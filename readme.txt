@@ -3,7 +3,7 @@ Contributors: strangerstudios
 Tags: pmpro, membership, card, membership card, members, badge, logo
 Requires at least: 3.5
 Tested up to: 3.9.1
-Stable tag: .2.1
+Stable tag: .2.2
 
 Display a printable Membership Card for Paid Memberships Pro members or WP users.
 
@@ -26,6 +26,9 @@ If Paid Memberships Pro is activated, then only members will be able to view the
 Please post it in the issues section of GitHub and we'll fix it as soon as we can. Thanks for helping. https://github.com/strangerstudios/pmpro-membership-card/issues
 
 == Changelog ==
+= .2.2 =
+* Added link to membership card in Member Links section of the account page.
+* Fixed the default membership card template styling a bit.
 
 = .2.1 =
 * Fixed template loading bug.
