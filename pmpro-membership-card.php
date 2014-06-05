@@ -3,7 +3,7 @@
 Plugin Name: PMPro Membership Card
 Plugin URI: http://www.paidmembershipspro.com/wp/pmpro-membership-card/
 Description: Display a printable Membership Card for Paid Memberships Pro members or WP users.
-Version: .2
+Version: .2.1
 Author: Stranger Studios
 Author URI: http://www.strangerstudios.com
 */
@@ -83,17 +83,17 @@ function pmpro_membership_card_shortcode($atts, $content=null, $code="")
 		Look for a custom template.
 	*/
 	if(file_exists(get_stylesheet_directory() . "/membership-card.php")) 
-		$template_path = get_stylesheet_directory_uri() . "/membership-card.php";		
+		$template_path = get_stylesheet_directory() . "/membership-card.php";
 	elseif(file_exists(get_template_directory() . "/membership-card.php")) 
-		$template_path = get_template_directory_uri() . "/membership-card.php";		
+		$template_path = get_template_directory() . "/membership-card.php";
 	else
-		$template_path = plugin_dir_path(__FILE__) . "templates/membership-card.php";			
-	
+		$template_path = plugin_dir_path(__FILE__) . "templates/membership-card.php";
+
 	/*
 		Load the Template
 	*/
 	ob_start();
-	include($template_path);		
+	include($template_path);
 	$temp_content = ob_get_contents();
 	ob_end_clean();
 	return $temp_content;
@@ -185,3 +185,15 @@ function pmpro_membership_card_profile_fields($user)
 }
 add_action('edit_user_profile', 'pmpro_membership_card_profile_fields');
 add_action('show_user_profile', 'pmpro_membership_card_profile_fields');
+
+/*
+	Add the link to view the card in the Member Links section of the Membership Account page
+*/
+function pmpro_membership_card_member_links_top()
+{
+	global $current_user;
+	?>
+		<li><a href="<?php echo get_permalink(pmpro_membership_card_get_post_id()); ?>?u=<?php echo $user->ID; ?>"><?php _e("View and Print Membership Card", "pmpro"); ?></a></li>
+	<?php
+}
+add_action("pmpro_member_links_top", "pmpro_membership_card_member_links_top");

@@ -3,32 +3,35 @@
 ?>
 <style>
 	/* Hide any thumbnail that might be on the page. */
-	.page .attachment-post-thumbnail {display: none;}
-	.post .attachment-post-thumbnail {display: none;}
+	.page .attachment-post-thumbnail, .page .wp-post-image {display: none;}
+	.post .attachment-post-thumbnail, .post .wp-post-image {display: none;}
 	
 	/* Page Styles */
 	.pmpro_membership_card {clear: both; }
 	.pmpro_membership_card-print {border: 1px solid #000000; border-radius: 10px; -moz-border-radius: 10px; -webkit-border-radius: 10px; background: #FFF; margin: 0 0 20px 0; }
 	.pmpro_membership_card-inner {padding: 5%; }
-	.pmpro_membership_card-print h1 {font-size: 20px; margin: 0 0 10px 0; }
+	.pmpro_membership_card-print h1 {font-size: 28px; margin: 0 0 10px 0; }
 	.pmpro_membership_card-print p {margin: 10px 0 0 0; padding: 0; font-size: 12px; }
 	img.pmpro_membership_card_image {float: right; border: none; box-shadow: none; }
+	.pmpro_membership_card-print-md .pmpro_membership_card_image {max-width: 150px; }
 	.pmpro_membership_card-print-md img.pmpro_membership_card_image {margin-bottom: 5%; }
 	.pmpro_membership_card-print-sm, .pmpro_membership_card-print-lg {visibility: hidden !important; }
 	.pmpro_clear {clear: both; }
 	/* Print Styles */
 	@media print
 	{	
-		.page {visibility: hidden !important; }
+		.page, .page .pmpro_membership_card #nav-below {visibility: hidden !important; }
 		.page .pmpro_membership_card { visibility: visible !important; position: fixed; top: 2%; left: 2%; width: 96%; }
 		.pmpro_membership_card-print-md {width: 48%; float: left; margin-bottom: 10%; }
-		.pmpro_membership_card-print-md .pmpro_membership_card_image {max-width: 150px; }
+		.pmpro_membership_card-print-md .pmpro_membership_card-inner {padding: 10% 5%; }
+		.pmpro_membership_card-print-md img.pmpro_membership_card_image {max-width: 150px !important; }
 		.pmpro_membership_card-print-sm {visibility: visible !important; float: right; width: 42%; }
-		.pmpro_membership_card-print-sm .pmpro_membership_card_image {max-width: 110px; }
-		.pmpro_membership_card-print-lg {clear: both; visibility: visible !important; width: 100%; }
+		.pmpro_membership_card-print-sm img.pmpro_membership_card_image {max-width: 110px !important; margin-bottom: 5%; }
+		.pmpro_membership_card-print-lg {clear: both; visibility: visible !important; width: 100%; line-height: 26px; }
 		.pmpro_membership_card-print-lg .pmpro_membership_card-inner {padding: 10% 5%; }
-		.pmpro_membership_card-print-lg h1 {font-size: 60px; }
-		.pmpro_membership_card-print-lg p {font-size: 22px; }
+		.pmpro_membership_card-print-lg img.pmpro_membership_card_image {max-width: 250px !important; }
+		.pmpro_membership_card-print-lg h1 {font-size: 60px; margin: 0 0 50px 0; }
+		.pmpro_membership_card-print-lg p {font-size: 22px; margin: 20px 0 0 0; }
 	}
 </style>
 <a class="pmpro_a-print" href="javascript:window.print()">Print</a>
@@ -132,7 +135,7 @@
 			<img id="pmpro_membership_card_image" class="pmpro_membership_card_image" src="<?php echo esc_attr($featured_image);?>" border="0" />
 			<?php
 			}
-		?>	
+		?>		
 		<?php
 			if(!empty($since))
 			{
