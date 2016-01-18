@@ -3,7 +3,7 @@
 Plugin Name: Paid Memberships Pro - Membership Card Add On
 Plugin URI: http://www.paidmembershipspro.com/wp/pmpro-membership-card/
 Description: Display a printable Membership Card for Paid Memberships Pro members or WP users.
-Version: .2.2
+Version: .3
 Author: Stranger Studios
 Author URI: http://www.strangerstudios.com
 */
@@ -17,7 +17,7 @@ function pmpro_membership_card_wp()
 		Check if we're on the membership card page.
 	*/
 	global $post;
-	if(is_admin() || empty($post) || strpos($post->post_content, "[pmpro_membership_card]") === false)
+	if(is_admin() || empty($post) || strpos($post->post_content, "[pmpro_membership_card") === false)
 		return;
 	
 	/*
@@ -88,7 +88,12 @@ function pmpro_membership_card_shortcode($atts, $content=null, $code="")
 		$template_path = get_template_directory() . "/membership-card.php";
 	else
 		$template_path = plugin_dir_path(__FILE__) . "templates/membership-card.php";
-
+	
+	extract(shortcode_atts(array(
+		'print_size' => 'all',
+	), $atts));
+	
+	$print_sizes = explode(",", $print_size);
 	/*
 		Load the Template
 	*/
@@ -125,7 +130,7 @@ function pmpro_membership_card_get_post_id()
 		global $wpdb;
 				
 		//look for a post with the shortcode in it
-		$from_post_content = $wpdb->get_var("SELECT ID FROM $wpdb->posts WHERE post_status = 'publish' AND post_content LIKE '%[pmpro_membership_card]%' LIMIT 1");			
+		$from_post_content = $wpdb->get_var("SELECT ID FROM $wpdb->posts WHERE post_status = 'publish' AND post_content LIKE '%[pmpro_membership_card%' LIMIT 1");			
 		if(!empty($from_post_content))
 			$pmpro_membership_card_get_post_id = $from_post_content;
 	
@@ -150,7 +155,7 @@ function pmpro_membership_card_save_post($post_id)
 	if(empty($option))
 		$option = array();
 		
-	if(strpos($post->post_content, "[pmpro_membership_card]") !== false && $post->post_status = 'publish')
+	if(strpos($post->post_content, "[pmpro_membership_card") !== false && $post->post_status = 'publish')
 		$option[$post_id] = $post_id;
 	else
 		unset($option[$post_id]);
