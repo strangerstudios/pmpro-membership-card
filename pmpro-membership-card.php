@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: PMPro Membership Card
+Plugin Name: Paid Memberships Pro - Membership Card Add On
 Plugin URI: http://www.paidmembershipspro.com/wp/pmpro-membership-card/
 Description: Display a printable Membership Card for Paid Memberships Pro members or WP users.
 Version: .2.2
@@ -197,3 +197,19 @@ function pmpro_membership_card_member_links_top()
 	<?php
 }
 add_action("pmpro_member_links_top", "pmpro_membership_card_member_links_top");
+
+/*
+Function to add links to the plugin row meta
+*/
+function pmpro_membership_card_plugin_row_meta($links, $file) {
+	if(strpos($file, 'pmpro-membership-card.php') !== false)
+	{
+		$new_links = array(
+			'<a href="' . esc_url('http://www.paidmembershipspro.com/add-ons/plugins-on-github/pmpro-membership-card/')  . '" title="' . esc_attr( __( 'View Documentation', 'pmpro' ) ) . '">' . __( 'Docs', 'pmpro' ) . '</a>',
+			'<a href="' . esc_url('http://paidmembershipspro.com/support/') . '" title="' . esc_attr( __( 'Visit Customer Support Forum', 'pmpro' ) ) . '">' . __( 'Support', 'pmpro' ) . '</a>',
+		);
+		$links = array_merge($links, $new_links);
+	}
+	return $links;
+}
+add_filter('plugin_row_meta', 'pmpro_membership_card_plugin_row_meta', 10, 2);
