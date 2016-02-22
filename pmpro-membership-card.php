@@ -172,7 +172,21 @@ function pmpro_membership_card_get_post_id()
 	Use an option to track pages with the [pmpro_membership_card] shortcode.
 */
 function pmpro_membership_card_save_post($post_id)
-{	
+{
+	global $post;
+
+	if ( !isset( $post->post_type) )
+		return;
+
+	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
+		return;
+
+	if ( wp_is_post_revision( $post_id ) !== false )
+		return;
+
+	if ( 'trash' == get_post_status( $post_id ) )
+		return;
+
 	$args = array(
 		'p' => $post_id,
 		'posts_per_page' => 1,
