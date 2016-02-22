@@ -123,7 +123,24 @@ function pmpro_membership_card_get_post_id()
 		
 	//look in options
 	$from_options = get_option("pmpro_membership_card_post_ids", array());		
-		
+
+	// Make this an array so we can check it.
+	if (!is_array($from_options) && !empty($from_options))
+		$from_options = array($from_options);
+
+	// check status of the stored posts ID(s) for the membership card(s).
+	if (is_array($from_options) && !empty($from_options))
+	{
+		foreach($from_options as $k => $mc_id)
+		{
+			$p = get_post($mc_id);
+
+			// remove any entry that isn't a published post/page
+			if (!in_array( $p->post_status, array('publish', 'private')))
+				unset($from_options[$k]);
+		}
+	}
+
 	if(!empty($from_options) && is_array($from_options))
 		$pmpro_membership_card_get_post_id = end($from_options);
 	elseif(!empty($from_options))
@@ -145,7 +162,6 @@ function pmpro_membership_card_get_post_id()
 		//look for a post with the shortcode in it
 		if(!empty($from_post_content))
 			$pmpro_membership_card_get_post_id = $from_post_content;
-
 	}
 
 	//didn't find anything
