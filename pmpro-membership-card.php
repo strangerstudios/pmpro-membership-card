@@ -3,7 +3,7 @@
 Plugin Name: Paid Memberships Pro - Membership Card Add On
 Plugin URI: http://www.paidmembershipspro.com/wp/pmpro-membership-card/
 Description: Display a printable Membership Card for Paid Memberships Pro members or WP users.
-Version: .3
+Version: .4
 Author: Stranger Studios
 Author URI: http://www.strangerstudios.com
 */
@@ -11,13 +11,16 @@ Author URI: http://www.strangerstudios.com
 /*
 	Load on the membership card page to setup vars and possibly redirect away
 */
+// loads class to find post based on content (and supports WP caching).
+require_once( plugin_dir_path(__FILE__) . 'class.pmpro_posts_by_content.php');
+
 function pmpro_membership_card_wp()
 {
 	/*
 		Check if we're on the membership card page.
 	*/
 	global $post;
-	if(is_admin() || empty($post) || strpos($post->post_content, "[pmpro_membership_card") === false)
+	if(is_admin() || empty($post) || ! has_shortcode($post->post_content, "pmpro_membership_card"))
 		return;
 	
 	/*
@@ -127,17 +130,22 @@ function pmpro_membership_card_get_post_id()
 		$pmpro_membership_card_get_post_id = $from_options;
 	else
 	{
-		global $wpdb;
-				
+		// Search for post based on content
+		// returns a single post or page (the first one found).
+		$args = array(
+			'posts_per_page' => 1,
+			'content' => '%pmpro_membership_card%',
+			'post_type' => array( 'post', 'page'),
+			'post_status' => array('publish', 'private')
+		);
+
+		$posts = pmpro_posts_by_content::get( $args );
+		$from_post_content = $posts[0]->ID;
+
 		//look for a post with the shortcode in it
-		$from_post_content = $wpdb->get_var("SELECT ID FROM $wpdb->posts WHERE post_status = 'publish' AND post_content LIKE '%[pmpro_membership_card%' LIMIT 1");			
 		if(!empty($from_post_content))
 			$pmpro_membership_card_get_post_id = $from_post_content;
-	
-		//look for a page with slug "membership-card"		
-		$from_slug = $wpdb->get_var("SELECT ID FROM $wpdb->posts WHERE post_status = 'publish' AND post_name = 'membership-card' LIMIT 1");		
-		if(!empty($from_slug))
-			$pmpro_membership_card_get_post_id = $from_slug;
+
 	}
 
 	//didn't find anything
@@ -149,13 +157,22 @@ function pmpro_membership_card_get_post_id()
 */
 function pmpro_membership_card_save_post($post_id)
 {	
-	$post = get_post($post_id);		
+	$args = array(
+		'p' => $post_id,
+		'posts_per_page' => 1,
+		'post_type' => array( 'post', 'page'),
+		'post_status' => array('publish', 'private')
+	);
+
+	$posts = pmpro_posts_by_content::get($args);
+	$post = $posts[0];
+
 	$option = get_option("pmpro_membership_card_post_ids", array());
 	
 	if(empty($option))
 		$option = array();
 		
-	if(strpos($post->post_content, "[pmpro_membership_card") !== false && $post->post_status = 'publish')
+	if(has_shortcode($post->post_content, "pmpro_membership_card") && in_array($post->post_status,  array('publish', 'private')) )
 		$option[$post_id] = $post_id;
 	else
 		unset($option[$post_id]);
@@ -198,7 +215,7 @@ function pmpro_membership_card_member_links_top()
 {
 	global $current_user;
 	?>
-		<li><a href="<?php echo get_permalink(pmpro_membership_card_get_post_id()); ?>?u=<?php echo $user->ID; ?>"><?php _e("View and Print Membership Card", "pmpro"); ?></a></li>
+		<li><a href="<?php echo get_permalink(pmpro_membership_card_get_post_id()); ?>?u=<?php echo esc_attr($current_user->ID); ?>"><?php _e("View and Print Membership Card", "pmpro"); ?></a></li>
 	<?php
 }
 add_action("pmpro_member_links_top", "pmpro_membership_card_member_links_top");
