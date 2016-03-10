@@ -195,14 +195,14 @@ function pmpro_membership_card_save_post($post_id)
 	);
 
 	$posts = pmpro_posts_by_content::get($args);
-	$post = $posts[0];
+	$post = isset($posts[0]) ? $posts[0] : null;
 
 	$option = get_option("pmpro_membership_card_post_ids", array());
 	
 	if(empty($option))
 		$option = array();
 		
-	if(has_shortcode($post->post_content, "pmpro_membership_card") && in_array($post->post_status,  array('publish', 'private')) )
+	if(isset($post->post_content) && has_shortcode($post->post_content, "pmpro_membership_card") && in_array($post->post_status,  array('publish', 'private')) )
 		$option[$post_id] = $post_id;
 	else
 		unset($option[$post_id]);
