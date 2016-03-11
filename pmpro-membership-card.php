@@ -221,7 +221,7 @@ function pmpro_membership_card_profile_fields($user)
 	$membership_level_capability = apply_filters("pmpro_edit_member_capability", "manage_options");
 	if(!current_user_can($membership_level_capability))
 		return false;
-	
+
 	if(!function_exists("pmpro_hasMembershipLevel") || (function_exists("pmpro_hasMembershipLevel") && pmpro_hasMembershipLevel(NULL, $user->ID)))
 	{
 		?>
@@ -229,7 +229,7 @@ function pmpro_membership_card_profile_fields($user)
 		<table class="form-table">
 			<tr>
 				<th>&nbsp;</th>
-				<td><a href="<?php echo get_permalink(pmpro_membership_card_get_post_id()); ?>?u=<?php echo $user->ID; ?>">View and Print Membership Card</a></td>
+				<td><a href="<?php echo add_query_arg('u', $user->ID, get_permalink(pmpro_membership_card_get_post_id()));?>">View and Print Membership Card</a></td>
 			</tr>
 		</table>
 		<?php
@@ -245,7 +245,7 @@ function pmpro_membership_card_member_links_top()
 {
 	global $current_user;
 	?>
-		<li><a href="<?php echo get_permalink(pmpro_membership_card_get_post_id()); ?>?u=<?php echo esc_attr($current_user->ID); ?>"><?php _e("View and Print Membership Card", "pmpro"); ?></a></li>
+		<li><a href="<?php echo add_query_arg('u', $current_user->ID, get_permalink(pmpro_membership_card_get_post_id()));?>"><?php _e("View and Print Membership Card", "pmpro"); ?></a></li>
 	<?php
 }
 add_action("pmpro_member_links_top", "pmpro_membership_card_member_links_top");
