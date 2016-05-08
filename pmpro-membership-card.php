@@ -37,7 +37,7 @@ function pmpro_membership_card_wp()
 	*/
 	if(empty($pmpro_membership_card_user))
 	{
-		wp_die("Invalid user.");
+		wp_die(__("Invalid user.", "pmpromc"));
 	}	
 	
 	/*
@@ -51,7 +51,7 @@ function pmpro_membership_card_wp()
 	*/
 	if(!current_user_can("edit_user", $pmpro_membership_card_user->ID))
 	{
-		wp_die("You do not have permission to view the membership card for this user.");
+		wp_die(__("You do not have permission to view the membership card for this user.", "pmpromc"));
 	}
 	
 	/*
@@ -91,7 +91,9 @@ function pmpro_membership_card_shortcode($atts, $content=null, $code="")
 		$template_path = get_template_directory() . "/membership-card.php";
 	else
 		$template_path = plugin_dir_path(__FILE__) . "templates/membership-card.php";
-	
+
+	$print_size = array();
+
 	extract(shortcode_atts(array(
 		'print_size' => 'all',
 	), $atts));
@@ -225,7 +227,7 @@ function pmpro_membership_card_profile_fields($user)
 	if(!function_exists("pmpro_hasMembershipLevel") || (function_exists("pmpro_hasMembershipLevel") && pmpro_hasMembershipLevel(NULL, $user->ID)))
 	{
 		?>
-		<h3><?php _e("Membership Card", "pmpro"); ?></h3>
+		<h3><?php _e("Membership Card", "pmpromc"); ?></h3>
 		<table class="form-table">
 			<tr>
 				<th>&nbsp;</th>
@@ -245,7 +247,7 @@ function pmpro_membership_card_member_links_top()
 {
 	global $current_user;
 	?>
-		<li><a href="<?php echo add_query_arg('u', $current_user->ID, get_permalink(pmpro_membership_card_get_post_id()));?>"><?php _e("View and Print Membership Card", "pmpro"); ?></a></li>
+		<li><a href="<?php echo add_query_arg('u', $current_user->ID, get_permalink(pmpro_membership_card_get_post_id()));?>"><?php _e("View and Print Membership Card", "pmpromc"); ?></a></li>
 	<?php
 }
 add_action("pmpro_member_links_top", "pmpro_membership_card_member_links_top");
