@@ -87,7 +87,7 @@
 				if(!empty($since))
 				{
 				?>
-				<p><strong>Member Since:</strong> <?php echo date(get_option("date_format"), strtotime($pmpro_membership_card_user->user_registered));?></p>
+				<p><strong>Member Since:</strong> <?php echo apply_filters('pmpro_membership_card_since_date', date(get_option("date_format"), strtotime($pmpro_membership_card_user->user_registered)), $pmpro_membership_card_user);?></p>
 				<?php
 				}
 			?>
