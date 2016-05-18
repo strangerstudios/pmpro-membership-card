@@ -142,6 +142,7 @@
 						echo "Never";
 				?>
 			</p>
+			<?php do_action("pmpro_membership_card_additional_fields");?>
 			<?php } ?>				
 		</div><div class="pmpro_clear"></div>
 	</div> <!-- end pmpro_membership_card-print-sm -->
