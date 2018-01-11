@@ -56,10 +56,13 @@
 		<?php } ?>
 	}
 </style>
+<?php if ( null !== $pmpro_membership_card_user ) { ?>
 <a class="pmpro_a-print" href="javascript:window.print()">Print</a>
 <div class="pmpro_membership_card">
-	<?php 
-		$featured_image = wp_get_attachment_url( get_post_thumbnail_id($post->ID) ); 
+	<?php // Check if in a Post first
+		if ( $post->ID ) {
+			$featured_image = wp_get_attachment_url( get_post_thumbnail_id( $post->ID ) );
+		} 
 		if(function_exists("pmpro_getMemberStartDate"))
 			$since = pmpro_getMemberStartDate($pmpro_membership_card_user->ID);
 		else
@@ -195,4 +198,9 @@
 		</div>
 	</nav>
 </div> <!-- end #pmpro_membership_card -->
-	
+<?php
+} elseif ( current_user_can( 'manage_options' ) ) {
+	echo 'You\'re an administrator, you don\'t need a membership card.';
+} else {
+	echo 'You\'re an administrator,';
+}
