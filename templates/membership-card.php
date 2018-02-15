@@ -93,8 +93,8 @@
 			?>
 				
 			<?php if(function_exists("pmpro_hasMembershipLevel")) { ?>
-			<p><strong><?php _e("Level", "pmpro");?>:</strong> <?php echo $pmpro_membership_card_user->membership_level->name?></p>		
-			<p><strong><?php _e("Membership Expires", "pmpro");?>:</strong> 
+			<p><strong><?php _e("Level", "pmpromc");?>:</strong> <?php echo $pmpro_membership_card_user->membership_level->name?></p>		
+			<p><strong><?php _e("Membership Expires", "pmpromc");?>:</strong> 
 				<?php 
 					if($pmpro_membership_card_user->membership_level->enddate)
 						echo date(get_option('date_format'), $pmpro_membership_card_user->membership_level->enddate);
@@ -127,19 +127,19 @@
 				if(!empty($since))
 				{
 				?>
-				<p><strong>Member Since:</strong> <?php echo date(get_option("date_format"), strtotime($pmpro_membership_card_user->user_registered));?></p>
+				<p><strong><?php _e("Member Since:", "pmpromc");?></strong> <?php echo date(get_option("date_format"), strtotime($pmpro_membership_card_user->user_registered));?></p>
 				<?php
 				}
 			?>
 				
 			<?php if(function_exists("pmpro_hasMembershipLevel")) { ?>
-			<p><strong><?php _e("Level", "pmpro");?>:</strong> <?php echo $pmpro_membership_card_user->membership_level->name?></p>		
-			<p><strong><?php _e("Membership Expires", "pmpro");?>:</strong> 
+			<p><strong><?php _e("Level", "pmpromc");?>:</strong> <?php echo $pmpro_membership_card_user->membership_level->name?></p>		
+			<p><strong><?php _e("Membership Expires", "pmpromc");?>:</strong> 
 				<?php 
 					if($pmpro_membership_card_user->membership_level->enddate)
 						echo date(get_option('date_format'), $pmpro_membership_card_user->membership_level->enddate);
 					else
-						echo "Never";
+						echo __("Never", "pmpromc");
 				?>
 			</p>
 			<?php } ?>				
@@ -167,19 +167,19 @@
 				if(!empty($since))
 				{
 				?>
-				<p><strong>Member Since:</strong> <?php echo date(get_option("date_format"), strtotime($pmpro_membership_card_user->user_registered));?></p>
+				<p><strong><?php _e("Member Since:", "pmpromc");?></strong> <?php echo date(get_option("date_format"), strtotime($pmpro_membership_card_user->user_registered));?></p>
 				<?php
 				}
 			?>
 				
 			<?php if(function_exists("pmpro_hasMembershipLevel")) { ?>
-			<p><strong><?php _e("Level", "pmpro");?>:</strong> <?php echo $pmpro_membership_card_user->membership_level->name?></p>		
-			<p><strong><?php _e("Membership Expires", "pmpro");?>:</strong> 
+			<p><strong><?php _e("Level", "pmpromc");?>:</strong> <?php echo $pmpro_membership_card_user->membership_level->name?></p>		
+			<p><strong><?php _e("Membership Expires", "pmpromc");?>:</strong> 
 				<?php 
 					if($pmpro_membership_card_user->membership_level->enddate)
 						echo date(get_option('date_format'), $pmpro_membership_card_user->membership_level->enddate);
 					else
-						echo "Never";
+						echo __("Never", "pmpromc");
 				?>
 			</p>
 			<?php } ?>				
@@ -188,9 +188,9 @@
 	<nav id="nav-below" class="navigation" role="navigation">
 		<div class="nav-previous alignleft">
 			<?php if(function_exists("pmpro_hasMembershipLevel") && pmpro_hasMembershipLevel(NULL, $pmpro_membership_card_user->ID)) { ?>
-				<a href="<?php echo pmpro_url("account")?>"><?php _e('&larr; Return to Your Account', 'pmpro');?></a>
+				<a href="<?php echo pmpro_url("account")?>"><?php _e('&larr; Return to Your Account', 'pmpromc');?></a>
 			<?php } else { ?>
-				<a href="<?php echo home_url()?>"><?php _e('&larr; Return to Home', 'pmpro');?></a>
+				<a href="<?php echo home_url()?>"><?php _e('&larr; Return to Home', 'pmpromc');?></a>
 			<?php } ?>
 		</div>
 	</nav>

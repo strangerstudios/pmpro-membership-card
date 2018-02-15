@@ -6,7 +6,16 @@ Description: Display a printable Membership Card for Paid Memberships Pro member
 Version: .4
 Author: Stranger Studios
 Author URI: http://www.strangerstudios.com
+Text Domain: pmpromc
 */
+
+/*
+	Load plugin textdomain.
+*/
+function pmpromc_load_textdomain() {
+  load_plugin_textdomain( 'pmpromc', false, plugin_basename( dirname( __FILE__ ) ) . '/languages' ); 
+}
+add_action( 'plugins_loaded', 'pmpromc_load_textdomain' );
 
 /*
 	Load on the membership card page to setup vars and possibly redirect away
@@ -225,11 +234,11 @@ function pmpro_membership_card_profile_fields($user)
 	if(!function_exists("pmpro_hasMembershipLevel") || (function_exists("pmpro_hasMembershipLevel") && pmpro_hasMembershipLevel(NULL, $user->ID)))
 	{
 		?>
-		<h3><?php _e("Membership Card", "pmpro"); ?></h3>
+		<h3><?php _e("Membership Card", "pmpromc"); ?></h3>
 		<table class="form-table">
 			<tr>
 				<th>&nbsp;</th>
-				<td><a href="<?php echo add_query_arg('u', $user->ID, get_permalink(pmpro_membership_card_get_post_id()));?>">View and Print Membership Card</a></td>
+				<td><a href="<?php echo add_query_arg('u', $user->ID, get_permalink(pmpro_membership_card_get_post_id()));?>"><?php _e('View and Print Membership Card','pmpromc'); ?></a></td>
 			</tr>
 		</table>
 		<?php
@@ -245,7 +254,7 @@ function pmpro_membership_card_member_links_top()
 {
 	global $current_user;
 	?>
-		<li><a href="<?php echo add_query_arg('u', $current_user->ID, get_permalink(pmpro_membership_card_get_post_id()));?>"><?php _e("View and Print Membership Card", "pmpro"); ?></a></li>
+		<li><a href="<?php echo add_query_arg('u', $current_user->ID, get_permalink(pmpro_membership_card_get_post_id()));?>"><?php _e("View and Print Membership Card", "pmpromc"); ?></a></li>
 	<?php
 }
 add_action("pmpro_member_links_top", "pmpro_membership_card_member_links_top");
@@ -257,8 +266,8 @@ function pmpro_membership_card_plugin_row_meta($links, $file) {
 	if(strpos($file, 'pmpro-membership-card.php') !== false)
 	{
 		$new_links = array(
-			'<a href="' . esc_url('http://www.paidmembershipspro.com/add-ons/plugins-on-github/pmpro-membership-card/')  . '" title="' . esc_attr( __( 'View Documentation', 'pmpro' ) ) . '">' . __( 'Docs', 'pmpro' ) . '</a>',
-			'<a href="' . esc_url('http://paidmembershipspro.com/support/') . '" title="' . esc_attr( __( 'Visit Customer Support Forum', 'pmpro' ) ) . '">' . __( 'Support', 'pmpro' ) . '</a>',
+			'<a href="' . esc_url('http://www.paidmembershipspro.com/add-ons/plugins-on-github/pmpro-membership-card/')  . '" title="' . esc_attr( __( 'View Documentation', 'pmpromc' ) ) . '">' . __( 'Docs', 'pmpromc' ) . '</a>',
+			'<a href="' . esc_url('http://paidmembershipspro.com/support/') . '" title="' . esc_attr( __( 'Visit Customer Support Forum', 'pmpromc' ) ) . '">' . __( 'Support', 'pmpromc' ) . '</a>',
 		);
 		$links = array_merge($links, $new_links);
 	}
