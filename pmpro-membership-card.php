@@ -92,6 +92,7 @@ function pmpro_membership_card_shortcode($atts, $content=null, $code="")
 	else
 		$template_path = plugin_dir_path(__FILE__) . "templates/membership-card.php";
 	
+
 	extract(shortcode_atts(array(
 		'print_size' => 'all',
 	), $atts));
@@ -265,3 +266,103 @@ function pmpro_membership_card_plugin_row_meta($links, $file) {
 	return $links;
 }
 add_filter('plugin_row_meta', 'pmpro_membership_card_plugin_row_meta', 10, 2);
+
+/**
+ * Adds settings to Advanced tab
+ */
+function pmpro_membership_card_settings( $fields ){
+
+	$fields[] = array(
+		'field_name' 	=> __( 'pmpro_mcard_enable_qr', 'paid-memberships-pro' ),
+		'label' 		=> __( 'Enable QR Code on Membership Card', 'paid-memberships-pro' ),
+		'field_type' 	=> 'select',
+		'options' 		=> array( 'no' => __('No', 'pmpro' ), 'yes' => __('Yes','pmpro') ),
+		'description' 	=> __( 'Display a QR Code on the Membership Card', 'paid-memberships-pro' )
+	);
+
+	$fields[] = array(
+		'field_name' 	=> __( 'pmpro_mcard_data', 'paid-memberships-pro' ),
+		'label' 		=> __( 'Data Used in QR Code', 'paid-memberships-pro' ),
+		'field_type' 	=> 'select',
+		'options' 		=> apply_filters( 'pmpro_mcard_qr_code_data_options', array( 
+			'ID' 	=> __('User ID', 'pmpro' ), 
+			'level' => __('Membership Level','pmpro'),
+			'email' => __('Email Address', 'pmpro'),
+			)
+		),
+		'description' 	=> __( 'What member data should be available when scanning a QR code?', 'paid-memberships-pro' )
+	);
+
+	return $fields;
+
+}
+add_filter( 'pmpro_custom_advanced_settings', 'pmpro_membership_card_settings' );
+
+/**
+ * Returns the member's first and last name
+ */
+function pmpro_membership_card_return_user_name( $pmpro_membership_card_user ){
+
+	if($pmpro_membership_card_user->user_firstname)
+		return $pmpro_membership_card_user->user_firstname. " ". $pmpro_membership_card_user->user_lastname;
+	else
+		return $pmpro_membership_card_user->display_name;
+
+}
+
+/**
+ * Returns the members expiration date for their membership
+ */
+function pmpro_membership_card_return_end_date( $pmpro_membership_card_user ){
+
+	if(isset( $pmpro_membership_card_user->membership_level->enddate ) && $pmpro_membership_card_user->membership_level->enddate)
+		return date_i18n(get_option('date_format'), $pmpro_membership_card_user->membership_level->enddate);
+	else
+		__('Never', 'pmpro');
+
+}
+
+/**
+ * Returns member's level name
+ */
+function pmpro_membership_card_return_level_name( $pmpro_membership_card_user ){
+
+	return isset( $pmpro_membership_card_user->membership_level->name ) ? $pmpro_membership_card_user->membership_level->name : __('None', 'pmpro');
+
+}
+
+/**
+ * If QR Codes are enabled, use this template instead
+ */
+function pmpro_membership_card_template_override( $template_path, $atts, $content, $code ){
+
+	$qr_code = pmpro_getOption( 'pmpro_mcard_enable_qr' );
+
+	if( $qr_code == 'yes' )
+		return plugin_dir_path(__FILE__) . "templates/membership-card-qr-code.php";
+	else
+		return $template_path;
+
+}
+add_filter( 'pmpro_membership_card_template_path', 'pmpro_membership_card_template_override', 10, 4 );
+
+/**
+ * Return QR Code Data for QR Code
+ */
+function pmpro_membership_card_return_qr_code_data( $pmpro_membership_card_user, $option ){
+
+	$data = $pmpro_membership_card_user->ID;
+
+	if( $option == 'ID' ){
+		$data = $pmpro_membership_card_user->ID;
+	} else if( $option == 'level' ){
+		$data = $pmpro_membership_card_user->membership_level->ID;
+	} else if( $option == 'email' ){
+		$data = $pmpro_membership_card_user->data->user_email;
+	} else {
+		$data = apply_filters( 'pmpro_mcard_alternative_qr_code_data', $pmpro_membership_card_user, $option );
+	}
+
+	return "https://api.qrserver.com/v1/create-qr-code/?size=".apply_filters( 'pmpro_mcard_qr_code_dimensions', '150x150' )."&data=".urlencode( $data );
+
+}
