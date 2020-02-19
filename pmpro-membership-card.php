@@ -92,6 +92,7 @@ function pmpro_membership_card_shortcode($atts, $content=null, $code="")
 	else
 		$template_path = plugin_dir_path(__FILE__) . "templates/membership-card.php";
 	
+	$template_path = apply_filters( 'pmpro_membership_card_template_path', $template_path, $atts, $content, $code );
 
 	extract(shortcode_atts(array(
 		'print_size' => 'all',
