@@ -87,19 +87,19 @@
 				if(!empty($since))
 				{
 				?>
-				<p><strong>Member Since:</strong> <?php echo date(get_option("date_format"), strtotime($pmpro_membership_card_user->user_registered));?></p>
+				<p><strong><?php _e( 'Member Since', 'pmpro' ); ?>:</strong> <?php echo date_i18n(get_option("date_format"), strtotime($pmpro_membership_card_user->user_registered));?></p>
 				<?php
 				}
 			?>
 				
 			<?php if(function_exists("pmpro_hasMembershipLevel")) { ?>
-			<p><strong><?php _e("Level", "pmpro");?>:</strong> <?php echo $pmpro_membership_card_user->membership_level->name?></p>		
+			<p><strong><?php _e("Level", "pmpro");?>:</strong> <?php echo isset( $pmpro_membership_card_user->membership_level->name ) ? $pmpro_membership_card_user->membership_level->name : __('None', 'pmpro'); ?></p>		
 			<p><strong><?php _e("Membership Expires", "pmpro");?>:</strong> 
 				<?php 
-					if($pmpro_membership_card_user->membership_level->enddate)
-						echo date(get_option('date_format'), $pmpro_membership_card_user->membership_level->enddate);
+					if( isset( $pmpro_membership_card_user->membership_level->enddate ) && $pmpro_membership_card_user->membership_level->enddate )
+						echo date_i18n(get_option('date_format'), $pmpro_membership_card_user->membership_level->enddate);
 					else
-						echo "Never";
+						_e( 'Never', 'pmpro' );
 				?>
 			</p>
 			<?php } ?>				
@@ -127,19 +127,19 @@
 				if(!empty($since))
 				{
 				?>
-				<p><strong>Member Since:</strong> <?php echo date(get_option("date_format"), strtotime($pmpro_membership_card_user->user_registered));?></p>
+				<p><strong><?php _e( 'Member Since', 'pmpro' ); ?>:</strong> <?php echo date_i18n(get_option("date_format"), strtotime($pmpro_membership_card_user->user_registered));?></p>
 				<?php
 				}
 			?>
 				
 			<?php if(function_exists("pmpro_hasMembershipLevel")) { ?>
-			<p><strong><?php _e("Level", "pmpro");?>:</strong> <?php echo $pmpro_membership_card_user->membership_level->name?></p>		
+			<p><strong><?php _e("Level", "pmpro");?>:</strong> <?php echo isset( $pmpro_membership_card_user->membership_level->name ) ? $pmpro_membership_card_user->membership_level->name : __('None', 'pmpro'); ?></p>		
 			<p><strong><?php _e("Membership Expires", "pmpro");?>:</strong> 
 				<?php 
-					if($pmpro_membership_card_user->membership_level->enddate)
+					if(isset( $pmpro_membership_card_user->membership_level->enddate ) && $pmpro_membership_card_user->membership_level->enddate)
 						echo date(get_option('date_format'), $pmpro_membership_card_user->membership_level->enddate);
 					else
-						echo "Never";
+						_e( 'Never', 'pmpro' );
 				?>
 			</p>
 			<?php } ?>				
@@ -167,19 +167,19 @@
 				if(!empty($since))
 				{
 				?>
-				<p><strong>Member Since:</strong> <?php echo date(get_option("date_format"), strtotime($pmpro_membership_card_user->user_registered));?></p>
+				<p><strong><?php _e( 'Member Since', 'pmpro' ); ?>:</strong> <?php echo date_i18n(get_option("date_format"), strtotime($pmpro_membership_card_user->user_registered));?></p>
 				<?php
 				}
 			?>
 				
 			<?php if(function_exists("pmpro_hasMembershipLevel")) { ?>
-			<p><strong><?php _e("Level", "pmpro");?>:</strong> <?php echo $pmpro_membership_card_user->membership_level->name?></p>		
+			<p><strong><?php _e("Level", "pmpro");?>:</strong> <?php echo isset( $pmpro_membership_card_user->membership_level->name ) ? $pmpro_membership_card_user->membership_level->name : __('None', 'pmpro' ); ?></p>		
 			<p><strong><?php _e("Membership Expires", "pmpro");?>:</strong> 
 				<?php 
-					if($pmpro_membership_card_user->membership_level->enddate)
-						echo date(get_option('date_format'), $pmpro_membership_card_user->membership_level->enddate);
+					if(isset( $pmpro_membership_card_user->membership_level->enddate ) && $pmpro_membership_card_user->membership_level->enddate)
+						echo date_i18n(get_option('date_format'), $pmpro_membership_card_user->membership_level->enddate);
 					else
-						echo "Never";
+						_e('Never', 'pmpro');
 				?>
 			</p>
 			<?php } ?>				
