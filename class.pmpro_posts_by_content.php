@@ -34,7 +34,8 @@ class pmpro_posts_by_content
         // isset( $args['like'] ) and self::$like = (bool) $like;
         $posts = get_posts( $args);
 
-        error_log("pmpro_posts_by_content: " . print_r($posts, true));
+        if( defined( 'WP_DEBUG_LOG' ) && WP_DEBUG_LOG )
+            error_log("pmpro_posts_by_content: " . print_r($posts, true));
 
         return $posts;
     }
@@ -43,7 +44,8 @@ class pmpro_posts_by_content
     {
         remove_filter('posts_where', array(__CLASS__, 'where_filter'));
 
-        error_log("pmpro_posts_by_content: " . print_r( $where, true ));
+        if( defined( 'WP_DEBUG_LOG' ) && WP_DEBUG_LOG )
+            error_log("pmpro_posts_by_content: " . print_r( $where, true ));
 
         global $wpdb;
         $like = self::$like ? 'LIKE' : 'NOT LIKE';
@@ -55,7 +57,9 @@ class pmpro_posts_by_content
         self::$like = true;
 
         $new_where = "{$where} AND post_content {$like} {$extra}";
-        error_log("pmpro_posts_by_content: " . print_r($new_where, true));
+
+        if( defined( 'WP_DEBUG_LOG' ) && WP_DEBUG_LOG )
+            error_log("pmpro_posts_by_content: " . print_r($new_where, true));
 
         return $new_where;
     }
