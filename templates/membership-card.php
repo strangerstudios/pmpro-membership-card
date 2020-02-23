@@ -95,7 +95,7 @@
 					<?php
 					}
 				?>
-					
+				
 				<?php if(function_exists("pmpro_hasMembershipLevel")) { ?>
 
 				<p><strong><?php _e("Level", "pmpro");?>:</strong> <?php echo pmpro_membership_card_return_level_name( $pmpro_membership_card_user ); ?></p>		
@@ -137,7 +137,6 @@
 					<?php
 					}
 				?>
-					
 				<?php if(function_exists("pmpro_hasMembershipLevel")) { ?>
 
 				<p><strong><?php _e("Level", "pmpro");?>:</strong> <?php echo pmpro_membership_card_return_level_name( $pmpro_membership_card_user ); ?></p>		

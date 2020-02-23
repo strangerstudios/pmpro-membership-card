@@ -287,7 +287,7 @@ function pmpro_membership_card_return_user_name( $pmpro_membership_card_user ){
  */
 function pmpro_membership_card_return_end_date( $pmpro_membership_card_user ){
 
-	if(isset( $pmpro_membership_card_user->membership_level->enddate ) && $pmpro_membership_card_user->membership_level->enddate !== "0" )
+	if(isset( $pmpro_membership_card_user->membership_level->enddate ) && $pmpro_membership_card_user->membership_level->enddate)
 		return date_i18n(get_option('date_format'), $pmpro_membership_card_user->membership_level->enddate);
 	else
 		__('Never', 'pmpro');
@@ -338,7 +338,6 @@ add_action( 'pmpro_membership_card_after_card', 'pmpro_membership_card_qr_code',
 /**
  * Adds an extra class to the inner container for QR code styling
  */
-
 function pmpro_membership_card_qr_code_class( $pmpro_membership_card_user, $print_sizes, $enable_qr_code, $qr_code_data ){
 	if( intval( $enable_qr_code ) )
 		echo 'qr_code_active';
