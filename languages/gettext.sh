@@ -18,6 +18,7 @@ xgettext -j -o languages/pmpro-membership-card.pot \
 --keyword=_n \
 --keyword=_x \
 --sort-by-file \
+--package-version=1.0 \
 --msgid-bugs-address="info@paidmembershipspro.com" \
 $(find . -name "*.php")
 echo "Done!"
