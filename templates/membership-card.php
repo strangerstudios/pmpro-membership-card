@@ -72,7 +72,7 @@
 			$since = $pmpro_membership_card_user->user_registered;
 	?>
 	<div class="pmpro_membership_card-print pmpro_membership_card-print-md">
-		<div class="pmpro_membership_card-inner <?php do_action( 'pmpro_membership_card-extra_classes', $pmpro_membership_card_user, $print_sizes, $enable_qr_code, $qr_code_data ); ?>">
+		<div class="pmpro_membership_card-inner <?php do_action( 'pmpro_membership_card-extra_classes', $pmpro_membership_card_user, $print_sizes, $qr_code, $qr_data ); ?>">
 			<div class="pmpro_membership_card-data">
 				<h1>
 					<?php 
@@ -108,13 +108,13 @@
 			</div>
 			<?php if( has_action( 'pmpro_membership_card_after_card' ) ){ ?>
 				<div class="pmpro_membership_card-after">
-					<?php do_action( 'pmpro_membership_card_after_card', $pmpro_membership_card_user, $print_sizes, $enable_qr_code, $qr_code_data ); ?>
+					<?php do_action( 'pmpro_membership_card_after_card', $pmpro_membership_card_user, $print_sizes, $qr_code, $qr_data ); ?>
 				</div>
 			<?php } ?>
 		</div><div class="pmpro_clear"></div>
 	</div> <!-- end pmpro_membership_card-print-md -->
 	<div class="pmpro_membership_card-print pmpro_membership_card-print-sm"<?php if(empty($print_small)) { ?> style="display: none;"<?php } ?>>
-		<div class="pmpro_membership_card-inner <?php do_action( 'pmpro_membership_card-extra_classes', $pmpro_membership_card_user, $print_sizes, $enable_qr_code, $qr_code_data ); ?>">
+		<div class="pmpro_membership_card-inner <?php do_action( 'pmpro_membership_card-extra_classes', $pmpro_membership_card_user, $print_sizes, $qr_code, $qr_data ); ?>">
 			<div class="pmpro_membership_card-data">
 				<h1>
 					<?php 
@@ -149,13 +149,13 @@
 			</div>
 			<?php if( has_action( 'pmpro_membership_card_after_card' ) ){ ?>
 				<div class="pmpro_membership_card-after">
-					<?php do_action( 'pmpro_membership_card_after_card', $pmpro_membership_card_user, $print_sizes, $enable_qr_code, $qr_code_data ); ?>
+					<?php do_action( 'pmpro_membership_card_after_card', $pmpro_membership_card_user, $print_sizes, $qr_code, $qr_data ); ?>
 				</div>
 			<?php } ?>
 		</div><div class="pmpro_clear"></div>
 	</div> <!-- end pmpro_membership_card-print-sm -->
 	<div class="pmpro_membership_card-print pmpro_membership_card-print-lg"<?php if(empty($print_large)) { ?> style="display: none;"<?php } ?>>
-		<div class="pmpro_membership_card-inner <?php do_action( 'pmpro_membership_card-extra_classes', $pmpro_membership_card_user, $print_sizes, $enable_qr_code, $qr_code_data ); ?>">
+		<div class="pmpro_membership_card-inner <?php do_action( 'pmpro_membership_card-extra_classes', $pmpro_membership_card_user, $print_sizes, $qr_code, $qr_data ); ?>">
 			<div class="pmpro_membership_card-data">
 				<h1>
 					<?php 
@@ -191,7 +191,7 @@
 			</div>	
 			<?php if( has_action( 'pmpro_membership_card_after_card' ) ){ ?>
 				<div class="pmpro_membership_card-after">
-					<?php do_action( 'pmpro_membership_card_after_card', $pmpro_membership_card_user, $print_sizes, $enable_qr_code, $qr_code_data ); ?>
+					<?php do_action( 'pmpro_membership_card_after_card', $pmpro_membership_card_user, $print_sizes, $qr_code, $qr_data ); ?>
 				</div>
 			<?php } ?>
 		</div><div class="pmpro_clear"></div>

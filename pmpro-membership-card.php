@@ -13,7 +13,7 @@ Domain Path: /languages
 function pmpro_membership_card_load_textdomain(){
 	load_plugin_textdomain( 'pmpro-membership-card', false, basename( dirname( __FILE__ ) ) . '/languages' ); 
 }
-add_action( 'init', 'pmpro_membership_card_load_textdomain' );asda
+add_action( 'init', 'pmpro_membership_card_load_textdomain' );
 /*
 	Load on the membership card page to setup vars and possibly redirect away
 */
@@ -102,8 +102,8 @@ function pmpro_membership_card_shortcode($atts, $content=null, $code="")
 
 	extract(shortcode_atts(array(
 		'print_size' => 'all',
-		'enable_qr_code' => 'false',
-		'qr_code_data' => 'ID' // Accepts ID, email and level
+		'qr_code' => 'false',
+		'qr_data' => 'ID' // Accepts ID, email and level
 	), $atts));
 
 	$print_sizes = explode(",", $print_size);
@@ -338,10 +338,10 @@ function pmpro_membership_card_return_qr_code_data( $pmpro_membership_card_user,
 /**
  * Load QR code in membership card
  */
-function pmpro_membership_card_qr_code( $pmpro_membership_card_user, $print_sizes, $enable_qr_code, $qr_code_data ){
+function pmpro_membership_card_qr_code( $pmpro_membership_card_user, $print_sizes, $qr_code, $qr_data ){
 
-	if( intval( $enable_qr_code ) || $enable_qr_code == 'true' ){
-		echo "<p><img src='".pmpro_membership_card_return_qr_code_data( $pmpro_membership_card_user, $qr_code_data )."' /></p>";
+	if( intval( $qr_code ) || $qr_code == 'true' ){
+		echo "<p><img src='".pmpro_membership_card_return_qr_code_data( $pmpro_membership_card_user, $qr_data )."' /></p>";
 	}
 }
 add_action( 'pmpro_membership_card_after_card', 'pmpro_membership_card_qr_code', 10, 4 );
@@ -349,8 +349,8 @@ add_action( 'pmpro_membership_card_after_card', 'pmpro_membership_card_qr_code',
 /**
  * Adds an extra class to the inner container for QR code styling
  */
-function pmpro_membership_card_qr_code_class( $pmpro_membership_card_user, $print_sizes, $enable_qr_code, $qr_code_data ){
-	if( intval( $enable_qr_code ) || $enable_qr_code == 'true' ){
+function pmpro_membership_card_qr_code_class( $pmpro_membership_card_user, $print_sizes, $qr_code, $qr_data ){
+	if( intval( $qr_code ) || $qr_code == 'true' ){
 		echo 'pmpro-qr-code-active';
 	}
 }
