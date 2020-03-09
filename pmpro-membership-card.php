@@ -6,8 +6,14 @@ Description: Display a printable Membership Card for Paid Memberships Pro member
 Version: .4
 Author: Stranger Studios
 Author URI: http://www.strangerstudios.com
+Text Domain: pmpro-membership-card
+Domain Path: /languages
 */
 
+function pmpro_membership_card_load_textdomain(){
+	load_plugin_textdomain( 'pmpro-membership-card', false, basename( dirname( __FILE__ ) ) . '/languages' ); 
+}
+add_action( 'init', 'pmpro_membership_card_load_textdomain' );asda
 /*
 	Load on the membership card page to setup vars and possibly redirect away
 */
