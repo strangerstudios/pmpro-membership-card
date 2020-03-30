@@ -98,12 +98,12 @@
 				
 				<?php if(function_exists("pmpro_hasMembershipLevel")) { ?>
 
-				<p><strong><?php _e("Level", "pmpro");?>:</strong>
+				<p><strong><?php _e("Level", 'pmpro-membership-card');?>:</strong>
 				<?php
 					pmpro_membership_card_output_levels_for_user( $pmpro_membership_card_user );
 				?>
 				</p>		
-				<p><strong><?php _e("Membership Expires", "pmpro");?>:</strong> 
+				<p><strong><?php _e("Membership Expires", 'pmpro-membership-card');?>:</strong> 
 					<?php 
 						echo pmpro_membership_card_return_end_date( $pmpro_membership_card_user );
 					?>
@@ -143,12 +143,12 @@
 				?>
 				<?php if(function_exists("pmpro_hasMembershipLevel")) { ?>
 
-				<p><strong><?php _e("Level", "pmpro");?>:</strong>
+				<p><strong><?php _e("Level", 'pmpro-membership-card');?>:</strong>
 				<?php
 					pmpro_membership_card_output_levels_for_user( $pmpro_membership_card_user );
 				?>
 				</p>		
-				<p><strong><?php _e("Membership Expires", "pmpro");?>:</strong> 
+				<p><strong><?php _e("Membership Expires", 'pmpro-membership-card');?>:</strong> 
 					<?php 
 						echo pmpro_membership_card_return_end_date( $pmpro_membership_card_user );
 					?>
@@ -189,12 +189,12 @@
 					
 				<?php if(function_exists("pmpro_hasMembershipLevel")) { ?>
 
-				<p><strong><?php _e("Level", "pmpro");?>:</strong>
+				<p><strong><?php _e("Level", 'pmpro-membership-card');?>:</strong>
 				<?php
 					pmpro_membership_card_output_levels_for_user( $pmpro_membership_card_user );
 				?>
 				</p>		
-				<p><strong><?php _e("Membership Expires", "pmpro");?>:</strong> 
+				<p><strong><?php _e("Membership Expires", 'pmpro-membership-card');?>:</strong> 
 					<?php 
 						echo pmpro_membership_card_return_end_date( $pmpro_membership_card_user );
 					?>
