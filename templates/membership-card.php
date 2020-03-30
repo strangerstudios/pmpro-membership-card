@@ -66,10 +66,10 @@
 <div class="pmpro_membership_card">
 	<?php 
 		$featured_image = wp_get_attachment_url( get_post_thumbnail_id($post->ID) ); 
-		if(function_exists("pmpro_getMemberStartDate"))
+		if(function_exists("pmpro_getMemberStartDate") && isset( $pmpro_membership_card_user->ID ) )
 			$since = pmpro_getMemberStartDate($pmpro_membership_card_user->ID);
 		else
-			$since = $pmpro_membership_card_user->user_registered;
+			$since = isset( $pmpro_membership_card_user->user_registered ) ? $pmpro_membership_card_user->user_registered : '';
 	?>
 	<div class="pmpro_membership_card-print pmpro_membership_card-print-md">
 		<div class="pmpro_membership_card-inner <?php do_action( 'pmpro_membership_card-extra_classes', $pmpro_membership_card_user, $print_sizes, $qr_code, $qr_data ); ?>">
@@ -91,7 +91,7 @@
 					if(!empty($since))
 					{
 					?>
-					<p><strong><?php _e( 'Member Since', 'pmpro' ); ?>:</strong> <?php echo date_i18n(get_option("date_format"), strtotime($pmpro_membership_card_user->user_registered));?></p>
+					<p><strong><?php _e( 'Member Since', 'pmpro-membership-card' ); ?>:</strong> <?php echo date_i18n(get_option("date_format"), strtotime($pmpro_membership_card_user->user_registered));?></p>
 					<?php
 					}
 				?>
@@ -133,7 +133,7 @@
 					if(!empty($since))
 					{
 					?>
-					<p><strong><?php _e( 'Member Since', 'pmpro' ); ?>:</strong> <?php echo date_i18n(get_option("date_format"), strtotime($pmpro_membership_card_user->user_registered));?></p>
+					<p><strong><?php _e( 'Member Since', 'pmpro-membership-card' ); ?>:</strong> <?php echo date_i18n(get_option("date_format"), strtotime($pmpro_membership_card_user->user_registered));?></p>
 					<?php
 					}
 				?>
@@ -174,7 +174,7 @@
 					if(!empty($since))
 					{
 					?>
-					<p><strong><?php _e( 'Member Since', 'pmpro' ); ?>:</strong> <?php echo date_i18n(get_option("date_format"), strtotime($pmpro_membership_card_user->user_registered));?></p>
+					<p><strong><?php _e( 'Member Since', 'pmpro-membership-card' ); ?>:</strong> <?php echo date_i18n(get_option("date_format"), strtotime($pmpro_membership_card_user->user_registered));?></p>
 					<?php
 					}
 				?>
@@ -198,10 +198,10 @@
 	</div> <!-- end pmpro_membership_card-print-lg -->	
 	<nav id="nav-below" class="navigation" role="navigation">
 		<div class="nav-previous alignleft">
-			<?php if(function_exists("pmpro_hasMembershipLevel") && pmpro_hasMembershipLevel(NULL, $pmpro_membership_card_user->ID)) { ?>
-				<a href="<?php echo pmpro_url("account")?>"><?php _e('&larr; Return to Your Account', 'pmpro');?></a>
+			<?php if(function_exists("pmpro_hasMembershipLevel") && isset( $pmpro_membership_card_user->ID ) && pmpro_hasMembershipLevel(NULL, $pmpro_membership_card_user->ID)) { ?>
+				<a href="<?php echo pmpro_url("account")?>"><?php _e('&larr; Return to Your Account', 'pmpro-membership-card');?></a>
 			<?php } else { ?>
-				<a href="<?php echo home_url()?>"><?php _e('&larr; Return to Home', 'pmpro');?></a>
+				<a href="<?php echo home_url()?>">&larr;<?php _e( 'Return to Home', 'pmpro-membership-card' );?></a>
 			<?php } ?>
 		</div>
 	</nav>
