@@ -105,12 +105,12 @@
 					?>
 				</p>
 				<?php } ?>	
+				<?php if( has_action( 'pmpro_membership_card_after_card' ) ){ ?>
+					<div class="pmpro_membership_card-after">
+						<?php do_action( 'pmpro_membership_card_after_card', $pmpro_membership_card_user, $print_sizes, $qr_code, $qr_data ); ?>
+					</div>
+				<?php } ?>
 			</div>
-			<?php if( has_action( 'pmpro_membership_card_after_card' ) ){ ?>
-				<div class="pmpro_membership_card-after">
-					<?php do_action( 'pmpro_membership_card_after_card', $pmpro_membership_card_user, $print_sizes, $qr_code, $qr_data ); ?>
-				</div>
-			<?php } ?>
 		</div><div class="pmpro_clear"></div>
 	</div> <!-- end pmpro_membership_card-print-md -->
 	<div class="pmpro_membership_card-print pmpro_membership_card-print-sm"<?php if(empty($print_small)) { ?> style="display: none;"<?php } ?>>
@@ -145,13 +145,13 @@
 						echo pmpro_membership_card_return_end_date( $pmpro_membership_card_user );
 					?>
 				</p>				
-				<?php } ?>	
+				<?php } ?>
+				<?php if( has_action( 'pmpro_membership_card_after_card' ) ){ ?>
+					<div class="pmpro_membership_card-after">
+						<?php do_action( 'pmpro_membership_card_after_card', $pmpro_membership_card_user, $print_sizes, $qr_code, $qr_data ); ?>
+					</div>
+				<?php } ?>
 			</div>
-			<?php if( has_action( 'pmpro_membership_card_after_card' ) ){ ?>
-				<div class="pmpro_membership_card-after">
-					<?php do_action( 'pmpro_membership_card_after_card', $pmpro_membership_card_user, $print_sizes, $qr_code, $qr_data ); ?>
-				</div>
-			<?php } ?>
 		</div><div class="pmpro_clear"></div>
 	</div> <!-- end pmpro_membership_card-print-sm -->
 	<div class="pmpro_membership_card-print pmpro_membership_card-print-lg"<?php if(empty($print_large)) { ?> style="display: none;"<?php } ?>>
@@ -187,13 +187,13 @@
 						echo pmpro_membership_card_return_end_date( $pmpro_membership_card_user );
 					?>
 				</p>				
-				<?php } ?>	
-			</div>	
-			<?php if( has_action( 'pmpro_membership_card_after_card' ) ){ ?>
-				<div class="pmpro_membership_card-after">
-					<?php do_action( 'pmpro_membership_card_after_card', $pmpro_membership_card_user, $print_sizes, $qr_code, $qr_data ); ?>
-				</div>
-			<?php } ?>
+				<?php } ?>
+				<?php if( has_action( 'pmpro_membership_card_after_card' ) ){ ?>
+					<div class="pmpro_membership_card-after">
+						<?php do_action( 'pmpro_membership_card_after_card', $pmpro_membership_card_user, $print_sizes, $qr_code, $qr_data ); ?>
+					</div>
+				<?php } ?>
+			</div>
 		</div><div class="pmpro_clear"></div>
 	</div> <!-- end pmpro_membership_card-print-lg -->	
 	<nav id="nav-below" class="navigation" role="navigation">
