@@ -315,6 +315,49 @@ function pmpro_membership_card_return_end_date( $pmpro_membership_card_user ){
 }
 
 /**
+ * Output Levels
+ *
+ * @param object $pmpro_membership_card_user The membership user.
+ */
+function pmpro_membership_card_output_levels_for_user( $pmpro_membership_card_user ) {
+	$levels      = pmpro_membership_card_get_levels_for_user( $pmpro_membership_card_user );
+	if ( ! $levels || ! is_array( $levels ) || empty( $levels ) ) {
+		return '';
+	}
+	$level_names = array();
+	foreach ( $levels as $level ) {
+		$level_names[] = $level->name;
+	}
+	sort( $level_names );
+	if ( count( $level_names ) > 1 ) {
+		echo '<ul>';
+		foreach ( $level_names as $level_name ) {
+			echo sprintf(
+				'<li>%s</li>',
+				esc_html( $level_name )
+			);
+		}
+		echo '</ul>';
+	} else {
+		$level_name = current( $level_names );
+		echo esc_html( $level_name );
+	}
+}
+
+/**
+ * Returns member's active levels.
+ *
+ * @param object $pmpro_membership_card_user The membership user.
+ *
+ * @return array User Levels.
+ */
+function pmpro_membership_card_get_levels_for_user( $pmpro_membership_card_user ){
+
+	return pmpro_getMembershipLevelsForUser( $pmpro_membership_card_user->ID );
+
+}
+
+/**
  * Returns member's level name
  */
 function pmpro_membership_card_return_level_name( $pmpro_membership_card_user ){
