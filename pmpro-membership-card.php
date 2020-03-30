@@ -319,29 +319,36 @@ function pmpro_membership_card_return_end_date( $pmpro_membership_card_user ){
  *
  * @param object $pmpro_membership_card_user The membership user.
  */
-function pmpro_membership_card_output_levels_for_user( $pmpro_membership_card_user ) {
+ function pmpro_membership_card_output_levels_for_user( $pmpro_membership_card_user ) {
 	$levels      = pmpro_membership_card_get_levels_for_user( $pmpro_membership_card_user );
-	if ( ! $levels || ! is_array( $levels ) || empty( $levels ) ) {
-		return '';
+	if ( ! $levels || empty( $levels ) ) {
+		return _e( 'None', 'pmpro-membership-card' );
 	}
-	$level_names = array();
-	foreach ( $levels as $level ) {
-		$level_names[] = $level->name;
-	}
-	sort( $level_names );
-	if ( count( $level_names ) > 1 ) {
-		echo '<ul>';
-		foreach ( $level_names as $level_name ) {
-			echo sprintf(
-				'<li>%s</li>',
-				esc_html( $level_name )
-			);
+
+	if ( is_array( $levels ) ) {
+		$level_names = array();
+		foreach ( $levels as $level ) {
+			$level_names[] = $level->name;
 		}
-		echo '</ul>';
+		sort( $level_names );
+	
+		$display = '';
+
+		if ( count( $level_names ) > 1 ) {
+			$display = '<ul>';
+			foreach ( $level_names as $level_name ) {
+				$display .= '<li><p>' . esc_html( $level_name ) . '</p></li>';	
+			}
+			$display .= '</ul>';
+		} else {
+			$level_name = current( $level_names );
+			$display = esc_html( $level_name );
+		}
 	} else {
-		$level_name = current( $level_names );
-		echo esc_html( $level_name );
+		$display = $levels;
 	}
+
+	echo apply_filters( 'pmpro_membership_card_mmpu_output', $display, $levels, $pmpro_membership_card_user );
 }
 
 /**
@@ -353,7 +360,21 @@ function pmpro_membership_card_output_levels_for_user( $pmpro_membership_card_us
  */
 function pmpro_membership_card_get_levels_for_user( $pmpro_membership_card_user ){
 
-	return pmpro_getMembershipLevelsForUser( $pmpro_membership_card_user->ID );
+	if ( ! isset( $pmpro_membership_card_user->ID ) ) {
+		return false;
+	}
+
+	if ( function_exists( 'pmpro_getMembershipLevelsForUser' ) ) {
+		$levels = pmpro_getMembershipLevelsForUser( $pmpro_membership_card_user->ID );
+	} else {
+		$levels = pmpro_membership_card_return_level_name( $pmpro_membership_card_user );
+	}
+
+	if ( empty( $levels ) ) {
+		return _e( 'None', 'pmpro-membership-card' );
+	} else {
+		return $levels;
+	}
 
 }
 
@@ -374,14 +395,18 @@ function pmpro_membership_card_return_qr_code_data( $pmpro_membership_card_user,
 	if( $option == 'ID' ){
 		$data = isset( $pmpro_membership_card_user->ID ) ? intval( $pmpro_membership_card_user->ID ) : '';
 	} elseif ( $option == 'level' ){
-		$data = isset( $pmpro_membership_card_user->membership_level->ID ) ? intval( $pmpro_membership_card_user->membership_level->ID ) : '';
+		$data = isset( $pmpro_membership_card_user->membership_level->ID ) ? intval( $pmpro_membership_card_user->membership_level->ID ) : null;
 	} elseif ( $option == 'email' ){
 		$data = isset( $pmpro_membership_card_user->data->user_email ) ? sanitize_text_field( $pmpro_membership_card_user->data->user_email ) : '';
 	} else {
 		$data = apply_filters( 'pmpro_membership_card_qr_data_other', $pmpro_membership_card_user, $option );
 	}
 
-	return "https://api.qrserver.com/v1/create-qr-code/?size=" . apply_filters( 'pmpro_membership_card_qr_code_size', '125x125' ) . "&data=".urlencode( $data );
+	if ( ! empty( $data ) ) {
+		return "https://api.qrserver.com/v1/create-qr-code/?size=" . apply_filters( 'pmpro_membership_card_qr_code_size', '125x125' ) . "&data=".urlencode( $data );
+	} else {
+		return;
+	}
 
 }
 
