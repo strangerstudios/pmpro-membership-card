@@ -3,7 +3,7 @@
 Plugin Name: Paid Memberships Pro - Membership Card Add On
 Plugin URI: http://www.paidmembershipspro.com/wp/pmpro-membership-card/
 Description: Display a printable Membership Card for Paid Memberships Pro members or WP users.
-Version: .4
+Version: 1.0
 Author: Stranger Studios
 Author URI: http://www.strangerstudios.com
 Text Domain: pmpro-membership-card
@@ -91,12 +91,13 @@ function pmpro_membership_card_shortcode($atts, $content=null, $code="")
 	/*
 		Look for a custom template.
 	*/
-	if(file_exists(get_stylesheet_directory() . "/membership-card.php")) 
+	if(file_exists(get_stylesheet_directory() . "/membership-card.php")) {
 		$template_path = get_stylesheet_directory() . "/membership-card.php";
-	elseif(file_exists(get_template_directory() . "/membership-card.php")) 
+	} elseif(file_exists(get_template_directory() . "/membership-card.php")) {
 		$template_path = get_template_directory() . "/membership-card.php";
-	else
+	} else {
 		$template_path = plugin_dir_path(__FILE__) . "templates/membership-card.php";
+	}
 	
 	$template_path = apply_filters( 'pmpro_membership_card_template_path', $template_path, $atts, $content, $code );
 
@@ -186,21 +187,25 @@ function pmpro_membership_card_get_post_id()
 /*
 	Use an option to track pages with the [pmpro_membership_card] shortcode.
 */
-function pmpro_membership_card_save_post($post_id)
-{
+function pmpro_membership_card_save_post( $post_id ) {
 	global $post;
 
-	if ( !isset( $post->post_type) )
+	if ( !isset( $post->post_type) ) {
 		return;
+	}
 
-	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
-		return;
 
-	if ( wp_is_post_revision( $post_id ) !== false )
+	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
 		return;
+	}
 
-	if ( 'trash' == get_post_status( $post_id ) )
+	if ( wp_is_post_revision( $post_id ) !== false ) {
 		return;
+	}
+
+	if ( 'trash' == get_post_status( $post_id ) ){
+		return;
+	}
 
 	$args = array(
 		'p' => $post_id,
@@ -214,17 +219,19 @@ function pmpro_membership_card_save_post($post_id)
 
 	$option = get_option("pmpro_membership_card_post_ids", array());
 	
-	if(empty($option))
+	if ( empty( $option ) ) {
 		$option = array();
+	}
 		
-	if(isset($post->post_content) && has_shortcode($post->post_content, "pmpro_membership_card") && in_array($post->post_status,  array('publish', 'private')) )
+	if ( isset( $post->post_content ) && has_shortcode( $post->post_content, "pmpro_membership_card" ) && in_array( $post->post_status,  array( 'publish', 'private' ) ) ) {
 		$option[$post_id] = $post_id;
-	else
-		unset($option[$post_id]);
+	} else {
+		unset( $option[$post_id] );
+	}
 		
-	update_option("pmpro_membership_card_post_ids", $option);
+	update_option( "pmpro_membership_card_post_ids", $option );
 }
-add_action('save_post', 'pmpro_membership_card_save_post');
+add_action( 'save_post', 'pmpro_membership_card_save_post' );
 
 /*
 	Add the link to view the card in the user profile
@@ -272,8 +279,8 @@ function pmpro_membership_card_plugin_row_meta($links, $file) {
 	if(strpos($file, 'pmpro-membership-card.php') !== false)
 	{
 		$new_links = array(
-			'<a href="' . esc_url('http://www.paidmembershipspro.com/add-ons/plugins-on-github/pmpro-membership-card/')  . '" title="' . esc_attr( __( 'View Documentation', 'pmpro' ) ) . '">' . __( 'Docs', 'pmpro' ) . '</a>',
-			'<a href="' . esc_url('http://paidmembershipspro.com/support/') . '" title="' . esc_attr( __( 'Visit Customer Support Forum', 'pmpro' ) ) . '">' . __( 'Support', 'pmpro' ) . '</a>',
+			'<a href="' . esc_url('http://www.paidmembershipspro.com/add-ons/plugins-on-github/pmpro-membership-card/')  . '" title="' . esc_attr( __( 'View Documentation', 'pmpro-membership-card' ) ) . '">' . __( 'Docs', 'pmpro-membership-card' ) . '</a>',
+			'<a href="' . esc_url('http://paidmembershipspro.com/support/') . '" title="' . esc_attr( __( 'Visit Customer Support Forum', 'pmpro-membership-card' ) ) . '">' . __( 'Support', 'pmpro-membership-card' ) . '</a>',
 		);
 		$links = array_merge($links, $new_links);
 	}
@@ -286,11 +293,13 @@ add_filter('plugin_row_meta', 'pmpro_membership_card_plugin_row_meta', 10, 2);
  */
 function pmpro_membership_card_return_user_name( $pmpro_membership_card_user ){
 
-	if($pmpro_membership_card_user->user_firstname)
-		return $pmpro_membership_card_user->user_firstname. " ". $pmpro_membership_card_user->user_lastname;
-	else
-		return $pmpro_membership_card_user->display_name;
+	if ( isset( $pmpro_membership_card_user->user_firstname ) ) {
+		$details = $pmpro_membership_card_user->user_firstname. " ". $pmpro_membership_card_user->user_lastname;
+	} else {
+		$details = isset( $pmpro_membership_card_user->display_name ) ? $pmpro_membership_card_user->display_name : '';
+	}
 
+	return $details;
 }
 
 /**
@@ -301,7 +310,7 @@ function pmpro_membership_card_return_end_date( $pmpro_membership_card_user ){
 	if(isset( $pmpro_membership_card_user->membership_level->enddate ) && $pmpro_membership_card_user->membership_level->enddate)
 		return date_i18n(get_option('date_format'), $pmpro_membership_card_user->membership_level->enddate);
 	else
-		__('Never', 'pmpro');
+		return __('Never', 'pmpro-membership-card');
 
 }
 
@@ -310,7 +319,7 @@ function pmpro_membership_card_return_end_date( $pmpro_membership_card_user ){
  */
 function pmpro_membership_card_return_level_name( $pmpro_membership_card_user ){
 
-	return isset( $pmpro_membership_card_user->membership_level->name ) ? $pmpro_membership_card_user->membership_level->name : __('None', 'pmpro');
+	return isset( $pmpro_membership_card_user->membership_level->name ) ? $pmpro_membership_card_user->membership_level->name : __( 'None', 'pmpro-membership-card' );
 
 }
 
@@ -319,19 +328,17 @@ function pmpro_membership_card_return_level_name( $pmpro_membership_card_user ){
  */
 function pmpro_membership_card_return_qr_code_data( $pmpro_membership_card_user, $option ){
 
-	$data = $pmpro_membership_card_user->ID;
-
 	if( $option == 'ID' ){
-		$data = $pmpro_membership_card_user->ID;
-	} else if( $option == 'level' ){
-		$data = $pmpro_membership_card_user->membership_level->ID;
-	} else if( $option == 'email' ){
-		$data = $pmpro_membership_card_user->data->user_email;
+		$data = isset( $pmpro_membership_card_user->ID ) ? intval( $pmpro_membership_card_user->ID ) : '';
+	} elseif ( $option == 'level' ){
+		$data = isset( $pmpro_membership_card_user->membership_level->ID ) ? intval( $pmpro_membership_card_user->membership_level->ID ) : '';
+	} elseif ( $option == 'email' ){
+		$data = isset( $pmpro_membership_card_user->data->user_email ) ? sanitize_text_field( $pmpro_membership_card_user->data->user_email ) : '';
 	} else {
-		$data = apply_filters( 'pmpro_mcard_alternative_qr_code_data', $pmpro_membership_card_user, $option );
+		$data = apply_filters( 'pmpro_membership_card_qr_data_other', $pmpro_membership_card_user, $option );
 	}
 
-	return "https://api.qrserver.com/v1/create-qr-code/?size=".apply_filters( 'pmpro_mcard_qr_code_dimensions', '125x125' )."&data=".urlencode( $data );
+	return "https://api.qrserver.com/v1/create-qr-code/?size=" . apply_filters( 'pmpro_membership_card_qr_code_size', '125x125' ) . "&data=".urlencode( $data );
 
 }
 
@@ -355,3 +362,9 @@ function pmpro_membership_card_qr_code_class( $pmpro_membership_card_user, $prin
 	}
 }
 add_action( 'pmpro_membership_card-extra_classes', 'pmpro_membership_card_qr_code_class', 10, 4 );
+
+
+function my_test() {
+	echo '<p>123123123123</p>';
+}
+add_action( 'pmpro_membership_card_after_card', 'my_test', 5 );
