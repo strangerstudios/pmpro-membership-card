@@ -335,10 +335,10 @@ function pmpro_membership_card_return_qr_code_data( $pmpro_membership_card_user,
 	} elseif ( $option == 'email' ){
 		$data = isset( $pmpro_membership_card_user->data->user_email ) ? sanitize_text_field( $pmpro_membership_card_user->data->user_email ) : '';
 	} else {
-		$data = apply_filters( 'pmpro_mcard_alternative_qr_code_data', $pmpro_membership_card_user, $option );
+		$data = apply_filters( 'pmpro_membership_card_qr_data_other', $pmpro_membership_card_user, $option );
 	}
 
-	return "https://api.qrserver.com/v1/create-qr-code/?size=" . apply_filters( 'pmpro_mcard_qr_code_dimensions', '125x125' ) . "&data=".urlencode( $data );
+	return "https://api.qrserver.com/v1/create-qr-code/?size=" . apply_filters( 'pmpro_membership_card_qr_code_size', '125x125' ) . "&data=".urlencode( $data );
 
 }
 
