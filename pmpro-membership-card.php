@@ -362,9 +362,3 @@ function pmpro_membership_card_qr_code_class( $pmpro_membership_card_user, $prin
 	}
 }
 add_action( 'pmpro_membership_card-extra_classes', 'pmpro_membership_card_qr_code_class', 10, 4 );
-
-
-function my_test() {
-	echo '<p>123123123123</p>';
-}
-add_action( 'pmpro_membership_card_after_card', 'my_test', 5 );
