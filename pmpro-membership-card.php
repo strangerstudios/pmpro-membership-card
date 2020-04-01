@@ -321,8 +321,9 @@ function pmpro_membership_card_return_end_date( $pmpro_membership_card_user ){
  */
  function pmpro_membership_card_output_levels_for_user( $pmpro_membership_card_user ) {
 	$levels      = pmpro_membership_card_get_levels_for_user( $pmpro_membership_card_user );
-	if ( ! $levels || empty( $levels ) ) {
-		return _e( 'None', 'pmpro-membership-card' );
+
+	if ( empty( $levels ) ) {
+		return false;
 	}
 
 	if ( is_array( $levels ) ) {
