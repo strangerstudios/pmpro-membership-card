@@ -34,6 +34,7 @@ Please post it in the issues section of GitHub and we'll fix it as soon as we ca
 * Enhancement: Added filter to allow custom data to be added: `pmpro_membership_card_after_card`. 
 * Enhancement: Added filter for QR code if `"other"` is set in attribute: `pmpro_membership_card_qr_data_other` and `pmpro_membership_card_qr_code_size`.
 * Bug Fix/Enhancements: Fixed notices and warnings, general improvements.
+* Enhancement: Support Multiple Memberships Per User Add On. Thanks @ronalfy
 
 = .4 =
 * BUG: Include private as well as published posts/pages in searches for the page/post containing the member card shortcode
