@@ -3,12 +3,15 @@
 Plugin Name: Paid Memberships Pro - Membership Card Add On
 Plugin URI: http://www.paidmembershipspro.com/wp/pmpro-membership-card/
 Description: Display a printable Membership Card for Paid Memberships Pro members or WP users.
-Version: 1.0
+Version: 1.1.0
 Author: Stranger Studios
 Author URI: http://www.strangerstudios.com
 Text Domain: pmpro-membership-card
 Domain Path: /languages
 */
+
+// version constant
+define('PMPRO_MEMBERSHIP_CARD_VERSION', '1.1.0');
 
 function pmpro_membership_card_load_textdomain(){
 	load_plugin_textdomain( 'pmpro-membership-card', false, basename( dirname( __FILE__ ) ) . '/languages' ); 
@@ -492,3 +495,39 @@ function pmpro_membership_card_pmpro_membership_level_after_other_settings()
 	<?php
 }
 add_action( 'pmpro_membership_level_after_other_settings', 'pmpro_membership_card_pmpro_membership_level_after_other_settings' );
+
+/**
+ * Check if the plugin version has changed.
+ */
+function pmpro_membership_card_check_version() {
+	if ( PMPRO_MEMBERSHIP_CARD_VERSION !== get_option( 'pmpro_membership_card_version' ) ) {
+		pmpro_membership_card_activation();
+	}
+}
+add_action('plugins_loaded', 'pmpro_membership_card_check_version');
+
+/**
+ * Plugin activation.
+ */
+function pmpro_membership_card_activation() {
+	global $wpdb;
+
+	update_option( 'pmpro_membership_card_version', PMPRO_MEMBERSHIP_CARD_VERSION );
+
+	if ( ! function_exists( 'pmpro_getOption' ) ) {
+		return;
+	}
+
+	$membership_card_page_id = pmpro_getOption( 'membership_card_page_id' );
+
+	if ( empty( $membership_card_page_id ) ) {
+		$page_id = $wpdb->get_var( "SELECT ID FROM " . $wpdb->posts . " WHERE post_content LIKE '%[pmpro_membership_card%' AND post_status = 'publish' LIMIT 1" );
+		if ( ! empty( $page_id ) ) {
+			// if $membership_card_page_id is empty but a page exists with the shortcode,
+			// set the Membership Card Additional Page Setting to $page_id
+			pmpro_setOption( 'membership_card_page_id', NULL, 'intval' );
+			pmpro_setOption( 'membership_card_page_id', $page_id );
+		}
+	}
+}
+register_activation_hook( __FILE__, 'pmpro_membership_card_activation' );
