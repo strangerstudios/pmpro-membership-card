@@ -444,3 +444,44 @@ function pmpro_membership_card_extra_page_settings($pages) {
 	return $pages;
 }
 add_action( 'pmpro_extra_page_settings', 'pmpro_membership_card_extra_page_settings' );
+
+/**
+ * Save membership card permission when a level is added or updated.
+ */
+function pmpro_membership_card_pmpro_save_membership_level($level_id) {
+	if ( isset( $_REQUEST['pmpro_show_membership_card_for_level'] ) ) {
+		$pmpro_show_membership_card = intval( $_REQUEST['pmpro_show_membership_card_for_level'] );
+	} else {
+		$pmpro_show_membership_card = 0;
+	}
+	update_option( 'pmpro_show_membership_card_for_level_' . $level_id, $pmpro_show_membership_card );
+}
+add_action( 'pmpro_save_membership_level', 'pmpro_membership_card_pmpro_save_membership_level' );
+
+/**
+ * Add checkbox to permit membership cards for members of this level.
+ */
+function pmpro_membership_card_pmpro_membership_level_after_other_settings()
+{	
+	$level_id = intval( $_REQUEST['edit'] );
+	if ( $level_id > 0 ) {
+		$pmpro_show_membership_card = get_option( 'pmpro_show_membership_card_for_level_' . $level_id, 1 );
+	} else {
+		$pmpro_show_membership_card = 1;
+	}
+	?>
+	<h3 class="topborder">Membership Card Settings</h3>
+	<table>
+	<tbody class="form-table">
+		<tr>
+			<th scope="row" valign="top"><label for="pmpro_show_membership_card_for_level">Show Card</label></th>
+			<td>
+				<input type="checkbox" id="pmpro_show_membership_card_for_level" name="pmpro_show_membership_card_for_level" value="1" <?php checked( $pmpro_show_membership_card, 1 ); ?> />
+				<label for="pmpro_show_membership_card_for_level">Check this to show the Membership Card for members of this level.</label>
+			</td>
+		</tr>
+	</tbody>
+	</table>
+	<?php
+}
+add_action( 'pmpro_membership_level_after_other_settings', 'pmpro_membership_card_pmpro_membership_level_after_other_settings' );
