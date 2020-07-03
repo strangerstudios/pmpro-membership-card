@@ -431,3 +431,16 @@ function pmpro_membership_card_qr_code_class( $pmpro_membership_card_user, $prin
 	}
 }
 add_action( 'pmpro_membership_card-extra_classes', 'pmpro_membership_card_qr_code_class', 10, 4 );
+
+/**
+ * Add page setting for the frontend Membership Card page
+ */
+function pmpro_membership_card_extra_page_settings($pages) {
+	$pages['membership_card'] = array(
+		'title' 	=> 'Membership Card',
+		'content' => '[pmpro_membership_card]',
+		'hint' 		=> 'Include the shortcode [pmpro_membership_card].'
+	);
+	return $pages;
+}
+add_action( 'pmpro_extra_page_settings', 'pmpro_membership_card_extra_page_settings' );
