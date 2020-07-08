@@ -77,8 +77,15 @@ function pmpro_membership_card_wp()
 		// check if membership cards are permitted for their membership level.
 		$pmpro_level = pmpro_getMembershipLevelForUser();
 		$pmpro_show_membership_card = get_option( 'pmpro_show_membership_card_for_level_' . $pmpro_level->id, 1 );
-		if ($pmpro_show_membership_card !== 1) {
-			wp_redirect( pmpro_url( 'account' ) );
+		if ( $pmpro_show_membership_card !== 1 ) {
+			wp_redirect(
+				apply_filters(
+					'pmpro_membership_card_account_url',
+					pmpro_url( 'account' ),
+					$pmpro_membership_card_user,
+					$pmpro_level
+				)
+			);
 			exit;
 		}
 	}
