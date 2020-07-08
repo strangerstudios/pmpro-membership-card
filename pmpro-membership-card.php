@@ -446,10 +446,10 @@ add_action( 'pmpro_membership_card-extra_classes', 'pmpro_membership_card_qr_cod
  * Add page setting for the frontend Membership Card page
  */
 function pmpro_membership_card_extra_page_settings($pages) {
-	$pages['membership_card'] = array(
-		'title' 	=> 'Membership Card',
-		'content' => '[pmpro_membership_card]',
-		'hint' 		=> 'Include the shortcode [pmpro_membership_card].'
+		$pages['membership_card'] = array(
+			'title'   => __( 'Membership Card', 'pmpro-membership-card' ),
+			'content' => '[pmpro_membership_card]',
+			'hint'    => __( 'Include the shortcode [pmpro_membership_card].', 'pmpro-membership-card' ),
 	);
 	return $pages;
 }
@@ -480,14 +480,14 @@ function pmpro_membership_card_pmpro_membership_level_after_other_settings()
 		$pmpro_show_membership_card = 1;
 	}
 	?>
-	<h3 class="topborder">Membership Card Settings</h3>
+	<h3 class="topborder"><?php _e( 'Membership Card Settings', 'pmpro-membership-card' ); ?></h3>
 	<table>
 	<tbody class="form-table">
 		<tr>
-			<th scope="row" valign="top"><label for="pmpro_show_membership_card_for_level">Show Card</label></th>
+			<th scope="row" valign="top"><label for="pmpro_show_membership_card_for_level"><?php _e( 'Show Card', 'pmpro-membership-card' ); ?></label></th>
 			<td>
 				<input type="checkbox" id="pmpro_show_membership_card_for_level" name="pmpro_show_membership_card_for_level" value="1" <?php checked( $pmpro_show_membership_card, 1 ); ?> />
-				<label for="pmpro_show_membership_card_for_level">Check this to show the Membership Card for members of this level.</label>
+				<label for="pmpro_show_membership_card_for_level"><?php _e( 'Check this to show the Membership Card for members of this level.', 'pmpro-membership-card' ); ?></label>
 			</td>
 		</tr>
 	</tbody>
