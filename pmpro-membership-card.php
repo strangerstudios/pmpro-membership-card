@@ -10,6 +10,9 @@ Text Domain: pmpro-membership-card
 Domain Path: /languages
 */
 
+// version constant
+define('PMPRO_MEMBERSHIP_CARD_VERSION', '1.0');
+
 function pmpro_membership_card_load_textdomain(){
 	load_plugin_textdomain( 'pmpro-membership-card', false, basename( dirname( __FILE__ ) ) . '/languages' ); 
 }
@@ -69,6 +72,20 @@ function pmpro_membership_card_wp()
 		if(!pmpro_hasMembershipLevel() && !current_user_can("manage_options"))
 		{
 			wp_redirect(pmpro_url("levels"));
+			exit;
+		}
+		// check if membership cards are permitted for their membership level.
+		$pmpro_level = pmpro_getMembershipLevelForUser();
+		$pmpro_show_membership_card = get_option( 'pmpro_show_membership_card_for_level_' . $pmpro_level->id, 1 );
+		if ( $pmpro_show_membership_card !== 1 ) {
+			wp_redirect(
+				apply_filters(
+					'pmpro_membership_card_account_url',
+					pmpro_url( 'account' ),
+					$pmpro_membership_card_user,
+					$pmpro_level
+				)
+			);
 			exit;
 		}
 	}
@@ -431,3 +448,93 @@ function pmpro_membership_card_qr_code_class( $pmpro_membership_card_user, $prin
 	}
 }
 add_action( 'pmpro_membership_card-extra_classes', 'pmpro_membership_card_qr_code_class', 10, 4 );
+
+/**
+ * Add page setting for the frontend Membership Card page
+ */
+function pmpro_membership_card_extra_page_settings($pages) {
+		$pages['membership_card'] = array(
+			'title'   => __( 'Membership Card', 'pmpro-membership-card' ),
+			'content' => '[pmpro_membership_card]',
+			'hint'    => __( 'Include the shortcode [pmpro_membership_card].', 'pmpro-membership-card' ),
+	);
+	return $pages;
+}
+add_action( 'pmpro_extra_page_settings', 'pmpro_membership_card_extra_page_settings' );
+
+/**
+ * Save membership card permission when a level is added or updated.
+ */
+function pmpro_membership_card_pmpro_save_membership_level($level_id) {
+	if ( isset( $_REQUEST['pmpro_show_membership_card_for_level'] ) ) {
+		$pmpro_show_membership_card = intval( $_REQUEST['pmpro_show_membership_card_for_level'] );
+	} else {
+		$pmpro_show_membership_card = 0;
+	}
+	update_option( 'pmpro_show_membership_card_for_level_' . $level_id, $pmpro_show_membership_card );
+}
+add_action( 'pmpro_save_membership_level', 'pmpro_membership_card_pmpro_save_membership_level' );
+
+/**
+ * Add checkbox to permit membership cards for members of this level.
+ */
+function pmpro_membership_card_pmpro_membership_level_after_other_settings()
+{	
+	$level_id = intval( $_REQUEST['edit'] );
+	if ( $level_id > 0 ) {
+		$pmpro_show_membership_card = get_option( 'pmpro_show_membership_card_for_level_' . $level_id, 1 );
+	} else {
+		$pmpro_show_membership_card = 1;
+	}
+	?>
+	<h3 class="topborder"><?php _e( 'Membership Card Settings', 'pmpro-membership-card' ); ?></h3>
+	<table>
+	<tbody class="form-table">
+		<tr>
+			<th scope="row" valign="top"><label for="pmpro_show_membership_card_for_level"><?php _e( 'Show Card', 'pmpro-membership-card' ); ?></label></th>
+			<td>
+				<input type="checkbox" id="pmpro_show_membership_card_for_level" name="pmpro_show_membership_card_for_level" value="1" <?php checked( $pmpro_show_membership_card, 1 ); ?> />
+				<label for="pmpro_show_membership_card_for_level"><?php _e( 'Check this to show the Membership Card for members of this level.', 'pmpro-membership-card' ); ?></label>
+			</td>
+		</tr>
+	</tbody>
+	</table>
+	<?php
+}
+add_action( 'pmpro_membership_level_after_other_settings', 'pmpro_membership_card_pmpro_membership_level_after_other_settings' );
+
+/**
+ * Check if the plugin version has changed.
+ */
+function pmpro_membership_card_check_version() {
+	if ( PMPRO_MEMBERSHIP_CARD_VERSION !== get_option( 'pmpro_membership_card_version' ) ) {
+		pmpro_membership_card_activation();
+	}
+}
+add_action('plugins_loaded', 'pmpro_membership_card_check_version');
+
+/**
+ * Plugin activation.
+ */
+function pmpro_membership_card_activation() {
+	global $wpdb;
+
+	update_option( 'pmpro_membership_card_version', PMPRO_MEMBERSHIP_CARD_VERSION );
+
+	if ( ! function_exists( 'pmpro_getOption' ) ) {
+		return;
+	}
+
+	$membership_card_page_id = pmpro_getOption( 'membership_card_page_id' );
+
+	if ( empty( $membership_card_page_id ) ) {
+		$page_id = $wpdb->get_var( "SELECT ID FROM " . $wpdb->posts . " WHERE post_content LIKE '%[pmpro_membership_card%' AND post_status = 'publish' LIMIT 1" );
+		if ( ! empty( $page_id ) ) {
+			// if $membership_card_page_id is empty but a page exists with the shortcode,
+			// set the Membership Card Additional Page Setting to $page_id
+			pmpro_setOption( 'membership_card_page_id', NULL, 'intval' );
+			pmpro_setOption( 'membership_card_page_id', $page_id );
+		}
+	}
+}
+register_activation_hook( __FILE__, 'pmpro_membership_card_activation' );
