@@ -251,7 +251,7 @@ function pmpro_membership_card_profile_fields($user)
 		<table class="form-table">
 			<tr>
 				<th>&nbsp;</th>
-				<td><a href="<?php echo add_query_arg('u', $user->ID, get_permalink(pmpro_membership_card_get_post_id()));?>">View and Print Membership Card</a></td>
+				<td><a href="<?php echo add_query_arg('u', $user->ID, get_permalink(pmpro_membership_card_get_post_id()));?>"><?php _e("View and Print Membership Card", "pmpro-membership-card"); ?></a></td>
 			</tr>
 		</table>
 		<?php
@@ -267,7 +267,7 @@ function pmpro_membership_card_member_links_top()
 {
 	global $current_user;
 	?>
-		<li><a href="<?php echo add_query_arg('u', $current_user->ID, get_permalink(pmpro_membership_card_get_post_id()));?>"><?php _e("View and Print Membership Card", "pmpro"); ?></a></li>
+		<li><a href="<?php echo add_query_arg('u', $current_user->ID, get_permalink(pmpro_membership_card_get_post_id()));?>"><?php _e("View and Print Membership Card", "pmpro-membership-card"); ?></a></li>
 	<?php
 }
 add_action("pmpro_member_links_top", "pmpro_membership_card_member_links_top");
