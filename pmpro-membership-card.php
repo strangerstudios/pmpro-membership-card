@@ -247,7 +247,7 @@ function pmpro_membership_card_profile_fields($user)
 	if(!function_exists("pmpro_hasMembershipLevel") || (function_exists("pmpro_hasMembershipLevel") && pmpro_hasMembershipLevel(NULL, $user->ID)))
 	{
 		?>
-		<h3><?php _e("Membership Card", "pmpro"); ?></h3>
+		<h3><?php _e("Membership Card", "pmpro-membership-card"); ?></h3>
 		<table class="form-table">
 			<tr>
 				<th>&nbsp;</th>
