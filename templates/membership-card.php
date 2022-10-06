@@ -67,7 +67,7 @@
 	<?php 
 		$featured_image = wp_get_attachment_url( get_post_thumbnail_id($post->ID) ); 
 		if(function_exists("pmpro_getMemberStartDate") && isset( $pmpro_membership_card_user->ID ) )
-			$since = pmpro_getMemberStartDate($pmpro_membership_card_user->ID);
+			$since = pmpro_getMemberStartDate($pmpro_membership_card_user->ID); // Will get the lowest membership_user ID, which should be the oldest startdate.
 		else
 			$since = isset( $pmpro_membership_card_user->user_registered ) ? $pmpro_membership_card_user->user_registered : '';
 	?>
