@@ -147,7 +147,7 @@ function pmpro_membership_card_get_post_id()
 			$p = get_post($mc_id);
 
 			// remove any entry that isn't a published post/page
-			if (!in_array( $p->post_status, array('publish', 'private')))
+			if ( empty( $p ) || !in_array( $p->post_status, array('publish', 'private')))
 				unset($from_options[$k]);
 		}
 	}
@@ -237,7 +237,7 @@ add_action( 'save_post', 'pmpro_membership_card_save_post' );
 	Add the link to view the card in the user profile
 */
 function pmpro_membership_card_profile_fields( $user ) {
-	
+
 	$membership_level_capability = apply_filters('pmpro_edit_member_capability', 'manage_options');
 
 	if ( ! current_user_can( $membership_level_capability ) ) {
