@@ -236,24 +236,28 @@ add_action( 'save_post', 'pmpro_membership_card_save_post' );
 /*
 	Add the link to view the card in the user profile
 */
-function pmpro_membership_card_profile_fields($user)
-{
-	global $current_user;
+function pmpro_membership_card_profile_fields( $user ) {
+	
+	$membership_level_capability = apply_filters('pmpro_edit_member_capability', 'manage_options');
 
-	$membership_level_capability = apply_filters("pmpro_edit_member_capability", "manage_options");
-	if(!current_user_can($membership_level_capability))
+	if ( ! current_user_can( $membership_level_capability ) ) {
 		return false;
+	}
 
-	if(!function_exists("pmpro_hasMembershipLevel") || (function_exists("pmpro_hasMembershipLevel") && pmpro_hasMembershipLevel(NULL, $user->ID)))
-	{
+	if ( ! function_exists( 'pmpro_hasMembershipLevel' ) || (function_exists( 'pmpro_hasMembershipLevel' ) && pmpro_hasMembershipLevel( NULL, $user->ID ) ) ) {
+
+		$membership_card_page_url = get_permalink( pmpro_membership_card_get_post_id() );
+
+		// Bail if the card's URL is empty.
+		if ( ! $membership_card_page_url ) {
+			return;
+		}
+
+		$membership_card_user_url = add_query_arg( 'u', $user->ID, $membership_card_page_url );
+
 		?>
-		<h3><?php _e("Membership Card", "pmpro"); ?></h3>
-		<table class="form-table">
-			<tr>
-				<th>&nbsp;</th>
-				<td><a href="<?php echo add_query_arg('u', $user->ID, get_permalink(pmpro_membership_card_get_post_id()));?>">View and Print Membership Card</a></td>
-			</tr>
-		</table>
+		<h3><?php esc_html_e( 'Membership Card', 'pmpro-membership-card' ); ?></h3>
+			<p><a href="<?php echo esc_url( $membership_card_user_url );?>"><?php esc_html_e( 'View and Print Membership Card', 'pmpro-membership-card' ); ?></a></p>
 		<?php
 	}	
 }
@@ -263,14 +267,23 @@ add_action('show_user_profile', 'pmpro_membership_card_profile_fields');
 /*
 	Add the link to view the card in the Member Links section of the Membership Account page
 */
-function pmpro_membership_card_member_links_top()
-{
+function pmpro_membership_card_member_links_top() {
 	global $current_user;
+
+	$membership_card_page_url = get_permalink( pmpro_membership_card_get_post_id() );
+
+	// Bail if the card's URL is empty.
+	if ( ! $membership_card_page_url ) {
+		return;
+	}
+
+	$membership_card_user_url = add_query_arg( 'u', $current_user->ID, $membership_card_page_url );
+
 	?>
-		<li><a href="<?php echo add_query_arg('u', $current_user->ID, get_permalink(pmpro_membership_card_get_post_id()));?>"><?php _e("View and Print Membership Card", "pmpro"); ?></a></li>
+		<li><a href="<?php echo esc_url( $membership_card_user_url ); ?>"><?php esc_html_e( 'View and Print Membership Card', 'pmpro-membership-card' ); ?></a></li>
 	<?php
 }
-add_action("pmpro_member_links_top", "pmpro_membership_card_member_links_top");
+add_action( 'pmpro_member_links_top', 'pmpro_membership_card_member_links_top' );
 
 /*
 Function to add links to the plugin row meta
