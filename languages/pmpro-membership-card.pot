@@ -1,37 +1,37 @@
-# Paid Memberships Pro - Membership Card Add On.
-# Copyright (C) 2020
-# This file is distributed under the same license as the GPL V2 package.
-# STRANGERSTUDIOS INFO@PAIDMEMBERSHIPSPRO.COM, 2020.
-#
-#, fuzzy
+# Copyright (C) 2022 Stranger Studios
+# This file is distributed under the same license as the Paid Memberships Pro - Membership Card Add On plugin.
 msgid ""
 msgstr ""
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
-"Project-Id-Version: Paid Memberships Pro - Membership Card Add On\n"
-"POT-Creation-Date: 2020-03-30 17:10+0200\n"
-"PO-Revision-Date: 2020-03-30 17:10+0200\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"Project-Id-Version: Paid Memberships Pro - Membership Card Add On 1.0\n"
+"Report-Msgid-Bugs-To: info@paidmembershipspro.com\n"
+"Last-Translator: Paid Memberships Pro <info@paidmembershipspro.com>\n"
+"Language-Team: Paid Memberships Pro <info@paidmembershipspro.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.3\n"
-"X-Poedit-Basepath: ..\n"
-"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
-"X-Poedit-WPHeader: pmpro-membership-card.php\n"
-"X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
-"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
-"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
-"X-Poedit-SearchPath-0: .\n"
-"X-Poedit-SearchPathExcluded-0: *.min.js\n"
+"POT-Creation-Date: 2022-10-18T12:26:50+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.7.0\n"
+"X-Domain: pmpro-membership-card\n"
 
-#: pmpro-membership-card.php:250
-msgid "Membership Card"
+#. Plugin Name of the plugin
+msgid "Paid Memberships Pro - Membership Card Add On"
 msgstr ""
 
-#: pmpro-membership-card.php:270
-msgid "View and Print Membership Card"
+#. Plugin URI of the plugin
+msgid "http://www.paidmembershipspro.com/wp/pmpro-membership-card/"
+msgstr ""
+
+#. Description of the plugin
+msgid "Display a printable Membership Card for Paid Memberships Pro members or WP users."
+msgstr ""
+
+#. Author of the plugin
+msgid "Stranger Studios"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "http://www.strangerstudios.com"
 msgstr ""
 
 #: pmpro-membership-card.php:282
@@ -54,22 +54,25 @@ msgstr ""
 msgid "Never"
 msgstr ""
 
-#: pmpro-membership-card.php:325 pmpro-membership-card.php:374
-#: pmpro-membership-card.php:386
+#: pmpro-membership-card.php:375
+#: pmpro-membership-card.php:387
 msgid "None"
 msgstr ""
 
-#: templates/membership-card.php:94 templates/membership-card.php:140
+#: templates/membership-card.php:94
+#: templates/membership-card.php:140
 #: templates/membership-card.php:185
 msgid "Member Since"
 msgstr ""
 
-#: templates/membership-card.php:101 templates/membership-card.php:146
+#: templates/membership-card.php:101
+#: templates/membership-card.php:146
 #: templates/membership-card.php:192
 msgid "Level"
 msgstr ""
 
-#: templates/membership-card.php:106 templates/membership-card.php:151
+#: templates/membership-card.php:106
+#: templates/membership-card.php:151
 #: templates/membership-card.php:197
 msgid "Membership Expires"
 msgstr ""
@@ -80,26 +83,4 @@ msgstr ""
 
 #: templates/membership-card.php:216
 msgid "Return to Home"
-msgstr ""
-
-#. Plugin Name of the plugin/theme
-msgid "Paid Memberships Pro - Membership Card Add On"
-msgstr ""
-
-#. Plugin URI of the plugin/theme
-msgid "http://www.paidmembershipspro.com/wp/pmpro-membership-card/"
-msgstr ""
-
-#. Description of the plugin/theme
-msgid ""
-"Display a printable Membership Card for Paid Memberships Pro members or WP "
-"users."
-msgstr ""
-
-#. Author of the plugin/theme
-msgid "Stranger Studios"
-msgstr ""
-
-#. Author URI of the plugin/theme
-msgid "http://www.strangerstudios.com"
 msgstr ""
