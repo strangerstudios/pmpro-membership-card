@@ -170,7 +170,7 @@ function pmpro_membership_card_get_post_id()
 		$posts = pmpro_posts_by_content::get( $args );
 
 
-		if ( is_array( $posts ) ) {
+		if ( ! empty( $posts ) && is_array( $posts ) ) {
 			$from_post_content = $posts[0]->ID;
 		}
 		
