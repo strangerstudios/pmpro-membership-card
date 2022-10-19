@@ -52,6 +52,13 @@ function pmpro_membership_card_wp()
 	if(function_exists("pmpro_getMembershipLevelForUser"))
 		$pmpro_membership_card_user->membership_level = pmpro_getMembershipLevelForUser($pmpro_membership_card_user->ID);
 	
+	/**
+	 * For MMPU compatibility, let's also set $pmpro_membership_card_user->membership_levels.
+	 */
+	if ( function_exists( 'pmpro_getMembershipLevelsForUser' ) ) {
+		$pmpro_membership_card_user->membership_levels = pmpro_getMembershipLevelsForUser( $pmpro_membership_card_user->ID );
+	}
+	
 	/*
 		Make sure that the current user can "edit" the user being viewed.
 	*/
@@ -320,12 +327,24 @@ function pmpro_membership_card_return_user_name( $pmpro_membership_card_user ){
 }
 
 /**
- * Returns the members expiration date for their membership
+ * Returns the members most distant expiration date for their memberships.
  */
 function pmpro_membership_card_return_end_date( $pmpro_membership_card_user ){
 
-	if(isset( $pmpro_membership_card_user->membership_level->enddate ) && $pmpro_membership_card_user->membership_level->enddate)
-		return date_i18n(get_option('date_format'), $pmpro_membership_card_user->membership_level->enddate);
+	// Make sure the user exists.
+	if ( empty( $pmpro_membership_card_user ) ) {
+		return __( 'Never', 'pmpro-membership-card' );
+	}
+
+	$furthest_enddate = null;
+	foreach ( $pmpro_membership_card_user->membership_levels as $level ) {
+		if ( $furthest_enddate == null || $level->enddate > $furthest_enddate ) {
+			$furthest_enddate = $level->enddate;
+		}
+	}
+
+	if( ! empty( $furthest_enddate ) )
+		return date_i18n( get_option('date_format'), $furthest_enddate );
 	else
 		return __('Never', 'pmpro-membership-card');
 
@@ -337,33 +356,31 @@ function pmpro_membership_card_return_end_date( $pmpro_membership_card_user ){
  * @param object $pmpro_membership_card_user The membership user.
  */
  function pmpro_membership_card_output_levels_for_user( $pmpro_membership_card_user ) {
-	$levels      = pmpro_membership_card_get_levels_for_user( $pmpro_membership_card_user );
 
-	if ( empty( $levels ) ) {
-		return false;
+	// Make sure the user exists.
+	if ( empty( $pmpro_membership_car_user ) ) {
+		return esc_html_e( 'None', 'pmpro-membership-card' );
 	}
 
-	if ( is_array( $levels ) ) {
-		$level_names = array();
-		foreach ( $levels as $level ) {
-			$level_names[] = $level->name;
-		}
-		sort( $level_names );
-	
-		$display = '';
+	// Get the user's current levels.
+	$levels = $pmpro_membership_card_user->membership_levels;
+	if ( empty( $levels ) ) {
+		return _e( 'None', 'pmpro-membership-card' );
+	}
 
-		if ( count( $level_names ) > 1 ) {
-			$display = '<ul>';
-			foreach ( $level_names as $level_name ) {
-				$display .= '<li><p>' . esc_html( $level_name ) . '</p></li>';	
-			}
-			$display .= '</ul>';
-		} else {
-			$level_name = current( $level_names );
-			$display = esc_html( $level_name );
-		}
+	// Get the level names.
+	$level_names = wp_list_pluck( $levels, 'name' );
+	sort( $level_names );
+
+	// Output the level names.
+	$display = '';
+	if ( count( $level_names ) > 1 ) {
+		$display = '<ul>';
+		$display .= '<li>' . implode( '</li><li>', $level_names ) . '</li>';
+		$display .= '</ul>';
 	} else {
-		$display = $levels;
+		$level_name = current( $level_names );
+		$display = esc_html( $level_name );
 	}
 
 	echo apply_filters( 'pmpro_membership_card_mmpu_output', $display, $levels, $pmpro_membership_card_user );
@@ -372,11 +389,15 @@ function pmpro_membership_card_return_end_date( $pmpro_membership_card_user ){
 /**
  * Returns member's active levels.
  *
+ * @deprecated TBD No longer necessary.
+ *
  * @param object $pmpro_membership_card_user The membership user.
  *
  * @return array User Levels.
  */
 function pmpro_membership_card_get_levels_for_user( $pmpro_membership_card_user ){
+	// Show deprecation message.
+	_deprecated_function( __FUNCTION__, 'TBD', 'pmpro_membership_card_output_levels_for_user' );
 
 	if ( ! isset( $pmpro_membership_card_user->ID ) ) {
 		return false;
@@ -398,8 +419,12 @@ function pmpro_membership_card_get_levels_for_user( $pmpro_membership_card_user 
 
 /**
  * Returns member's level name
+ *
+ * @deprecated TBD No longer necessary.
  */
 function pmpro_membership_card_return_level_name( $pmpro_membership_card_user ){
+	// Show deprecation message.
+	_deprecated_function( __FUNCTION__, 'TBD', 'pmpro_membership_card_output_levels_for_user' );
 
 	return isset( $pmpro_membership_card_user->membership_level->name ) ? $pmpro_membership_card_user->membership_level->name : __( 'None', 'pmpro-membership-card' );
 
@@ -413,7 +438,7 @@ function pmpro_membership_card_return_qr_code_data( $pmpro_membership_card_user,
 	if( $option == 'ID' ){
 		$data = isset( $pmpro_membership_card_user->ID ) ? intval( $pmpro_membership_card_user->ID ) : '';
 	} elseif ( $option == 'level' ){
-		$data = isset( $pmpro_membership_card_user->membership_level->ID ) ? intval( $pmpro_membership_card_user->membership_level->ID ) : null;
+		$data = isset( $pmpro_membership_card_user->membership_levels ) ? implode( ',', wp_list_pluck( $pmpro_membership_card_user->membership_levels, 'id' ) ) : null;
 	} elseif ( $option == 'email' ){
 		$data = isset( $pmpro_membership_card_user->data->user_email ) ? sanitize_text_field( $pmpro_membership_card_user->data->user_email ) : '';
 	} else {
