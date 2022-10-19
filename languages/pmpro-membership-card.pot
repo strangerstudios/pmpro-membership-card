@@ -2,16 +2,16 @@
 # This file is distributed under the same license as the Paid Memberships Pro - Membership Card Add On plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Paid Memberships Pro - Membership Card Add On 1.0\n"
+"Project-Id-Version: Paid Memberships Pro - Membership Card Add On 1.1\n"
 "Report-Msgid-Bugs-To: info@paidmembershipspro.com\n"
 "Last-Translator: Paid Memberships Pro <info@paidmembershipspro.com>\n"
 "Language-Team: Paid Memberships Pro <info@paidmembershipspro.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-10-18T12:26:50+00:00\n"
+"POT-Creation-Date: 2022-10-19T14:31:12+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.7.0\n"
+"X-Generator: WP-CLI 2.7.1\n"
 "X-Domain: pmpro-membership-card\n"
 
 #. Plugin Name of the plugin
@@ -34,28 +34,40 @@ msgstr ""
 msgid "http://www.strangerstudios.com"
 msgstr ""
 
-#: pmpro-membership-card.php:282
+#: pmpro-membership-card.php:265
+msgid "Membership Card"
+msgstr ""
+
+#: pmpro-membership-card.php:266
+#: pmpro-membership-card.php:289
+msgid "View and Print Membership Card"
+msgstr ""
+
+#: pmpro-membership-card.php:301
 msgid "View Documentation"
 msgstr ""
 
-#: pmpro-membership-card.php:282
+#: pmpro-membership-card.php:301
 msgid "Docs"
 msgstr ""
 
-#: pmpro-membership-card.php:283
+#: pmpro-membership-card.php:302
 msgid "Visit Customer Support Forum"
 msgstr ""
 
-#: pmpro-membership-card.php:283
+#: pmpro-membership-card.php:302
 msgid "Support"
 msgstr ""
 
-#: pmpro-membership-card.php:313
+#: pmpro-membership-card.php:331
+#: pmpro-membership-card.php:344
 msgid "Never"
 msgstr ""
 
-#: pmpro-membership-card.php:375
-#: pmpro-membership-card.php:387
+#: pmpro-membership-card.php:357
+#: pmpro-membership-card.php:363
+#: pmpro-membership-card.php:408
+#: pmpro-membership-card.php:424
 msgid "None"
 msgstr ""
 
