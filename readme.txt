@@ -33,7 +33,6 @@ Please post it in the issues section of GitHub and we'll fix it as soon as we ca
 * ENHANCEMENT: Improved support for Multiple Memberships Per User Add On. This now shows multiple levels within the card view. (@dparker1005)
 * ENHANCEMENT: Added the ID 'pmpro_membership_card_member_since' to the 'since' element on the membership card. (@kimwhite)
 * BUG FIX/ENHANCEMENT: Fixed an issue where the "View and Print Membership Card" link would not generate a URL correctly if a page wasn't set with the [pmpro_membership_card] shortcode. (@andrewlimaza)
-* BUG FIX: Fixed an issue where the save function would run on all post saves and not just for the membership card page. 
 * DEPRECATED: Deprecated functions (pmpro_membership_card_get_levels_for_user and pmpro_membership_card_return_level_name) in place of the new function pmpro_membership_card_output_levels_for_user. (@dparker1005)
 
 = 1.0 - 01-04-2020 =
