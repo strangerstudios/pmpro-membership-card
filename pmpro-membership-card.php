@@ -3,7 +3,7 @@
 Plugin Name: Paid Memberships Pro - Membership Card Add On
 Plugin URI: http://www.paidmembershipspro.com/wp/pmpro-membership-card/
 Description: Display a printable Membership Card for Paid Memberships Pro members or WP users.
-Version: 1.0
+Version: 1.1
 Author: Stranger Studios
 Author URI: http://www.strangerstudios.com
 Text Domain: pmpro-membership-card
@@ -389,7 +389,7 @@ function pmpro_membership_card_return_end_date( $pmpro_membership_card_user ){
 /**
  * Returns member's active levels.
  *
- * @deprecated TBD No longer necessary.
+ * @deprecated 1.1 No longer necessary.
  *
  * @param object $pmpro_membership_card_user The membership user.
  *
@@ -397,7 +397,7 @@ function pmpro_membership_card_return_end_date( $pmpro_membership_card_user ){
  */
 function pmpro_membership_card_get_levels_for_user( $pmpro_membership_card_user ){
 	// Show deprecation message.
-	_deprecated_function( __FUNCTION__, 'TBD', 'pmpro_membership_card_output_levels_for_user' );
+	_deprecated_function( __FUNCTION__, '1.1', 'pmpro_membership_card_output_levels_for_user' );
 
 	if ( ! isset( $pmpro_membership_card_user->ID ) ) {
 		return false;
@@ -420,11 +420,11 @@ function pmpro_membership_card_get_levels_for_user( $pmpro_membership_card_user 
 /**
  * Returns member's level name
  *
- * @deprecated TBD No longer necessary.
+ * @deprecated 1.1 No longer necessary.
  */
 function pmpro_membership_card_return_level_name( $pmpro_membership_card_user ){
 	// Show deprecation message.
-	_deprecated_function( __FUNCTION__, 'TBD', 'pmpro_membership_card_output_levels_for_user' );
+	_deprecated_function( __FUNCTION__, '1.1', 'pmpro_membership_card_output_levels_for_user' );
 
 	return isset( $pmpro_membership_card_user->membership_level->name ) ? $pmpro_membership_card_user->membership_level->name : __( 'None', 'pmpro-membership-card' );
 

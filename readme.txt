@@ -3,7 +3,7 @@ Contributors: strangerstudios
 Tags: paid memberships pro, pmpro, membership, card, membership card, members, badge, logo
 Requires at least: 3.5
 Tested up to: 5.4
-Stable tag: 1.0
+Stable tag: 1.1
 
 Display a printable Membership Card for Paid Memberships Pro members or WP users.
 
@@ -29,12 +29,19 @@ Specify the print size of the cards to display using the shortcode attribute "pr
 Please post it in the issues section of GitHub and we'll fix it as soon as we can. Thanks for helping. https://github.com/strangerstudios/pmpro-membership-card/issues
 
 == Changelog ==
+= 1.1 - 19-10-2022 =
+* ENHANCEMENT: Improved support for Multiple Memberships Per User Add On. This now shows multiple levels within the card view. (@dparker1005)
+* ENHANCEMENT: Added the ID 'pmpro_membership_card_member_since' to the 'since' element on the membership card. (@kimwhite)
+* BUG FIX/ENHANCEMENT: Fixed an issue where the "View and Print Membership Card" link would not generate a URL correctly if a page wasn't set with the [pmpro_membership_card] shortcode. (@andrewlimaza)
+* BUG FIX: Fixed an issue where the save function would run on all post saves and not just for the membership card page. 
+* DEPRECATED: Deprecated functions (pmpro_membership_card_get_levels_for_user and pmpro_membership_card_return_level_name) in place of the new function pmpro_membership_card_output_levels_for_user. (@dparker1005)
+
 = 1.0 - 01-04-2020 =
-* BUG FIX/ENHANCEMENT: Fixed notices and warnings, general improvements.
 * ENHANCEMENT: Added QR Code functionality and QR data. Attributes: `qr_code="true"` and `qr_data="email"` for example. Please see documentation for more information. Thanks @jarrydlong.
 * ENHANCEMENT: Added filter to allow custom data to be added: `pmpro_membership_card_after_card`. 
 * ENHANCEMENT: Added filter for QR code if `"other"` is set in attribute: `pmpro_membership_card_qr_data_other` and `pmpro_membership_card_qr_code_size`.
 * ENHANCEMENT: Support Multiple Memberships Per User Add On. Thanks @ronalfy
+* BUG FIX/ENHANCEMENT: Fixed notices and warnings, general improvements.
 
 = .4 =
 * BUG: Include private as well as published posts/pages in searches for the page/post containing the member card shortcode
