@@ -313,6 +313,12 @@ function pmpro_membership_card_return_user_name( $pmpro_membership_card_user ){
  * Returns the members most distant expiration date for their memberships.
  */
 function pmpro_membership_card_return_end_date( $pmpro_membership_card_user ){
+
+	// Make sure the user exists.
+	if ( empty( $pmpro_membership_card_user ) ) {
+		return __( 'Never', 'pmpro-membership-card' );
+	}
+
 	$furthest_enddate = null;
 	foreach ( $pmpro_membership_card_user->membership_levels as $level ) {
 		if ( $furthest_enddate == null || $level->enddate > $furthest_enddate ) {
@@ -333,6 +339,12 @@ function pmpro_membership_card_return_end_date( $pmpro_membership_card_user ){
  * @param object $pmpro_membership_card_user The membership user.
  */
  function pmpro_membership_card_output_levels_for_user( $pmpro_membership_card_user ) {
+
+	// Make sure the user exists.
+	if ( empty( $pmpro_membership_car_user ) ) {
+		return esc_html_e( 'None', 'pmpro-membership-card' );
+	}
+
 	// Get the user's current levels.
 	$levels = $pmpro_membership_card_user->membership_levels;
 	if ( empty( $levels ) ) {
