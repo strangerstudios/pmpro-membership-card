@@ -91,7 +91,7 @@
 					if(!empty($since))
 					{
 					?>
-					<p><strong><?php _e( 'Member Since', 'pmpro-membership-card' ); ?>:</strong> <?php echo apply_filters('pmpro_membership_card_since_date', date_i18n( get_option("date_format"), strtotime( $pmpro_membership_card_user->user_registered ) ), $pmpro_membership_card_user );?></p>
+					<p id="pmpro_membership_card_member_since"><strong><?php _e( 'Member Since', 'pmpro-membership-card' ); ?>:</strong> <?php echo apply_filters('pmpro_membership_card_since_date', date_i18n( get_option("date_format"), strtotime( $pmpro_membership_card_user->user_registered ) ), $pmpro_membership_card_user );?></p>
 					<?php
 					}
 				?>
@@ -137,7 +137,7 @@
 					if(!empty($since))
 					{
 					?>
-					<p><strong><?php _e( 'Member Since', 'pmpro-membership-card' ); ?>:</strong> <?php echo date_i18n(get_option("date_format"), strtotime($pmpro_membership_card_user->user_registered));?></p>
+					<p id="pmpro_membership_card_member_since"><strong><?php _e( 'Member Since', 'pmpro-membership-card' ); ?>:</strong> <?php echo date_i18n(get_option("date_format"), strtotime($pmpro_membership_card_user->user_registered));?></p>
 					<?php
 					}
 				?>
@@ -182,7 +182,7 @@
 					if(!empty($since))
 					{
 					?>
-					<p><strong><?php _e( 'Member Since', 'pmpro-membership-card' ); ?>:</strong> <?php echo date_i18n(get_option("date_format"), strtotime($pmpro_membership_card_user->user_registered));?></p>
+					<p id="pmpro_membership_card_member_since"><strong><?php _e( 'Member Since', 'pmpro-membership-card' ); ?>:</strong> <?php echo date_i18n(get_option("date_format"), strtotime($pmpro_membership_card_user->user_registered));?></p>
 					<?php
 					}
 				?>
