@@ -190,6 +190,10 @@ function pmpro_membership_card_get_post_id()
 function pmpro_membership_card_save_post( $post_id ) {
 	global $post;
 
+	if ( ! has_shortcode( $post->post_content, "pmpro_membership_card" ) ) {
+		return;
+	}
+
 	if ( !isset( $post->post_type) ) {
 		return;
 	}
