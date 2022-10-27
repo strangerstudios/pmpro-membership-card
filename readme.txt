@@ -1,9 +1,9 @@
 === Paid Memberships Pro - Membership Card Add On ===
 Contributors: strangerstudios
 Tags: paid memberships pro, pmpro, membership, card, membership card, members, badge, logo
-Requires at least: 3.5
-Tested up to: 5.4
-Stable tag: 1.1
+Requires at least: 5.0
+Tested up to: 6.0
+Stable tag: 1.1.1
 
 Display a printable Membership Card for Paid Memberships Pro members or WP users.
 
@@ -29,6 +29,9 @@ Specify the print size of the cards to display using the shortcode attribute "pr
 Please post it in the issues section of GitHub and we'll fix it as soon as we can. Thanks for helping. https://github.com/strangerstudios/pmpro-membership-card/issues
 
 == Changelog ==
+= 1.1.1 - 27-10-2022 =
+* BUG FIX: Fixed an issue where it would always show "None" as the level even if a user had a valid level.
+
 = 1.1 - 19-10-2022 =
 * ENHANCEMENT: Improved support for Multiple Memberships Per User Add On. This now shows multiple levels within the card view. (@dparker1005)
 * ENHANCEMENT: Added the ID 'pmpro_membership_card_member_since' to the 'since' element on the membership card. (@kimwhite)
