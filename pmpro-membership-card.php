@@ -353,7 +353,7 @@ function pmpro_membership_card_return_end_date( $pmpro_membership_card_user ){
  function pmpro_membership_card_output_levels_for_user( $pmpro_membership_card_user ) {
 
 	// Make sure the user exists.
-	if ( empty( $pmpro_membership_car_user ) ) {
+	if ( empty( $pmpro_membership_card_user ) ) {
 		return esc_html_e( 'None', 'pmpro-membership-card' );
 	}
 
