@@ -440,7 +440,7 @@ function pmpro_membership_card_return_qr_code_data( $pmpro_membership_card_user,
 		$data = apply_filters( 'pmpro_membership_card_qr_data_other', $pmpro_membership_card_user, $option );
 	}
 
-	if ( ! empty( $data ) ) {
+	if ( ! empty( $data ) && ( is_string( $data ) || is_numeric( $data ) ) ) {
 		return "https://api.qrserver.com/v1/create-qr-code/?size=" . apply_filters( 'pmpro_membership_card_qr_code_size', '125x125' ) . "&data=".urlencode( $data );
 	} else {
 		return;
