@@ -216,7 +216,7 @@ function pmpro_membership_card_save_post( $post_id ) {
 	$args = array(
 		'p' => $post_id,
 		'posts_per_page' => 1,
-		'post_type' => array( 'post', 'page'),
+		'post_type' => array_unique( array( 'post', 'page', $post->post_type ) ),
 		'post_status' => array('publish', 'private')
 	);
 
