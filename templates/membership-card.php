@@ -154,9 +154,9 @@
 		<?php if(!empty($print_large)) { ?>
 			.pmpro_membership_card-print-lg {
 				display: block;
-				height: 90mm;
+				height: 115mm;
 				overflow: hidden;
-				width: 143mm;
+				width: 185mm;
 				visibility: visible !important;
 			}
 			.pmpro_membership_card-print-lg .pmpro_membership_card-inner {
@@ -170,7 +170,7 @@
 			}
 			.pmpro_membership_card-print-lg img.pmpro_membership_card_image {
 				margin-bottom: 5mm;
-				max-width: 40mm !important;
+				max-width: 60mm !important;
 			}
 			.pmpro_membership_card-print.pmpro_membership_card-print-lg h1 {
 				font-size: 28pt;
