@@ -2,8 +2,8 @@
 Contributors: strangerstudios
 Tags: paid memberships pro, pmpro, membership, card, membership card, members, badge, logo
 Requires at least: 5.0
-Tested up to: 6.1
-Stable tag: 1.1.2
+Tested up to: 6.5
+Stable tag: 1.1.3
 
 Display a printable Membership Card for Paid Memberships Pro members or WP users.
 
@@ -29,6 +29,11 @@ Specify the print size of the cards to display using the shortcode attribute "pr
 Please post it in the issues section of GitHub and we'll fix it as soon as we can. Thanks for helping. https://github.com/strangerstudios/pmpro-membership-card/issues
 
 == Changelog ==
+= 1.1.3 - 2024-04-25 =
+* ENHANCEMENT: Improvements added to the print functionality and adjusted printing sizes.
+* ENHANCEMENT: Adjusted title of the membership card from H3 to H2 to improve accessibility and screen readers.
+* REFACTOR: Added comments to code for improved IDE compatibility.
+
 = 1.1.2 - 2023-02-02 =
 * ENHANCEMENT: Added compatibility for using the [pmpro_membership_card] in custom post types (@JarrydLong)
 * BUG FIX: Fixed an issue when qr_data attribute was set to an invalid option.
