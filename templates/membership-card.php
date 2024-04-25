@@ -1,4 +1,11 @@
 <?php 
+/**
+ * Available variables coming from the shortcode atts
+ * 
+ * @var string[] $print_sizes
+ * @var string $qr_code
+ * @var string $qr_data
+ */
 	global $wpdb, $pmpro_membership_card_user, $pmpro_currency_symbol, $post;
 	if( (in_array('small',$print_sizes)) || (in_array('Small',$print_sizes)) || (in_array('all',$print_sizes)) || empty($print_sizes) )
 		$print_small = true;
