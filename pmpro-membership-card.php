@@ -111,7 +111,8 @@ function pmpro_membership_card_shortcode($atts, $content=null, $code="")
 	extract(shortcode_atts(array(
 		'print_size' => 'all',
 		'qr_code' => 'false',
-		'qr_data' => 'ID' // Accepts ID, email and level
+		'qr_data' => 'ID', // Accepts ID, email and level
+		'show_avatar' => 'false'
 	), $atts));
 
 	$print_sizes = explode(",", $print_size);
