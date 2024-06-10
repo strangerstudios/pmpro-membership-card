@@ -328,7 +328,7 @@ function pmpro_membership_card_return_end_date( $pmpro_membership_card_user ){
 
 	// Make sure the user exists.
 	if ( empty( $pmpro_membership_card_user ) ) {
-		return __( 'Never', 'pmpro-membership-card' );
+		return esc_html__( 'Never', 'pmpro-membership-card' );
 	}
 
 	$furthest_enddate = null;
@@ -338,11 +338,19 @@ function pmpro_membership_card_return_end_date( $pmpro_membership_card_user ){
 		}
 	}
 
-	if( ! empty( $furthest_enddate ) )
-		return date_i18n( get_option('date_format'), $furthest_enddate );
-	else
-		return __('Never', 'pmpro-membership-card');
+	if ( ! empty( $furthest_enddate ) ) {
+		$date = date_i18n( get_option( 'date_format' ), $furthest_enddate );
+	} else {
+		$date = esc_html__( 'Never', 'pmpro-membership-card' );
+	}
 
+	/**
+	 * Filter the end date for the membership card.
+	 * @param $date The date to display.
+	 * @param $pmpro_membership_card_user The membership user.
+	 * @since TBD
+	 */
+	return apply_filters( 'pmpro_membership_card_member_end_date', $date, $pmpro_membership_card_user );
 }
 
 /**
