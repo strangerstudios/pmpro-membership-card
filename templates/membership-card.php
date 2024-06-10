@@ -258,7 +258,7 @@
 					pmpro_membership_card_output_levels_for_user( $pmpro_membership_card_user );
 				?>
 				</p>		
-				<p><strong><?php _e("Membership Expires", 'pmpro-membership-card');?>:</strong> 
+				<p id="pmpro_membership_card_member_end_date"><strong><?php esc_html_e("Membership Expires", 'pmpro-membership-card');?>:</strong> 
 					<?php 
 						echo pmpro_membership_card_return_end_date( $pmpro_membership_card_user );
 					?>
