@@ -22,7 +22,11 @@
 	else
 		$print_large = false;
 
-
+	if ( $show_avatar === 'false' ) {
+		$show_avatar = false;
+	} else {
+		$show_avatar = true;
+	}
 ?>
 <style>
 	/* Hide any thumbnail that might be on the page. */
@@ -208,6 +212,24 @@
 	<div class="pmpro_membership_card-print pmpro_membership_card-print-sm"<?php if(empty($print_small)) { ?> style="display: none;"<?php } ?>>
 		<div class="pmpro_membership_card-inner <?php do_action( 'pmpro_membership_card-extra_classes', $pmpro_membership_card_user, $print_sizes, $qr_code, $qr_data ); ?>">
 			<div class="pmpro_membership_card-data">
+				<?php
+					if ( function_exists( 'get_avatar' ) && $show_avatar !== false ) {
+						$avatar_args = apply_filters( 'pmpro_membership_card_avatar_args', 
+						array( 
+							'size' => 150,
+							'default' => 'wavatar',
+							'alt' => pmpro_membership_card_return_user_name( $pmpro_membership_card_user ) . ' avatar',
+							'args' => array( 
+								'class' => 'pmpro_membership_card_avatar'
+								)
+							) 
+						);
+						$avatar = get_avatar( $pmpro_membership_card_user->ID, $avatar_args['size'], $avatar_args['default'], $avatar_args['alt'], $avatar_args['args'] );
+						if( ! empty( $avatar ) ) {
+							?><div id="pmpro_membership_card_avatar"><?php echo $avatar; ?></div><?php
+						}
+					}
+				?>
 				<h1>
 					<?php 
 						echo pmpro_membership_card_return_user_name( $pmpro_membership_card_user );
@@ -253,6 +275,24 @@
 	<div class="pmpro_membership_card-print pmpro_membership_card-print-md">
 		<div class="pmpro_membership_card-inner <?php do_action( 'pmpro_membership_card-extra_classes', $pmpro_membership_card_user, $print_sizes, $qr_code, $qr_data ); ?>">
 			<div class="pmpro_membership_card-data">
+				<?php
+					if ( function_exists( 'get_avatar' ) && $show_avatar !== false ) {
+						$avatar_args = apply_filters( 'pmpro_membership_card_avatar_args', 
+						array( 
+							'size' => 150,
+							'default' => 'wavatar',
+							'alt' => pmpro_membership_card_return_user_name( $pmpro_membership_card_user ) . ' avatar',
+							'args' => array( 
+								'class' => 'pmpro_membership_card_avatar'
+								)
+							) 
+						);
+						$avatar = get_avatar( $pmpro_membership_card_user->ID, $avatar_args['size'], $avatar_args['default'], $avatar_args['alt'], $avatar_args['args'] );
+						if( ! empty( $avatar ) ) {
+							?><div id="pmpro_membership_card_avatar"><?php echo $avatar; ?></div><?php
+						}
+					}
+				?>
 				<h1>
 					<?php 
 						echo pmpro_membership_card_return_user_name( $pmpro_membership_card_user );
@@ -299,6 +339,24 @@
 	<div class="pmpro_membership_card-print pmpro_membership_card-print-lg"<?php if(empty($print_large)) { ?> style="display: none;"<?php } ?>>
 		<div class="pmpro_membership_card-inner <?php do_action( 'pmpro_membership_card-extra_classes', $pmpro_membership_card_user, $print_sizes, $qr_code, $qr_data ); ?>">
 			<div class="pmpro_membership_card-data">
+				<?php
+					if ( function_exists( 'get_avatar' ) && $show_avatar !== false ) {
+						$avatar_args = apply_filters( 'pmpro_membership_card_avatar_args', 
+						array( 
+							'size' => 150,
+							'default' => 'wavatar',
+							'alt' => pmpro_membership_card_return_user_name( $pmpro_membership_card_user ) . ' avatar',
+							'args' => array( 
+								'class' => 'pmpro_membership_card_avatar'
+								)
+							) 
+						);
+						$avatar = get_avatar( $pmpro_membership_card_user->ID, $avatar_args['size'], $avatar_args['default'], $avatar_args['alt'], $avatar_args['args'] );
+						if( ! empty( $avatar ) ) {
+							?><div id="pmpro_membership_card_avatar"><?php echo $avatar; ?></div><?php
+						}
+					}
+				?>
 				<h1>
 					<?php 
 						echo pmpro_membership_card_return_user_name( $pmpro_membership_card_user );
