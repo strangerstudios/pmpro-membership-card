@@ -5,7 +5,7 @@
  */
 use PKPass\PKPass;
 
-// Require the autoloader file.
+// Require the library for apple wallet passes.
 require( plugin_dir_path( __FILE__ ) . 'pkpass/PKPass.php' );
 
 /**
