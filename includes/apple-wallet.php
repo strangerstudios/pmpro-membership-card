@@ -182,4 +182,4 @@ function pmpro_membership_card_generate_apple_pass( $user = NULL ) {
 		$pass->create(true);
 }
 }
-add_shortcode( 'pmpro_show_wallet', 'pmpro_membership_card_generate_apple_pass' );
+add_shortcode( 'pmpro_membership_card_show_wallet', 'pmpro_membership_card_generate_apple_pass' );
