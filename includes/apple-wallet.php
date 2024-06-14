@@ -97,7 +97,7 @@ function pmpro_membership_card_generate_apple_pass( $user = NULL ) {
 		 * @param array $args The arguments for the Apple Wallet Pass.
 		 * @param user $user The WordPress user.
 		 */
-		$args = apply_filters( 'pmpro_membership_card_wallet_args', array(
+		$args = apply_filters( 'pmpro_membership_card_apple_wallet_args', array(
 			'site_name' => get_bloginfo('name'),
 			'serial_number' => $user->ID,
 			'member_name' => pmpro_membership_card_return_user_name( $user ),
