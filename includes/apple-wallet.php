@@ -5,8 +5,8 @@
  */
 use PKPass\PKPass;
 
-// Require the library for apple wallet passes.
-require( plugin_dir_path( __FILE__ ) . 'pkpass/PKPass.php' );
+// Require the autoloader file.
+require plugin_dir_path( __DIR__ ) . 'vendor/autoload.php';
 
 /**
  * Determine if the device shown is a valid Apple device or browser.
@@ -46,6 +46,7 @@ function pmpro_membership_card_generate_apple_pass( $user = NULL ) {
 		return;
 	}
 
+
 	// If no user object passed through, let's use the current user.
 	if ( empty( $user->ID ) ) {
 		$user = $current_user;
@@ -55,7 +56,6 @@ function pmpro_membership_card_generate_apple_pass( $user = NULL ) {
 	if ( ! pmpro_hasMembershipLevel( $user->ID ) ) {
 		return;
 	}
-	
 
 	// Let's show the add to wallet button
 	if ( empty( $_REQUEST['pmpro_membership_add_to_wallet'] ) ) {
@@ -79,8 +79,14 @@ function pmpro_membership_card_generate_apple_pass( $user = NULL ) {
 			return;
 		}
 
-		$certificate_url = 'https://paidmembershipspro.com/Certificates.p12'; /// Make sure this file is uploaded to the right place.
-		$certificate_pass = 'pmpro1234';
+		// No certificate and password is found. Let's not proceed.
+		if ( ! defined( 'PMPRO_APPLE_WALLET_CERT' ) && !defined( 'PMPRO_APPLE_WALLET_CERT_PASS' ) ) {
+			return;
+		}
+
+		$certificate_url = PMPRO_APPLE_WALLET_CERT;
+		$certificate_pass = PMPRO_APPLE_WALLET_CERT_PASS;
+		
 		// Instantiate the PKPass class.
 		$pass = new PKPass( $certificate_url, $certificate_pass );
 

@@ -12,6 +12,8 @@ Domain Path: /languages
 
 // Include functionality for Apple Wallet Passes.
 include plugin_dir_path( __FILE__ ) . 'includes/apple-wallet.php';
+include plugin_dir_path( __FILE__ ) . 'includes/google-wallet.php';
+
 
 function pmpro_membership_card_load_textdomain(){
 	load_plugin_textdomain( 'pmpro-membership-card', false, basename( dirname( __FILE__ ) ) . '/languages' ); 
