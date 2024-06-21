@@ -10,6 +10,11 @@ Text Domain: pmpro-membership-card
 Domain Path: /languages
 */
 
+// Include functionality for Apple Wallet Passes.
+include plugin_dir_path( __FILE__ ) . 'includes/apple-wallet.php';
+include plugin_dir_path( __FILE__ ) . 'includes/google-wallet.php';
+
+
 function pmpro_membership_card_load_textdomain(){
 	load_plugin_textdomain( 'pmpro-membership-card', false, basename( dirname( __FILE__ ) ) . '/languages' ); 
 }
@@ -111,7 +116,8 @@ function pmpro_membership_card_shortcode($atts, $content=null, $code="")
 	extract(shortcode_atts(array(
 		'print_size' => 'all',
 		'qr_code' => 'false',
-		'qr_data' => 'ID' // Accepts ID, email and level
+		'qr_data' => 'ID', // Accepts ID, email and level
+		'show_wallet_btn' => 'false'
 	), $atts));
 
 	$print_sizes = explode(",", $print_size);

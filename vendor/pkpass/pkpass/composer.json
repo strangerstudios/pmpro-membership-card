@@ -1,0 +1,37 @@
+{
+  "name": "pkpass/pkpass",
+  "license": "MIT",
+  "description": "PHP PKPass class for iOS Wallet",
+  "keywords": [
+    "PHP",
+    "apple",
+    "ios",
+    "iphone",
+    "ipad",
+    "passbook",
+    "wallet"
+  ],
+  "homepage": "https://github.com/includable/php-pkpass",
+  "type": "library",
+  "authors": [
+    {
+      "name": "Thomas Schoffelen",
+      "homepage": "https://schof.co/",
+      "email": "thomas@includable.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "PKPass\\": "src"
+    }
+  },
+  "require": {
+    "php": ">=7.0",
+    "ext-zip": "*",
+    "ext-json": "*",
+    "ext-openssl": "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.6"
+  }
+}

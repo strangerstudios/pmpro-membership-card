@@ -23,6 +23,12 @@
 		$print_large = false;
 
 
+	// Show add to wallet buttons.
+	if ( $show_wallet_btn == 'false' ) {
+		$show_wallet_btn = false;
+	} else {
+		$show_wallet_btn = true;
+	}
 ?>
 <style>
 	/* Hide any thumbnail that might be on the page. */
@@ -196,6 +202,14 @@
 		<?php } ?>
 	}
 </style>
+<?php 
+	// Show the wallet button if it's set.
+	if ( $show_wallet_btn ) {
+		echo pmpro_membership_card_generate_apple_pass( $pmpro_membership_card_user );
+		echo pmpro_membership_card_generate_google_wallet_link( $pmpro_membership_card_user );
+	}
+?>
+
 <a class="pmpro_a-print" href="javascript:window.print()">Print</a>
 <div class="pmpro_membership_card">
 	<?php 
