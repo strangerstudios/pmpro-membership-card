@@ -34,8 +34,9 @@ class pmpro_posts_by_content
         // isset( $args['like'] ) and self::$like = (bool) $like;
         $posts = get_posts( $args);
 
-        if( defined( 'WP_DEBUG_LOG' ) && WP_DEBUG_LOG )
-            error_log("pmpro_posts_by_content: " . print_r($posts, true));
+        if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+            error_log( 'pmpro_posts_by_content: ' . print_r( $posts, true ) );
+        }
 
         return $posts;
     }
@@ -44,8 +45,9 @@ class pmpro_posts_by_content
     {
         remove_filter('posts_where', array(__CLASS__, 'where_filter'));
 
-        if( defined( 'WP_DEBUG_LOG' ) && WP_DEBUG_LOG )
-            error_log("pmpro_posts_by_content: " . print_r( $where, true ));
+        if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+            error_log( 'pmpro_posts_by_content: ' . print_r( $where, true ) );
+        }
 
         global $wpdb;
         $like = self::$like ? 'LIKE' : 'NOT LIKE';
@@ -58,8 +60,9 @@ class pmpro_posts_by_content
 
         $new_where = "{$where} AND post_content {$like} {$extra}";
 
-        if( defined( 'WP_DEBUG_LOG' ) && WP_DEBUG_LOG )
-            error_log("pmpro_posts_by_content: " . print_r($new_where, true));
+        if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+            error_log( 'pmpro_posts_by_content: ' . print_r( $new_where, true ) );
+        }
 
         return $new_where;
     }
