@@ -369,14 +369,21 @@ function pmpro_membership_card_return_end_date( $pmpro_membership_card_user ){
 
 	// Get the level names.
 	$level_names = array_map( function( $level, $pmpro_membership_card_user ) {
-		if ( empty( $level->enddate ) ) {
+		// Get the expiration date to maybe show.
+		$expiration_date_text = '';
+		if ( function_exists( 'pmpro_get_membership_expiration_text' ) ) {
+			$expiration_date_text = pmpro_get_membership_expiration_text( $level, $pmpro_membership_card_user, '' );
+		} else {
+			if ( ! empty( $level->enddate ) ) {
+				$expiration_date_text = date_i18n( get_option('date_format'), $level->enddate );
+			}
+		}
+
+		// Return the level name and expiration date if it exists.
+		if ( empty( $expiration_date_text ) ) {
 			return $level->name;
 		} else {
-			if ( function_exists( 'pmpro_get_membership_expiration_text' ) ) {
-				return $level->name . ' <em>(' . pmpro_get_membership_expiration_text( $level, $pmpro_membership_card_user  ) . ')</em>';
-			} else {
-				return $level->name . ' <em>(' . sprintf( __( 'Expires %s', 'pmpro-membership-card' ), date_i18n( get_option('date_format'), $level->enddate ) ) . ')</em>';
-			}
+			return $level->name . ' <em>(' . sprintf( esc_html__( 'Expires %s', 'pmpro-membership-card' ), esc_html( $expiration_date_text ) ) . ')</em>';
 		}
 	}, $levels, array( $pmpro_membership_card_user ) );
 	sort( $level_names );
@@ -388,11 +395,10 @@ function pmpro_membership_card_return_end_date( $pmpro_membership_card_user ){
 		$display .= '<li>' . implode( '</li><li>', $level_names ) . '</li>';
 		$display .= '</ul>';
 	} else {
-		$level_name = current( $level_names );
-		$display = esc_html( $level_name );
+		$display = current( $level_names );
 	}
 
-	echo apply_filters( 'pmpro_membership_card_mmpu_output', $display, $levels, $pmpro_membership_card_user );
+	echo wp_kses_post( apply_filters( 'pmpro_membership_card_mmpu_output', $display, $levels, $pmpro_membership_card_user ) );
 }
 
 /**
