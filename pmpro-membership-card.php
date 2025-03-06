@@ -223,9 +223,15 @@ function pmpro_membership_card_profile_fields( $user ) {
 		return false;
 	}
 
+	// Get the membership card post ID.
+	$membership_card_post_id = pmpro_membership_card_get_post_id();
+	if ( empty( $membership_card_post_id )  ) {
+		return;
+	}
+
 	if ( ! function_exists( 'pmpro_hasMembershipLevel' ) || (function_exists( 'pmpro_hasMembershipLevel' ) && pmpro_hasMembershipLevel( NULL, $user->ID ) ) ) {
 
-		$membership_card_page_url = get_permalink( pmpro_membership_card_get_post_id() );
+		$membership_card_page_url = get_permalink( $membership_card_post_id );
 
 		// Bail if the card's URL is empty.
 		if ( ! $membership_card_page_url ) {
@@ -249,7 +255,13 @@ add_action('show_user_profile', 'pmpro_membership_card_profile_fields');
 function pmpro_membership_card_member_links_top() {
 	global $current_user;
 
-	$membership_card_page_url = get_permalink( pmpro_membership_card_get_post_id() );
+	// Get the membership card post ID.
+	$membership_card_post_id = pmpro_membership_card_get_post_id();
+	if ( empty( $membership_card_post_id )  ) {
+		return;
+	}
+
+	$membership_card_page_url = get_permalink( $membership_card_post_id );
 
 	// Bail if the card's URL is empty.
 	if ( ! $membership_card_page_url ) {
