@@ -323,8 +323,12 @@ function pmpro_membership_card_return_user_name( $pmpro_membership_card_user ){
 
 /**
  * Returns the members most distant expiration date for their memberships.
+ *
+ * @deprecated TBD
  */
 function pmpro_membership_card_return_end_date( $pmpro_membership_card_user ){
+	// Show deprecation message.
+	_deprecated_function( __FUNCTION__, 'TBD', 'pmpro_membership_card_output_levels_for_user' );
 
 	// Make sure the user exists.
 	if ( empty( $pmpro_membership_card_user ) ) {
@@ -364,7 +368,17 @@ function pmpro_membership_card_return_end_date( $pmpro_membership_card_user ){
 	}
 
 	// Get the level names.
-	$level_names = wp_list_pluck( $levels, 'name' );
+	$level_names = array_map( function( $level, $pmpro_membership_card_user ) {
+		if ( empty( $level->enddate ) ) {
+			return $level->name;
+		} else {
+			if ( function_exists( 'pmpro_get_membership_expiration_text' ) ) {
+				return $level->name . ' <em>(' . pmpro_get_membership_expiration_text( $level, $pmpro_membership_card_user  ) . ')</em>';
+			} else {
+				return $level->name . ' <em>(' . sprintf( __( 'Expires %s', 'pmpro-membership-card' ), date_i18n( get_option('date_format'), $level->enddate ) ) . ')</em>';
+			}
+		}
+	}, $levels, array( $pmpro_membership_card_user ) );
 	sort( $level_names );
 
 	// Output the level names.
