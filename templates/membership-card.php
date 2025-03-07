@@ -200,7 +200,7 @@
 		<?php } ?>
 	}
 </style>
-<a class="pmpro_a-print" href="javascript:window.print()">Print</a>
+<a class="pmpro_a-print" href="javascript:window.print()"><?php esc_html_e( 'Print', 'pmpro-membership-card' ); ?></a>
 <div class="pmpro_membership_card">
 	<?php 
 		$featured_image = wp_get_attachment_url( get_post_thumbnail_id($post->ID) ); 
@@ -257,11 +257,6 @@
 				<?php
 					pmpro_membership_card_output_levels_for_user( $pmpro_membership_card_user );
 				?>
-				</p>		
-				<p id="pmpro_membership_card_member_end_date"><strong><?php esc_html_e("Membership Expires", 'pmpro-membership-card');?>:</strong> 
-					<?php 
-						echo pmpro_membership_card_return_end_date( $pmpro_membership_card_user );
-					?>
 				</p>
 				<?php } ?>
 				<?php if( has_action( 'pmpro_membership_card_after_card' ) ){ ?>
@@ -322,11 +317,6 @@
 					pmpro_membership_card_output_levels_for_user( $pmpro_membership_card_user );
 				?>
 				</p>
-				<p><strong><?php _e("Membership Expires", 'pmpro-membership-card');?>:</strong> 
-					<?php 
-						echo pmpro_membership_card_return_end_date( $pmpro_membership_card_user );
-					?>
-				</p>
 				<?php } ?>
 				<?php if( has_action( 'pmpro_membership_card_after_card' ) ){ ?>
 					<div class="pmpro_membership_card-after">
@@ -385,12 +375,7 @@
 				<?php
 					pmpro_membership_card_output_levels_for_user( $pmpro_membership_card_user );
 				?>
-				</p>		
-				<p><strong><?php _e("Membership Expires", 'pmpro-membership-card');?>:</strong> 
-					<?php 
-						echo pmpro_membership_card_return_end_date( $pmpro_membership_card_user );
-					?>
-				</p>				
+				</p>			
 				<?php } ?>
 				<?php if( has_action( 'pmpro_membership_card_after_card' ) ){ ?>
 					<div class="pmpro_membership_card-after">
