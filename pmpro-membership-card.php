@@ -126,75 +126,49 @@ function pmpro_membership_card_shortcode($atts, $content=null, $code="")
 }
 add_shortcode('pmpro_membership_card', 'pmpro_membership_card_shortcode');
 
-/*
-	Figure out which post/page id is the membership card page.
-*/
-function pmpro_membership_card_get_post_id()
-{
-	//check cache
-	global $pmpro_membership_card_get_post_id;
-	if(isset($pmpro_membership_card_get_post_id))
-		return $pmpro_membership_card_get_post_id;
+/**
+ * Add a page setting for the Membership Card page.
+ *
+ * @param array $pages Array of settings for the PMPro settings page.
+ */
+function pmpro_membership_card_extra_page_settings( $pages ) {
+	$pages['membership_card'] = array(
+		'title' => esc_html__( 'Membership Card', 'pmpro-membership-card' ),
+		'content' => '[pmpro_membership_card]',
+		'hint' => esc_html__( 'Include the shortcode [pmpro_membership_card].', 'pmpro-membership-card' ),
+	);
 
-	//default to false
-	$pmpro_membership_card_get_post_id = false;
-		
-	//look in options
-	$from_options = get_option("pmpro_membership_card_post_ids", array());		
+	return $pages;
+}
+add_filter( 'pmpro_extra_page_settings', 'pmpro_membership_card_extra_page_settings');
 
-	// Make this an array so we can check it.
-	if (!is_array($from_options) && !empty($from_options))
-		$from_options = array($from_options);
-
-	// check status of the stored posts ID(s) for the membership card(s).
-	if (is_array($from_options) && !empty($from_options))
-	{
-		foreach($from_options as $k => $mc_id)
-		{
-			$p = get_post($mc_id);
-
-			// remove any entry that isn't a published post/page
-			if ( empty( $p ) || !in_array( $p->post_status, array('publish', 'private')))
-				unset($from_options[$k]);
-		}
+/**
+ * Get the post ID for the membership card page.
+ *
+ * @return int|false The post ID for the membership card page, or false if no post ID is found.
+ */
+function pmpro_membership_card_get_post_id() {
+	// Check legacy options.
+	$legacy_options = get_option("pmpro_membership_card_post_ids", array());
+	if ( ! empty( $legacy_options ) ) {
+		// We have legacy options. Choose the first ID and save it in the new option.
+		$first_id = reset( $legacy_options );
+		update_option( 'pmpro_membership_card_page_id', $first_id );
+		delete_option( 'pmpro_membership_card_post_ids' );
+		return $first_id;
 	}
 
-	if(!empty($from_options) && is_array($from_options))
-		$pmpro_membership_card_get_post_id = end($from_options);
-	elseif(!empty($from_options))
-		$pmpro_membership_card_get_post_id = $from_options;
-	else
-	{
-		// Search for post based on content
-		// returns a single post or page (the first one found).
-		$args = array(
-			'posts_per_page' => 1,
-			'content' => '%pmpro_membership_card%',
-			'post_type' => array( 'post', 'page'),
-			'post_status' => array('publish', 'private')
-		);
-
-		$posts = pmpro_posts_by_content::get( $args );
-
-
-		if ( ! empty( $posts ) && is_array( $posts ) ) {
-			$from_post_content = $posts[0]->ID;
-		}
-		
-
-		//look for a post with the shortcode in it
-		if(!empty($from_post_content))
-			$pmpro_membership_card_get_post_id = $from_post_content;
-	}
-
-	//didn't find anything
-	return $pmpro_membership_card_get_post_id;
+	// Get the page ID.
+	return get_option( 'pmpro_membership_card_page_id' );
 }
 
-/*
-	Use an option to track pages with the [pmpro_membership_card] shortcode.
-*/
+/**
+ * Use an option to track pages with the [pmpro_membership_card] shortcode.
+ *
+ * @deprecated TBD
+ */
 function pmpro_membership_card_save_post( $post_id ) {
+	_deprecated_function( __FUNCTION__, 'TBD' );
 	global $post;
 
 	if ( !isset( $post->post_type) ) {
@@ -237,7 +211,6 @@ function pmpro_membership_card_save_post( $post_id ) {
 		
 	update_option( "pmpro_membership_card_post_ids", $option );
 }
-add_action( 'save_post', 'pmpro_membership_card_save_post' );
 
 /*
 	Add the link to view the card in the user profile
@@ -250,9 +223,15 @@ function pmpro_membership_card_profile_fields( $user ) {
 		return false;
 	}
 
+	// Get the membership card post ID.
+	$membership_card_post_id = pmpro_membership_card_get_post_id();
+	if ( empty( $membership_card_post_id )  ) {
+		return;
+	}
+
 	if ( ! function_exists( 'pmpro_hasMembershipLevel' ) || (function_exists( 'pmpro_hasMembershipLevel' ) && pmpro_hasMembershipLevel( NULL, $user->ID ) ) ) {
 
-		$membership_card_page_url = get_permalink( pmpro_membership_card_get_post_id() );
+		$membership_card_page_url = get_permalink( $membership_card_post_id );
 
 		// Bail if the card's URL is empty.
 		if ( ! $membership_card_page_url ) {
@@ -276,7 +255,13 @@ add_action('show_user_profile', 'pmpro_membership_card_profile_fields');
 function pmpro_membership_card_member_links_top() {
 	global $current_user;
 
-	$membership_card_page_url = get_permalink( pmpro_membership_card_get_post_id() );
+	// Get the membership card post ID.
+	$membership_card_post_id = pmpro_membership_card_get_post_id();
+	if ( empty( $membership_card_post_id )  ) {
+		return;
+	}
+
+	$membership_card_page_url = get_permalink( $membership_card_post_id );
 
 	// Bail if the card's URL is empty.
 	if ( ! $membership_card_page_url ) {
