@@ -3,7 +3,7 @@
 Plugin Name: Paid Memberships Pro - Membership Card Add On
 Plugin URI: http://www.paidmembershipspro.com/wp/pmpro-membership-card/
 Description: Display a printable Membership Card for Paid Memberships Pro members or WP users.
-Version: 1.1.3
+Version: 1.2
 Author: Stranger Studios
 Author URI: http://www.strangerstudios.com
 Text Domain: pmpro-membership-card
@@ -166,10 +166,10 @@ function pmpro_membership_card_get_post_id() {
 /**
  * Use an option to track pages with the [pmpro_membership_card] shortcode.
  *
- * @deprecated TBD
+ * @deprecated 1.2
  */
 function pmpro_membership_card_save_post( $post_id ) {
-	_deprecated_function( __FUNCTION__, 'TBD' );
+	_deprecated_function( __FUNCTION__, '1.2' );
 	global $post;
 
 	if ( !isset( $post->post_type) ) {
@@ -310,11 +310,11 @@ function pmpro_membership_card_return_user_name( $pmpro_membership_card_user ){
 /**
  * Returns the members most distant expiration date for their memberships.
  *
- * @deprecated TBD
+ * @deprecated 1.2
  */
 function pmpro_membership_card_return_end_date( $pmpro_membership_card_user ){
 	// Show deprecation message.
-	_deprecated_function( __FUNCTION__, 'TBD', 'pmpro_membership_card_output_levels_for_user' );
+	_deprecated_function( __FUNCTION__, '1.2', 'pmpro_membership_card_output_levels_for_user' );
 
 	// Make sure the user exists.
 	if ( empty( $pmpro_membership_card_user ) ) {

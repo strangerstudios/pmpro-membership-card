@@ -20,11 +20,11 @@ class pmpro_posts_by_content
      *
      * @return WP_Post
      * @since .4
-     * @deprecated TBD
+     * @deprecated 1.2
      */
     public static function get( $args )
     {
-        _deprecated_function( __FUNCTION__, 'TBD' );
+        _deprecated_function( __FUNCTION__, '1.2' );
         if ( isset( $args['content'] ) ) {
             // 'suppress_filters' is TRUE by default for the get_posts() function
             // it needs to be FALSE if we need the 'WHERE' filter to work
@@ -44,7 +44,7 @@ class pmpro_posts_by_content
 
     public static function where_filter( $where )
     {
-        _deprecated_function( __FUNCTION__, 'TBD' );
+        _deprecated_function( __FUNCTION__, '1.2' );
         remove_filter('posts_where', array(__CLASS__, 'where_filter'));
 
         if( defined( 'WP_DEBUG_LOG' ) && WP_DEBUG_LOG )
