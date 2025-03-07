@@ -259,6 +259,21 @@
 				?>
 				</p>
 				<?php } ?>
+				<?php
+				/**
+				 * Filter to allow showing custom fields on the membership card.
+				 *
+				 * @since TBD
+				 *
+				 * @param array $custom_fields An associative array of field labels and values to display.
+				 */
+				$custom_fields = apply_filters( 'pmpro_membership_card_custom_fields', array(), $pmpro_membership_card_user );
+				foreach( $custom_fields as $field_label => $field_value ) {
+					if ( ! empty( $field_label ) && ! empty( $field_value ) ) {
+						echo '<p><strong>' . esc_html__( $field_label, 'pmpro-membership-card' ) . ':</strong> ' . esc_html__( $field_value, 'pmpro-membership-card' ) . '</p>';
+					}
+				}
+				?>
 				<?php if( has_action( 'pmpro_membership_card_after_card' ) ){ ?>
 					<div class="pmpro_membership_card-after">
 						<?php do_action( 'pmpro_membership_card_after_card', $pmpro_membership_card_user, $print_sizes, $qr_code, $qr_data ); ?>
@@ -318,6 +333,21 @@
 				?>
 				</p>
 				<?php } ?>
+				<?php
+				/**
+				 * Filter to allow showing custom fields on the membership card.
+				 *
+				 * @since TBD
+				 *
+				 * @param array $custom_fields An associative array of field labels and values to display.
+				 */
+				$custom_fields = apply_filters( 'pmpro_membership_card_custom_fields', array(), $pmpro_membership_card_user );
+				foreach( $custom_fields as $field_label => $field_value ) {
+					if ( ! empty( $field_label ) && ! empty( $field_value ) ) {
+						echo '<p><strong>' . esc_html__( $field_label, 'pmpro-membership-card' ) . ':</strong> ' . esc_html__( $field_value, 'pmpro-membership-card' ) . '</p>';
+					}
+				}
+				?>
 				<?php if( has_action( 'pmpro_membership_card_after_card' ) ){ ?>
 					<div class="pmpro_membership_card-after">
 						<?php do_action( 'pmpro_membership_card_after_card', $pmpro_membership_card_user, $print_sizes, $qr_code, $qr_data ); ?>
@@ -377,6 +407,21 @@
 				?>
 				</p>			
 				<?php } ?>
+				<?php
+				/**
+				 * Filter to allow showing custom fields on the membership card.
+				 *
+				 * @since TBD
+				 *
+				 * @param array $custom_fields An associative array of field labels and values to display.
+				 */
+				$custom_fields = apply_filters( 'pmpro_membership_card_custom_fields', array(), $pmpro_membership_card_user );
+				foreach( $custom_fields as $field_label => $field_value ) {
+					if ( ! empty( $field_label ) && ! empty( $field_value ) ) {
+						echo '<p><strong>' . esc_html__( $field_label, 'pmpro-membership-card' ) . ':</strong> ' . esc_html__( $field_value, 'pmpro-membership-card' ) . '</p>';
+					}
+				}
+				?>
 				<?php if( has_action( 'pmpro_membership_card_after_card' ) ){ ?>
 					<div class="pmpro_membership_card-after">
 						<?php do_action( 'pmpro_membership_card_after_card', $pmpro_membership_card_user, $print_sizes, $qr_code, $qr_data ); ?>
