@@ -196,7 +196,7 @@
 		<?php } ?>
 	}
 </style>
-<a class="pmpro_a-print" href="javascript:window.print()">Print</a>
+<a class="pmpro_a-print" href="javascript:window.print()"><?php esc_html_e( 'Print', 'pmpro-membership-card' ); ?></a>
 <div class="pmpro_membership_card">
 	<?php 
 		$featured_image = wp_get_attachment_url( get_post_thumbnail_id($post->ID) ); 
