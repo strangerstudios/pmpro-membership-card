@@ -1,17 +1,17 @@
-# Copyright (C) 2024 Stranger Studios
+# Copyright (C) 2025 Stranger Studios
 # This file is distributed under the same license as the Paid Memberships Pro - Membership Card Add On plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Paid Memberships Pro - Membership Card Add On 1.1.3\n"
+"Project-Id-Version: Paid Memberships Pro - Membership Card Add On 1.2\n"
 "Report-Msgid-Bugs-To: info@paidmembershipspro.com\n"
 "Last-Translator: Paid Memberships Pro <info@paidmembershipspro.com>\n"
 "Language-Team: Paid Memberships Pro <info@paidmembershipspro.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-04-25T13:22:29+00:00\n"
+"POT-Creation-Date: 2025-03-07T15:36:35+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.10.0\n"
+"X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: pmpro-membership-card\n"
 
 #. Plugin Name of the plugin
@@ -39,65 +39,72 @@ msgstr ""
 msgid "http://www.strangerstudios.com"
 msgstr ""
 
-#: pmpro-membership-card.php:265
+#: pmpro-membership-card.php:137
+#: pmpro-membership-card.php:245
 msgid "Membership Card"
 msgstr ""
 
-#: pmpro-membership-card.php:266
-#: pmpro-membership-card.php:289
+#: pmpro-membership-card.php:139
+msgid "Include the shortcode [pmpro_membership_card]."
+msgstr ""
+
+#: pmpro-membership-card.php:246
+#: pmpro-membership-card.php:275
 msgid "View and Print Membership Card"
 msgstr ""
 
-#: pmpro-membership-card.php:301
+#: pmpro-membership-card.php:287
 msgid "View Documentation"
 msgstr ""
 
-#: pmpro-membership-card.php:301
+#: pmpro-membership-card.php:287
 msgid "Docs"
 msgstr ""
 
-#: pmpro-membership-card.php:302
+#: pmpro-membership-card.php:288
 msgid "Visit Customer Support Forum"
 msgstr ""
 
-#: pmpro-membership-card.php:302
+#: pmpro-membership-card.php:288
 msgid "Support"
 msgstr ""
 
-#: pmpro-membership-card.php:331
-#: pmpro-membership-card.php:344
+#: pmpro-membership-card.php:321
+#: pmpro-membership-card.php:334
 msgid "Never"
 msgstr ""
 
-#: pmpro-membership-card.php:357
-#: pmpro-membership-card.php:363
-#: pmpro-membership-card.php:408
-#: pmpro-membership-card.php:424
+#: pmpro-membership-card.php:347
+#: pmpro-membership-card.php:353
+#: pmpro-membership-card.php:414
+#: pmpro-membership-card.php:430
 msgid "None"
 msgstr ""
 
-#: templates/membership-card.php:228
-#: templates/membership-card.php:273
-#: templates/membership-card.php:319
+#: pmpro-membership-card.php:372
+msgid "Expires %s"
+msgstr ""
+
+#: templates/membership-card.php:203
+msgid "Print"
+msgstr ""
+
+#: templates/membership-card.php:250
+#: templates/membership-card.php:308
+#: templates/membership-card.php:367
 msgid "Member Since"
 msgstr ""
 
-#: templates/membership-card.php:234
-#: templates/membership-card.php:280
-#: templates/membership-card.php:326
+#: templates/membership-card.php:256
+#: templates/membership-card.php:315
+#: templates/membership-card.php:374
 msgid "Level"
 msgstr ""
 
-#: templates/membership-card.php:239
-#: templates/membership-card.php:285
-#: templates/membership-card.php:331
-msgid "Membership Expires"
-msgstr ""
-
-#: templates/membership-card.php:348
+#: templates/membership-card.php:391
 msgid "&larr; Return to Your Account"
 msgstr ""
 
-#: templates/membership-card.php:350
+#: templates/membership-card.php:393
 msgid "Return to Home"
 msgstr ""
