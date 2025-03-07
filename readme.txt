@@ -30,10 +30,10 @@ Please post it in the issues section of GitHub and we'll fix it as soon as we ca
 
 == Changelog ==
 = 1.2 - 2025-03-07 =
-* FEATURE: Now supporting showing user avatars on the membership card. #56 (@andrewlimaza)
+* FEATURE: Added support for user avatars on the membership card. #56 (@andrewlimaza)
 * ENHANCEMENT: Now allowing admins to set the Membership Card page on the Memberships > Settings > Pages settings page. #64 (@dparker1005)
-* ENHANCEMENT: Now showing expiratoin dates next to each level on the membership card. #63 (@dparker1005)
-* BUG FIX/ENHANCEMENT: Now allowing translation of the "Print" link. #61 (@MaximilianoRicoTabo)
+* ENHANCEMENT: Now showing expiration dates next to each level on the membership card. #63 (@dparker1005)
+* BUG FIX/ENHANCEMENT: The "Print" link is now translatable. #61 (@MaximilianoRicoTabo)
 * DEPRECATED: No longer using methods from the `pmpro_posts_by_content` class. #64 (@dparker1005)
 
 = 1.1.3 - 2024-04-25 =
