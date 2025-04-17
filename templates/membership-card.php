@@ -73,10 +73,6 @@
 	.pmpro_membership_card-inner .pmpro_membership_card-after p:last-of-type {
 		margin-bottom: 0;
 	}
-	.pmpro-qr-code-active .pmpro_membership_card-after img {
-		height: 100px;
-		width: 100px;
-	}
 	/* Print Styles */
 	@media print
 	{	
