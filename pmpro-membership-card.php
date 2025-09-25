@@ -20,75 +20,61 @@ add_action( 'init', 'pmpro_membership_card_load_textdomain' );
 // loads class to find post based on content (and supports WP caching).
 require_once( plugin_dir_path(__FILE__) . 'class.pmpro_posts_by_content.php');
 
-function pmpro_membership_card_wp()
-{
-	/*
-		Check if we're on the membership card page.
-	*/
+function pmpro_membership_card_wp() {
 	global $post;
-	if(is_admin() || empty($post) || ! has_shortcode($post->post_content, "pmpro_membership_card"))
+
+	//Check if we're on the membership card page.
+	if ( is_admin() || empty( $post ) || ! has_shortcode( $post->post_content, "pmpro_membership_card" ) ) {
 		return;
-	
-	/*
-		Set the $pmpro_membership_card_user
-	*/
+	}
+
+	// If the user is not logged in, redirect to login.
+	if ( ! is_user_logged_in() ) {
+		wp_redirect( wp_login_url() );
+		exit;
+	}
+
+	// Bail if PMPro is not enabled.
+	if ( ! defined( 'PMPRO_VERSION' ) ) {
+		return;
+	}
+
+	// Set the pmpro membership card user object.
 	global $pmpro_membership_card_user, $current_user;
-	if(!empty($_REQUEST['u']))	
-		$pmpro_membership_card_user = get_userdata(intval($_REQUEST['u']));
-	else
+	if ( ! empty( $_REQUEST['u'] ) ) {
+		$pmpro_membership_card_user = get_userdata( intval( $_REQUEST['u'] ) );
+	} else {
 		$pmpro_membership_card_user = $current_user;
+	}
+
+	// No user still, bail.
+	if ( empty( $pmpro_membership_card_user ) ) {
+		wp_die( 'Invalid user.' );
+	}
 	
-	/*
-		No user? Die
-	*/
-	if(empty($pmpro_membership_card_user))
-	{
-		wp_die("Invalid user.");
-	}	
+	// Make sure the logged-in user can edit the current member.
+	if ( ! current_user_can( 'edit_user', $pmpro_membership_card_user->ID ) ) {
+		wp_die( 'You do not have permission to view the membership card for this user.' );
+	}
 	
-	/*
-		Make sure we have level data for user.
-	*/
-	if(function_exists("pmpro_getMembershipLevelForUser"))
-		$pmpro_membership_card_user->membership_level = pmpro_getMembershipLevelForUser($pmpro_membership_card_user->ID);
-	
-	/**
-	 * For MMPU compatibility, let's also set $pmpro_membership_card_user->membership_levels.
-	 */
+	// Make sure we have the level data.
+	if ( function_exists( 'pmpro_getMembershipLevelForUser' ) ) {
+		$pmpro_membership_card_user->membership_level = pmpro_getMembershipLevelForUser( $pmpro_membership_card_user->ID );
+	}
+
+	//For MMPU compatibility, let's also set $pmpro_membership_card_user->membership_levels.
 	if ( function_exists( 'pmpro_getMembershipLevelsForUser' ) ) {
 		$pmpro_membership_card_user->membership_levels = pmpro_getMembershipLevelsForUser( $pmpro_membership_card_user->ID );
 	}
-	
-	/*
-		Make sure that the current user can "edit" the user being viewed.
-	*/
-	if(!current_user_can("edit_user", $pmpro_membership_card_user->ID))
-	{
-		wp_die("You do not have permission to view the membership card for this user.");
+
+	// Redirect away if the user does not have a membership level and is not an admin.
+	if ( ! pmpro_hasMembershipLevel() && ! current_user_can( 'manage_options' ) ) {
+		wp_redirect( pmpro_url( 'levels' ) );
+		exit;
 	}
 	
-	/*
-		If PMPro is activated, make sure the current user is a member or admin.
-		If not, make sure they are at least logged in.
-	*/
-	if(function_exists("pmpro_hasMembershipLevel"))
-	{
-		if(!pmpro_hasMembershipLevel() && !current_user_can("manage_options"))
-		{
-			wp_redirect(pmpro_url("levels"));
-			exit;
-		}
-	}
-	else
-	{
-		if(!is_user_logged_in())
-		{
-			wp_redirect(wp_login_url());
-			exit;
-		}		
-	}
 }
-add_action('wp', 'pmpro_membership_card_wp');
+add_action( 'wp', 'pmpro_membership_card_wp' );
 
 /*
 	The membership card shortcode/template
