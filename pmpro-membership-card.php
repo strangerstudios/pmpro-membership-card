@@ -344,13 +344,13 @@ function pmpro_membership_card_return_end_date( $pmpro_membership_card_user ){
 
 	// Make sure the user exists.
 	if ( empty( $pmpro_membership_card_user ) ) {
-		return esc_html_e( 'None', 'pmpro-membership-card' );
+		return esc_html__( 'None', 'pmpro-membership-card' );
 	}
 
 	// Get the user's current levels.
 	$levels = $pmpro_membership_card_user->membership_levels;
 	if ( empty( $levels ) ) {
-		return _e( 'None', 'pmpro-membership-card' );
+		return esc_html__( 'None', 'pmpro-membership-card' );
 	}
 
 	// Get the level names.
@@ -384,7 +384,7 @@ function pmpro_membership_card_return_end_date( $pmpro_membership_card_user ){
 		$display = current( $level_names );
 	}
 
-	echo wp_kses_post( apply_filters( 'pmpro_membership_card_mmpu_output', $display, $levels, $pmpro_membership_card_user ) );
+	return wp_kses_post( apply_filters( 'pmpro_membership_card_mmpu_output', $display, $levels, $pmpro_membership_card_user ) );
 }
 
 /**

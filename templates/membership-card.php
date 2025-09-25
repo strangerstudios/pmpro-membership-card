@@ -255,7 +255,7 @@
 
 				<p><strong><?php _e("Level", 'pmpro-membership-card');?>:</strong>
 				<?php
-					pmpro_membership_card_output_levels_for_user( $pmpro_membership_card_user );
+					echo pmpro_membership_card_output_levels_for_user( $pmpro_membership_card_user );
 				?>
 				</p>
 				<?php } ?>
@@ -314,7 +314,7 @@
 
 				<p><strong><?php _e("Level", 'pmpro-membership-card');?>:</strong>
 				<?php
-					pmpro_membership_card_output_levels_for_user( $pmpro_membership_card_user );
+					echo pmpro_membership_card_output_levels_for_user( $pmpro_membership_card_user );
 				?>
 				</p>
 				<?php } ?>
@@ -373,7 +373,7 @@
 
 				<p><strong><?php _e("Level", 'pmpro-membership-card');?>:</strong>
 				<?php
-					pmpro_membership_card_output_levels_for_user( $pmpro_membership_card_user );
+					echo pmpro_membership_card_output_levels_for_user( $pmpro_membership_card_user );
 				?>
 				</p>			
 				<?php } ?>
