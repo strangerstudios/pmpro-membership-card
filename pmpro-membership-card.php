@@ -215,6 +215,8 @@ add_action('show_user_profile', 'pmpro_membership_card_profile_fields');
  * Add the link to view the card in the Member Links section of the Membership Account page
  */
 function pmpro_membership_card_member_links_top() {
+	global $current_user;
+
 	// Get the membership card post ID.
 	$membership_card_post_id = pmpro_membership_card_get_post_id();
 	if ( empty( $membership_card_post_id ) ) {
@@ -235,9 +237,11 @@ function pmpro_membership_card_member_links_top() {
 	if ( empty( $levels ) ) {
 		return;
 	}
+
+	$membership_card_user_url = add_query_arg( 'u', $current_user->ID, $membership_card_page_url );
 	?>
 		<li>
-			<a href="<?php echo esc_url( $membership_card_page_url ); ?>">
+			<a href="<?php echo esc_url( $membership_card_user_url ); ?>">
 				<?php esc_html_e( 'View and Print Membership Card', 'pmpro-membership-card' ); ?>
 			</a>
 		</li>
