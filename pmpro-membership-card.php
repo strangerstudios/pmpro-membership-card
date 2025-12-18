@@ -19,12 +19,12 @@ add_action( 'init', 'pmpro_membership_card_load_textdomain' );
  * Setup membership card user and handle redirects.
  */
 function pmpro_membership_card_wp() {
+	global $pmpro_pages, $post, $current_user, $pmpro_membership_card_user;
+
 	// Only run on the front end and when PMPro is available.
 	if ( is_admin() || ! function_exists( 'pmpro_getMembershipLevelsForUser' ) ) {
 		return;
 	}
-
-	global $pmpro_pages, $post, $current_user, $pmpro_membership_card_user;
 
 	// Must be on the Membership Card page OR the current content has the shortcode.
 	$membership_card_page_id = pmpro_membership_card_get_post_id();
@@ -215,8 +215,6 @@ add_action('show_user_profile', 'pmpro_membership_card_profile_fields');
  * Add the link to view the card in the Member Links section of the Membership Account page
  */
 function pmpro_membership_card_member_links_top() {
-	global $current_user;
-
 	// Get the membership card post ID.
 	$membership_card_post_id = pmpro_membership_card_get_post_id();
 	if ( empty( $membership_card_post_id ) ) {
@@ -238,7 +236,7 @@ function pmpro_membership_card_member_links_top() {
 		return;
 	}
 
-	$membership_card_user_url = add_query_arg( 'u', $current_user->ID, $membership_card_page_url );
+	$membership_card_user_url = add_query_arg( 'u', get_current_user_id(), $membership_card_page_url );
 	?>
 		<li>
 			<a href="<?php echo esc_url( $membership_card_user_url ); ?>">
