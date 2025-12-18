@@ -56,10 +56,10 @@ function pmpro_membership_card_wp() {
 	// No card user to show? Redirect.
 	if ( empty( $pmpro_membership_card_user->ID ) ) {
 		if ( ! empty( $pmpro_pages['account'] ) && get_post( $pmpro_pages['account'] ) ) {
-			wp_redirect( get_permalink( $pmpro_pages['account'] ) );
+			wp_safe_redirect( get_permalink( $pmpro_pages['account'] ) );
 			exit;
 		}
-		wp_redirect( home_url() );
+		wp_safe_redirect( home_url() );
 		exit;
 	}
 
@@ -67,10 +67,10 @@ function pmpro_membership_card_wp() {
 	$is_admin = current_user_can( apply_filters( 'pmpro_edit_member_capability', 'manage_options' ) );
 	if ( ! $is_admin && ( $pmpro_membership_card_user->ID !== $current_user->ID ) ) {
 		if ( ! empty( $pmpro_pages['account'] ) && get_post( $pmpro_pages['account'] ) ) {
-			wp_redirect( get_permalink( $pmpro_pages['account'] ) );
+			wp_safe_redirect( get_permalink( $pmpro_pages['account'] ) );
 			exit;
 		}
-		wp_redirect( home_url() );
+		wp_safe_redirect( home_url() );
 		exit;
 	}
 
@@ -80,10 +80,10 @@ function pmpro_membership_card_wp() {
 	// If no level and not admin, redirect to account page.
 	if ( ! $is_admin && empty( $pmpro_membership_card_user->membership_levels ) ) {
 		if ( ! empty( $pmpro_pages['account'] ) && get_post( $pmpro_pages['account'] ) ) {
-			wp_redirect( get_permalink( $pmpro_pages['account'] ) );
+			wp_safe_redirect( get_permalink( $pmpro_pages['account'] ) );
 			exit;
 		}
-		wp_redirect( home_url() );
+		wp_safe_redirect( home_url() );
 		exit;
 	}
 }
