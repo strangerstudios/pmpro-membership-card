@@ -218,7 +218,7 @@
 						array( 
 							'size' => 150,
 							'default' => 'wavatar',
-							'alt' => pmpro_membership_card_return_user_name( $pmpro_membership_card_user ) . ' avatar',
+							'alt' => esc_attr( pmpro_membership_card_return_user_name( $pmpro_membership_card_user ) . ' avatar' ),
 							'args' => array( 
 								'class' => 'pmpro_membership_card_avatar'
 								)
@@ -232,7 +232,7 @@
 				?>
 				<h1>
 					<?php 
-						echo pmpro_membership_card_return_user_name( $pmpro_membership_card_user );
+						echo esc_html( pmpro_membership_card_return_user_name( $pmpro_membership_card_user ) );
 					?>
 				</h1>		
 				<?php
@@ -276,7 +276,7 @@
 						array( 
 							'size' => 150,
 							'default' => 'wavatar',
-							'alt' => pmpro_membership_card_return_user_name( $pmpro_membership_card_user ) . ' avatar',
+							'alt' => esc_attr( pmpro_membership_card_return_user_name( $pmpro_membership_card_user ) . ' avatar' ),
 							'args' => array( 
 								'class' => 'pmpro_membership_card_avatar'
 								)
@@ -290,7 +290,7 @@
 				?>
 				<h1>
 					<?php 
-						echo pmpro_membership_card_return_user_name( $pmpro_membership_card_user );
+						echo esc_html( pmpro_membership_card_return_user_name( $pmpro_membership_card_user ) );
 					?>
 				</h1>		
 				<?php
@@ -335,7 +335,7 @@
 						array( 
 							'size' => 150,
 							'default' => 'wavatar',
-							'alt' => pmpro_membership_card_return_user_name( $pmpro_membership_card_user ) . ' avatar',
+							'alt' => esc_attr( pmpro_membership_card_return_user_name( $pmpro_membership_card_user ) . ' avatar' ),
 							'args' => array( 
 								'class' => 'pmpro_membership_card_avatar'
 								)
@@ -349,7 +349,7 @@
 				?>
 				<h1>
 					<?php 
-						echo pmpro_membership_card_return_user_name( $pmpro_membership_card_user );
+						echo esc_html( pmpro_membership_card_return_user_name( $pmpro_membership_card_user ) );
 					?>
 				</h1>		
 				<?php

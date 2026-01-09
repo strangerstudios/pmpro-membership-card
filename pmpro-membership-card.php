@@ -268,10 +268,10 @@ add_filter('plugin_row_meta', 'pmpro_membership_card_plugin_row_meta', 10, 2);
  */
 function pmpro_membership_card_return_user_name( $pmpro_membership_card_user ){
 
-	if ( isset( $pmpro_membership_card_user->user_firstname ) ) {
+	if ( ! empty( $pmpro_membership_card_user->user_firstname ) ) {
 		$details = $pmpro_membership_card_user->user_firstname. " ". $pmpro_membership_card_user->user_lastname;
 	} else {
-		$details = isset( $pmpro_membership_card_user->display_name ) ? $pmpro_membership_card_user->display_name : '';
+		$details = ! empty( $pmpro_membership_card_user->display_name ) ? $pmpro_membership_card_user->display_name : '';
 	}
 
 	return $details;
