@@ -14,81 +14,80 @@ function pmpro_membership_card_load_textdomain(){
 	load_plugin_textdomain( 'pmpro-membership-card', false, basename( dirname( __FILE__ ) ) . '/languages' ); 
 }
 add_action( 'init', 'pmpro_membership_card_load_textdomain' );
-/*
-	Load on the membership card page to setup vars and possibly redirect away
-*/
-// loads class to find post based on content (and supports WP caching).
-require_once( plugin_dir_path(__FILE__) . 'class.pmpro_posts_by_content.php');
 
-function pmpro_membership_card_wp()
-{
-	/*
-		Check if we're on the membership card page.
-	*/
-	global $post;
-	if(is_admin() || empty($post) || ! has_shortcode($post->post_content, "pmpro_membership_card"))
+/**
+ * Setup membership card user and handle redirects.
+ */
+function pmpro_membership_card_wp() {
+	global $pmpro_pages, $post, $current_user, $pmpro_membership_card_user;
+
+	// Only run on the front end and when PMPro is available.
+	if ( is_admin() || ! function_exists( 'pmpro_getMembershipLevelsForUser' ) ) {
 		return;
-	
-	/*
-		Set the $pmpro_membership_card_user
-	*/
-	global $pmpro_membership_card_user, $current_user;
-	if(!empty($_REQUEST['u']))	
-		$pmpro_membership_card_user = get_userdata(intval($_REQUEST['u']));
-	else
-		$pmpro_membership_card_user = $current_user;
-	
-	/*
-		No user? Die
-	*/
-	if(empty($pmpro_membership_card_user))
-	{
-		wp_die("Invalid user.");
-	}	
-	
-	/*
-		Make sure we have level data for user.
-	*/
-	if(function_exists("pmpro_getMembershipLevelForUser"))
-		$pmpro_membership_card_user->membership_level = pmpro_getMembershipLevelForUser($pmpro_membership_card_user->ID);
-	
-	/**
-	 * For MMPU compatibility, let's also set $pmpro_membership_card_user->membership_levels.
-	 */
-	if ( function_exists( 'pmpro_getMembershipLevelsForUser' ) ) {
-		$pmpro_membership_card_user->membership_levels = pmpro_getMembershipLevelsForUser( $pmpro_membership_card_user->ID );
 	}
-	
-	/*
-		Make sure that the current user can "edit" the user being viewed.
-	*/
-	if(!current_user_can("edit_user", $pmpro_membership_card_user->ID))
-	{
-		wp_die("You do not have permission to view the membership card for this user.");
+
+	// Must be on the Membership Card page OR the current content has the shortcode.
+	$membership_card_page_id = pmpro_membership_card_get_post_id();
+	$is_membership_card_page = $membership_card_page_id && is_page( $membership_card_page_id );
+	$has_shortcode = ( ! empty( $post ) && has_shortcode( $post->post_content, 'pmpro_membership_card' ) );
+
+	// Return if this is not the Membership Card page or using the shortcode.
+	if ( ! $is_membership_card_page && ! $has_shortcode ) {
+		return;
 	}
-	
-	/*
-		If PMPro is activated, make sure the current user is a member or admin.
-		If not, make sure they are at least logged in.
-	*/
-	if(function_exists("pmpro_hasMembershipLevel"))
-	{
-		if(!pmpro_hasMembershipLevel() && !current_user_can("manage_options"))
-		{
-			wp_redirect(pmpro_url("levels"));
+
+	// Get requested user (if any) once.
+	$u = isset( $_REQUEST['u'] ) ? (int) $_REQUEST['u'] : 0;
+
+	// Redirect if not logged in.
+	if ( ! is_user_logged_in() ) {
+		$redirect_to = get_permalink();
+		if ( ! empty( $_REQUEST['u'] ) ) {
+			$redirect_to = add_query_arg( 'u', intval( $_REQUEST['u'] ), $redirect_to );
+		}
+
+		wp_safe_redirect( pmpro_login_url( $redirect_to ) );
+		exit;
+	}
+
+	// Set the pmpro membership card user object.
+	$pmpro_membership_card_user = $u ? get_userdata( $u ) : $current_user;
+
+	// No card user to show? Redirect.
+	if ( empty( $pmpro_membership_card_user->ID ) ) {
+		if ( ! empty( $pmpro_pages['account'] ) && get_post( $pmpro_pages['account'] ) ) {
+			wp_safe_redirect( get_permalink( $pmpro_pages['account'] ) );
 			exit;
 		}
+		wp_safe_redirect( home_url() );
+		exit;
 	}
-	else
-	{
-		if(!is_user_logged_in())
-		{
-			wp_redirect(wp_login_url());
+
+	// Check if the current user can view this page.
+	$membership_level_capability = current_user_can( apply_filters( 'pmpro_edit_member_capability', 'manage_options' ) );
+	if ( ! $membership_level_capability && ( $pmpro_membership_card_user->ID !== $current_user->ID ) ) {
+		if ( ! empty( $pmpro_pages['account'] ) && get_post( $pmpro_pages['account'] ) ) {
+			wp_safe_redirect( get_permalink( $pmpro_pages['account'] ) );
 			exit;
-		}		
+		}
+		wp_safe_redirect( home_url() );
+		exit;
+	}
+
+	// Ok, make sure we have the level data.
+	$pmpro_membership_card_user->membership_levels = pmpro_getMembershipLevelsForUser( $pmpro_membership_card_user->ID );
+
+	// If no level and not admin, redirect to account page.
+	if ( ! $membership_level_capability && empty( $pmpro_membership_card_user->membership_levels ) ) {
+		if ( ! empty( $pmpro_pages['account'] ) && get_post( $pmpro_pages['account'] ) ) {
+			wp_safe_redirect( get_permalink( $pmpro_pages['account'] ) );
+			exit;
+		}
+		wp_safe_redirect( home_url() );
+		exit;
 	}
 }
-add_action('wp', 'pmpro_membership_card_wp');
+add_action( 'wp', 'pmpro_membership_card_wp' );
 
 /*
 	The membership card shortcode/template
@@ -149,6 +148,12 @@ add_filter( 'pmpro_extra_page_settings', 'pmpro_membership_card_extra_page_setti
  * @return int|false The post ID for the membership card page, or false if no post ID is found.
  */
 function pmpro_membership_card_get_post_id() {
+	// First, check if we have a PMPro page set.
+	global $pmpro_pages;
+	if ( isset( $pmpro_pages['membership_card'] ) && is_numeric( $pmpro_pages['membership_card'] ) && (int) $pmpro_pages['membership_card'] > 0 ) {
+		return $pmpro_pages['membership_card'];
+	}
+
 	// Check legacy options.
 	$legacy_options = get_option("pmpro_membership_card_post_ids", array());
 	if ( ! empty( $legacy_options ) ) {
@@ -164,58 +169,8 @@ function pmpro_membership_card_get_post_id() {
 }
 
 /**
- * Use an option to track pages with the [pmpro_membership_card] shortcode.
- *
- * @deprecated 1.2
+ * Add the link to view the card in the user profile for admins.
  */
-function pmpro_membership_card_save_post( $post_id ) {
-	_deprecated_function( __FUNCTION__, '1.2' );
-	global $post;
-
-	if ( !isset( $post->post_type) ) {
-		return;
-	}
-
-	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
-		return;
-	}
-
-	if ( wp_is_post_revision( $post_id ) !== false ) {
-		return;
-	}
-
-	if ( 'trash' == get_post_status( $post_id ) ){
-		return;
-	}
-
-	$args = array(
-		'p' => $post_id,
-		'posts_per_page' => 1,
-		'post_type' => array_unique( array( 'post', 'page', $post->post_type ) ),
-		'post_status' => array('publish', 'private')
-	);
-
-	$posts = pmpro_posts_by_content::get($args);
-	$post = isset($posts[0]) ? $posts[0] : null;
-
-	$option = get_option("pmpro_membership_card_post_ids", array());
-	
-	if ( empty( $option ) ) {
-		$option = array();
-	}
-		
-	if ( isset( $post->post_content ) && has_shortcode( $post->post_content, "pmpro_membership_card" ) && in_array( $post->post_status,  array( 'publish', 'private' ) ) ) {
-		$option[$post_id] = $post_id;
-	} else {
-		unset( $option[$post_id] );
-	}
-		
-	update_option( "pmpro_membership_card_post_ids", $option );
-}
-
-/*
-	Add the link to view the card in the user profile
-*/
 function pmpro_membership_card_profile_fields( $user ) {
 
 	$membership_level_capability = apply_filters('pmpro_edit_member_capability', 'manage_options');
@@ -230,35 +185,13 @@ function pmpro_membership_card_profile_fields( $user ) {
 		return;
 	}
 
-	if ( ! function_exists( 'pmpro_hasMembershipLevel' ) || (function_exists( 'pmpro_hasMembershipLevel' ) && pmpro_hasMembershipLevel( NULL, $user->ID ) ) ) {
+	// Only show the link if the current user has a membership.
+	if ( ! function_exists( 'pmpro_getMembershipLevelsForUser' ) ) {
+		return;
+	}
 
-		$membership_card_page_url = get_permalink( $membership_card_post_id );
-
-		// Bail if the card's URL is empty.
-		if ( ! $membership_card_page_url ) {
-			return;
-		}
-
-		$membership_card_user_url = add_query_arg( 'u', $user->ID, $membership_card_page_url );
-
-		?>
-		<h2><?php esc_html_e( 'Membership Card', 'pmpro-membership-card' ); ?></h2>
-			<p><a href="<?php echo esc_url( $membership_card_user_url );?>"><?php esc_html_e( 'View and Print Membership Card', 'pmpro-membership-card' ); ?></a></p>
-		<?php
-	}	
-}
-add_action('edit_user_profile', 'pmpro_membership_card_profile_fields');
-add_action('show_user_profile', 'pmpro_membership_card_profile_fields');
-
-/*
-	Add the link to view the card in the Member Links section of the Membership Account page
-*/
-function pmpro_membership_card_member_links_top() {
-	global $current_user;
-
-	// Get the membership card post ID.
-	$membership_card_post_id = pmpro_membership_card_get_post_id();
-	if ( empty( $membership_card_post_id )  ) {
+	$levels = pmpro_getMembershipLevelsForUser( $user->ID );
+	if ( empty( $levels ) ) {
 		return;
 	}
 
@@ -269,10 +202,47 @@ function pmpro_membership_card_member_links_top() {
 		return;
 	}
 
-	$membership_card_user_url = add_query_arg( 'u', $current_user->ID, $membership_card_page_url );
-
+	$membership_card_user_url = add_query_arg( 'u', $user->ID, $membership_card_page_url );
 	?>
-		<li><a href="<?php echo esc_url( $membership_card_user_url ); ?>"><?php esc_html_e( 'View and Print Membership Card', 'pmpro-membership-card' ); ?></a></li>
+	<h2><?php esc_html_e( 'Membership Card', 'pmpro-membership-card' ); ?></h2>
+	<p><a href="<?php echo esc_url( $membership_card_user_url );?>"><?php esc_html_e( 'View and Print Membership Card', 'pmpro-membership-card' ); ?></a></p>
+	<?php
+}
+add_action('edit_user_profile', 'pmpro_membership_card_profile_fields');
+add_action('show_user_profile', 'pmpro_membership_card_profile_fields');
+
+/**
+ * Add the link to view the card in the Member Links section of the Membership Account page
+ */
+function pmpro_membership_card_member_links_top() {
+	// Get the membership card post ID.
+	$membership_card_post_id = pmpro_membership_card_get_post_id();
+	if ( empty( $membership_card_post_id ) ) {
+		return;
+	}
+
+	$membership_card_page_url = get_permalink( $membership_card_post_id );
+	if ( empty( $membership_card_page_url ) ) {
+		return;
+	}
+
+	// Only show the link if the current user has a membership.
+	if ( ! function_exists( 'pmpro_getMembershipLevelsForUser' ) ) {
+		return;
+	}
+
+	$levels = pmpro_getMembershipLevelsForUser( get_current_user_id() );
+	if ( empty( $levels ) ) {
+		return;
+	}
+
+	$membership_card_user_url = add_query_arg( 'u', get_current_user_id(), $membership_card_page_url );
+	?>
+		<li>
+			<a href="<?php echo esc_url( $membership_card_user_url ); ?>">
+				<?php esc_html_e( 'View and Print Membership Card', 'pmpro-membership-card' ); ?>
+			</a>
+		</li>
 	<?php
 }
 add_action( 'pmpro_member_links_top', 'pmpro_membership_card_member_links_top' );
@@ -298,10 +268,10 @@ add_filter('plugin_row_meta', 'pmpro_membership_card_plugin_row_meta', 10, 2);
  */
 function pmpro_membership_card_return_user_name( $pmpro_membership_card_user ){
 
-	if ( isset( $pmpro_membership_card_user->user_firstname ) ) {
+	if ( ! empty( $pmpro_membership_card_user->user_firstname ) ) {
 		$details = $pmpro_membership_card_user->user_firstname. " ". $pmpro_membership_card_user->user_lastname;
 	} else {
-		$details = isset( $pmpro_membership_card_user->display_name ) ? $pmpro_membership_card_user->display_name : '';
+		$details = ! empty( $pmpro_membership_card_user->display_name ) ? $pmpro_membership_card_user->display_name : '';
 	}
 
 	return $details;
