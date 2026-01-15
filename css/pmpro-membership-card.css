@@ -1,0 +1,163 @@
+/**
+ * Base styles for Paid Memberships Pro - Membership Card Add On.
+ */
+
+/* Hide any thumbnail that might be on the page. */
+.page .attachment-post-thumbnail, .page .wp-post-image {display: none;}
+.post .attachment-post-thumbnail, .post .wp-post-image {display: none;}
+
+.pmpro {
+	/* Page Styles */
+	section.pmpro_membership_card_print_sizes {
+		display: none;
+		visibility: hidden !important;
+	}
+
+	section.pmpro_membership_card_display .pmpro_card_content {
+		padding-top: var(--pmpro--base--spacing--large);
+	}
+
+	section.pmpro_membership_card_display .pmpro_card_content,
+	section.pmpro_membership_card_print_sizes .pmpro_card_content {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: nowrap;
+		gap: var(--pmpro--base--spacing--large);
+	}
+
+	.pmpro_membership_card-left {
+		flex: 0 0 auto;
+	}
+
+	.pmpro_membership_card_field {
+		margin: var(--pmpro--base--spacing--small) 0;
+	}
+
+	.pmpro_membership_card_field h2 {
+		margin: 0;
+		padding: 0;
+	}
+
+	.pmpro_membership_card_display img {
+		max-height: 100px;
+		width: auto;
+	}
+
+	.pmpro_membership_card_field_label {
+		font-weight: 700;
+		margin-right: var(--pmpro--base--spacing--small);
+	}
+
+	.pmpro_membership_card-right {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		flex: 1 1 auto;
+	}
+	.pmpro_membership_card-right .pmpro_membership_card-after p:last-of-type {
+		margin-bottom: 0;
+	}
+}
+
+/* Print Styles */
+@media print
+{
+	.page,
+	section.pmpro_membership_card_display,
+	.pmpro_actions_nav {
+		visibility: hidden !important;
+	}
+	.pmpro {
+		section.pmpro_membership_card_display,
+		.pmpro_actions_nav {
+			display: none;
+		}
+		section.pmpro_membership_card_print_sizes {
+			display: block;
+			left: 1mm;
+			margin: 0;
+			position: fixed;
+			top: 1mm;
+			visibility: visible !important;
+		}
+		.pmpro_membership_card-print {
+			background-color: var(--pmpro--color--base);
+			border: 1px solid var(--pmpro--color--border--variation);
+			box-shadow: var(--pmpro--box-shadow);
+			margin: 0;
+		}
+		section.pmpro_membership_card_print_sizes .pmpro_membership_card-print .pmpro_card_content {
+			gap: var(--pmpro--base--spacing--small);
+			height: 100%;
+		}
+		.pmpro-qr-code-active .pmpro_membership_card-after img {
+			height: 40px;
+			width: 40px;
+		}
+		.pmpro_membership_card-print-small {
+			height: 54mm;
+			margin-bottom: 5mm;
+			width: 86mm;
+		}
+		.pmpro_membership_card-print-small .pmpro_card_content {
+			padding: 3mm;
+		}
+		.pmpro_membership_card-print-small img {
+			max-height: 13mm !important;
+			width: auto;
+		}
+		.pmpro_membership_card-print.pmpro_membership_card-print-small .pmpro_membership_card_field {
+			font-size: 9pt;
+			line-height: 12pt;
+			margin: 1mm 0 0 0;
+		}
+		.pmpro_membership_card-print.pmpro_membership_card-print-small .pmpro_membership_card_field h2 {
+			font-size: 14pt;
+			line-height: 18pt;
+			margin: 0;
+		}
+		.pmpro_membership_card-print-medium {
+			height: 64mm;
+			margin-bottom: 5mm;
+			width: 102mm;
+		}
+		.pmpro_membership_card-print-medium .pmpro_card_content {
+			padding: 5mm;
+		}
+		.pmpro_membership_card-print-medium img {
+			max-height: 16mm !important;
+			width: auto;
+		}
+		.pmpro_membership_card-print.pmpro_membership_card-print-medium .pmpro_membership_card_field {
+			font-size: 10pt;
+			line-height: 12pt;
+			margin: 2mm 0 0 0;
+		}
+		.pmpro_membership_card-print.pmpro_membership_card-print-medium .pmpro_membership_card_field h2 {
+			font-size: 18pt;
+			line-height: 24pt;
+			margin: 0;
+		}
+		.pmpro_membership_card-print-large {
+			height: 115mm;
+			width: 185mm;
+		}
+		.pmpro_membership_card-print-large .pmpro_card_content {
+			padding: 8mm;
+		}
+		.pmpro_membership_card-print-large img {
+			max-height: 26mm !important;
+			width: auto;
+		}
+		.pmpro_membership_card-print.pmpro_membership_card-print-large .pmpro_membership_card_field {
+			font-size: 15pt;
+			line-height: 20pt;
+			margin: 3mm 0 0 0;
+		}
+		.pmpro_membership_card-print.pmpro_membership_card-print-large .pmpro_membership_card_field h2 {
+			font-size: 30pt;
+			line-height: 36pt;
+			margin: 0;
+		}
+	}
+}
