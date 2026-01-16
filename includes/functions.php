@@ -231,13 +231,15 @@ function pmpro_membership_card_get_display_value( $element, $pmpro_membership_ca
 			$start_dates = array_column( $levels, 'startdate' );
 			$end_dates   = array_column( $levels, 'enddate' );
 
-			$startdate = ! empty( $start_dates ) ? min( $start_dates ) : null;
-
-			// Only use real end dates (ignore null/empty = never expires).
+			// Only use real start and end dates (ignore null/empty values).
+			$start_dates = array_filter( $start_dates, function( $startdate ) {
+				return ! empty( $startdate );
+			} );
 			$end_dates = array_filter( $end_dates, function( $enddate ) {
 				return ! empty( $enddate );
 			} );
 
+			$startdate = ! empty( $start_dates ) ? min( $start_dates ) : null;
 			$enddate = ! empty( $end_dates ) ? min( $end_dates ) : null;
 		}
 
@@ -319,8 +321,15 @@ function pmpro_membership_card_get_display_value( $element, $pmpro_membership_ca
 		}
 
 		// Format the date fields.
-		if ( in_array( $element, $date_fields ) && ! empty( $value ) ) {
-			$value = date_i18n( get_option('date_format'), $value );
+		if ( in_array( $element, $date_fields, true ) && ! empty( $value ) ) {
+			if ( $value === '0000-00-00 00:00:00' ) {
+				$value = '';
+			} else {
+				if ( ! is_numeric( $value ) ) {
+					$value = strtotime( $value );
+				}
+				$value = ! empty( $value ) ? date_i18n( get_option( 'date_format' ), (int) $value ) : '';
+			}
 		}
 
 	}

@@ -99,7 +99,7 @@
 			margin: 0;
 		}
 		section.pmpro_membership_card_print_sizes .pmpro_membership_card-print .pmpro_card_content {
-			gap: var(--pmpro--base--spacing--small);
+			gap: var(--pmpro--base--spacing--medium);
 			height: 100%;
 		}
 		.pmpro-qr-code-active .pmpro_membership_card-after img {
