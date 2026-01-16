@@ -39,7 +39,7 @@ if ( ! empty( $elements ) ) {
 	$elements .= 'featured_image;';
 	$since = pmpro_getMemberStartDate( $pmpro_membership_card_user->ID );
 	if ( ! empty( $since ) ) {
-		$elements .= __( 'Start Date', 'pmpro-membership-card' ) . ',membership_startdate;';
+		$elements .= __( 'Member Since', 'pmpro-membership-card' ) . ',membership_startdate;';
 	}
 	$elements .= __( 'Level', 'pmpro-membership-card' ) . ',membership_name;';
 	$elements_array = pmpro_membership_card_prepare_elements_array( $elements );
@@ -60,7 +60,7 @@ if ( ! empty( $elements ) ) {
 						$card_content_left = array();
 						if ( $show_avatar ) {
 							// Show the avatar if we have one.
-							$avatar = get_avatar( $pmpro_membership_card_user->ID, '256', NULL, esc_attr( $pmpro_membership_card_user->display_name ) );
+							$avatar = pmpro_membership_card_return_user_avatar( $pmpro_membership_card_user );
 							if ( ! empty( $avatar ) ) {
 								$card_content_left['avatar'] = $avatar;
 							}
@@ -69,7 +69,7 @@ if ( ! empty( $elements ) ) {
 						if ( $qr_code ) {
 							// Show the QR code if enabled.
 							$qr_code_data = pmpro_membership_card_return_qr_code_data( $pmpro_membership_card_user, $qr_data );
-							if ( ! empty( $qr_code_data ) ) {								
+							if ( ! empty( $qr_code_data ) ) {
 								$card_content_left['qr_code'] = '<img src="' . esc_url( $qr_code_data ) . '" />';
 							}
 						}
@@ -105,7 +105,7 @@ if ( ! empty( $elements ) ) {
 									$card_content_right[ $element[1] ] = '';
 									// Include a label if we have one.
 									if ( ! empty( $element[0] ) ) {
-										$card_content_right[ $element[1] ] .= '<span class="'. pmpro_get_element_class( 'pmpro_membership_card_field_label' ) . '">' . $element[0] . '</span>';
+										$card_content_right[ $element[1] ] .= '<span class="'. pmpro_get_element_class( 'pmpro_membership_card_field_label' ) . '">' . esc_html( $element[0] ) . '</span>';
 									}
 									$card_content_right[ $element[1] ] .= '<span class="' . pmpro_get_element_class( 'pmpro_membership_card_field_data' ) . '">';
 									$card_content_right[ $element[1] ] .= $value;
@@ -113,7 +113,7 @@ if ( ! empty( $elements ) ) {
 								}
 							}
 						}
-						
+
 						/**
 						 * Filter the Membership Card right column content.
 						 *
@@ -132,17 +132,6 @@ if ( ! empty( $elements ) ) {
 						}
 					?>
 				</div> <!-- end pmpro_membership_card-right -->
-				<?php
-					/**
-					 * Action to add content after the card content on the membership card.
-					 *
-					 * @since TBD
-					 * @param WP_User $pmpro_membership_card_user The user object for the membership card.
-					 * @param array $atts The shortcode attributes.
-					 * @return void
-					 */
-					do_action( 'pmpro_membership_card_after_card', $pmpro_membership_card_user, $atts );
-				?>
 			</div> <!-- end pmpro_card_content -->
 		</div> <!-- end pmpro_card -->
 	</section> <!-- end pmpro_section pmpro_membership_card -->
@@ -157,59 +146,81 @@ if ( ! empty( $elements ) ) {
 					<div class="<?php echo esc_attr( pmpro_get_element_class( 'pmpro_card_content' ) ); ?>">
 						<div class="<?php echo esc_attr( pmpro_get_element_class( 'pmpro_membership_card-left' ) ); ?>">
 							<?php
-								// Show the avatar if we have one.
-								$avatar = get_avatar( $pmpro_membership_card_user->ID, '256', NULL, esc_attr( $pmpro_membership_card_user->display_name ) );
-								if ( ! empty( $avatar ) ) {
-									echo wp_kses_post( $avatar );
+								$card_content_left = array();
+								if ( $show_avatar ) {
+									// Show the avatar if we have one.
+									$avatar = pmpro_membership_card_return_user_avatar( $pmpro_membership_card_user );
+									if ( ! empty( $avatar ) ) {
+										$card_content_left['avatar'] = $avatar;
+									}
+								}
+
+								if ( $qr_code ) {
+									// Show the QR code if enabled.
+									$qr_code_data = pmpro_membership_card_return_qr_code_data( $pmpro_membership_card_user, $qr_data );
+									if ( ! empty( $qr_code_data ) ) {
+										$card_content_left['qr_code'] = '<img src="' . esc_url( $qr_code_data ) . '" />';
+									}
 								}
 
 								/**
-								 * Action to add content after the avatar on the membership card.
+								 * Filter the Membership Card left column content.
 								 *
 								 * @since TBD
+								 * @param array $card_content_left The array of HTML content to show in the left column.
 								 * @param WP_User $pmpro_membership_card_user The user object for the membership card.
 								 * @param array $atts The shortcode attributes.
-								 * @return void
+								 *
+								 * @return array The modified array of HTML content to show in the left column.
 								 */
-								do_action( 'pmpro_membership_card_left', $pmpro_membership_card_user, $atts );
+								$card_content_left = apply_filters( 'pmpro_membership_card_left', $card_content_left, $pmpro_membership_card_user, $atts );
+								foreach ( $card_content_left as $item => $value ) {
+									echo '<div class="' . esc_attr( pmpro_get_element_class( 'pmpro_membership_card_field pmpro_membership_card_field-' . $item ) ) . '">';
+									echo wp_kses_post( $value );
+									echo '</div>';
+								}
 							?>
 						</div> <!-- end pmpro_membership_card-left -->
-						<div class="<?php echo esc_attr( pmpro_get_element_class( 'pmpro_membership_card-right' ) ); ?>">
+						<div class="<?php echo esc_attr( pmpro_get_element_class( 'pmpro_membership_card-right') ); ?>">
 							<?php
+								$card_content_right = array();
 								foreach ( $elements_array as $element ) {
 									$value = pmpro_membership_card_get_display_value( $element[1], $pmpro_membership_card_user );
 									if ( ! empty( $value ) || $value === '0' ) {
 										// If this is the display_name, we need to wrap it in an h2 tag.
 										if ( 'display_name' === $element[1] ) {
-											$value = '<h2 class="' . pmpro_get_element_class( 'pmpro_font-x-large' ) . '">' . $value . '</h2>';
+											$card_content_right['display_name'] = '<h2 class="' . pmpro_get_element_class( 'pmpro_font-x-large' ) . '">' . $value . '</h2>';
+										} else {
+											$card_content_right[ $element[1] ] = '';
+											// Include a label if we have one.
+											if ( ! empty( $element[0] ) ) {
+												$card_content_right[ $element[1] ] .= '<span class="'. pmpro_get_element_class( 'pmpro_membership_card_field_label' ) . '">' . esc_html( $element[0] ) . '</span>';
+											}
+											$card_content_right[ $element[1] ] .= '<span class="' . pmpro_get_element_class( 'pmpro_membership_card_field_data' ) . '">';
+											$card_content_right[ $element[1] ] .= $value;
+											$card_content_right[ $element[1] ] .= '</span>';
 										}
-										?>
-										<div class="<?php echo esc_attr( pmpro_get_element_class( 'pmpro_membership_card_field pmpro_membership_card_field-' . strtok( $element[1], '|' ) ) ); ?>">
-											<?php if ( ! empty( $element[0] ) ) { ?>
-												<span class="<?php echo esc_attr( pmpro_get_element_class( 'pmpro_membership_card_field_label' ) ); ?>">
-													<?php echo esc_html( $element[0] ); ?>
-												</span>
-											<?php } ?>
-												<span class="<?php echo esc_attr( pmpro_get_element_class( 'pmpro_membership_card_field_data' ) ); ?>">
-													<?php echo wp_kses_post( $value ); ?>
-												</span>
-										</div> <!-- end pmpro_membership_card_field -->
-										<?php
 									}
+								}
+
+								/**
+								 * Filter the Membership Card right column content.
+								 *
+								 * @since TBD
+								 * @param array $card_content_right The array of HTML content to show in the right column.
+								 * @param WP_User $pmpro_membership_card_user The user object for the membership card.
+								 * @param array $atts The shortcode attributes.
+								 *
+								 * @return array The modified array of HTML content to show in the right column.
+								 */
+								$card_content_right = apply_filters( 'pmpro_membership_card_right', $card_content_right, $pmpro_membership_card_user, $atts );
+								foreach ( $card_content_right as $item => $value ) {
+									echo '<div class="' . esc_attr( pmpro_get_element_class( 'pmpro_membership_card_field pmpro_membership_card_field-' . $item ) ) . '">';
+									echo wp_kses_post( $value );
+									echo '</div>';
 								}
 							?>
 						</div> <!-- end pmpro_membership_card-right -->
-						<?php
-							/**
-							 * Action to add content after the card content on the membership card.
-							 *
-							 * @since TBD
-							 * @param WP_User $pmpro_membership_card_user The user object for the membership card.
-							 * @param array $atts The shortcode attributes.
-							 * @return void
-							 */
-							do_action( 'pmpro_membership_card_after_card', $pmpro_membership_card_user, $atts );
-						?>
 					</div> <!-- end pmpro_card_content -->
 				</div> <!-- end pmpro_card -->
 				<?php
