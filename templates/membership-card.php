@@ -25,6 +25,11 @@ if ( in_array( 'all', $print_sizes ) ) {
 	$print_sizes = array( 'small', 'medium', 'large' );
 }
 
+// Safeguard against someone loading this template directly without attributes.
+if ( empty( $atts ) || ! is_array( $atts ) ) {
+	$atts = array();
+}
+
 // Validate boolean variables.
 $show_avatar = filter_var( $show_avatar, FILTER_VALIDATE_BOOLEAN );
 $qr_code = filter_var( $qr_code, FILTER_VALIDATE_BOOLEAN );
