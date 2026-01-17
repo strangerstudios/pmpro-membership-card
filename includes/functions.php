@@ -220,6 +220,7 @@ function pmpro_membership_card_get_display_value( $element, $pmpro_membership_ca
 					if ( empty( $expiration_date_text ) ) {
 						return '<span>' . $level->name . '</span>';
 					} else {
+						/* translators: %s: Expiration date */
 						return '<span>' . $level->name . ' <em>(' . sprintf( esc_html__( 'Expires %s', 'pmpro-membership-card' ), esc_html( $expiration_date_text ) ) . ')</em></span>';
 					}
 				}, $levels, array( $pmpro_membership_card_user ) );

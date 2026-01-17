@@ -55,7 +55,7 @@ if ( ! empty( $elements ) ) {
 		<p class="<?php echo esc_attr( pmpro_get_element_class( 'pmpro_membership_card-print-button' ) ); ?>">
 			<button class="<?php echo esc_attr( pmpro_get_element_class( 'pmpro_btn-plain pmpro_btn-print' ) ); ?>" onclick="window.print()">
 				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-printer"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
-				<?php echo esc_html__( 'Print or Save as PDF', 'paid-memberships-pro' ); ?>
+				<?php echo esc_html__( 'Print or Save as PDF', 'pmpro-membership-card' ); ?>
 			</button>
 		</p>
 		<div class="<?php echo esc_attr( pmpro_get_element_class( 'pmpro_card' ) ); ?>">
@@ -233,6 +233,6 @@ if ( ! empty( $elements ) ) {
 		?>
 	</section> <!-- end pmpro_section pmpro_membership_card_print -->
 	<div class="<?php echo esc_attr( pmpro_get_element_class( 'pmpro_actions_nav' ) ); ?>">
-		<span class="<?php echo esc_attr( pmpro_get_element_class( 'pmpro_actions_nav-right' ) ); ?>"><a href="<?php echo esc_url( pmpro_url( "account" ) ) ?>"><?php esc_html_e('View Your Membership Account &rarr;', 'paid-memberships-pro' );?></a></span>
+		<span class="<?php echo esc_attr( pmpro_get_element_class( 'pmpro_actions_nav-right' ) ); ?>"><a href="<?php echo esc_url( pmpro_url( "account" ) ) ?>"><?php esc_html_e('View Your Membership Account &rarr;', 'pmpro-membership-card' );?></a></span>
 	</div> <!-- end pmpro_actions_nav -->
 </div> <!-- end pmpro -->

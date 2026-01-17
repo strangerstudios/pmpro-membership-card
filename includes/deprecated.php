@@ -89,7 +89,7 @@ function pmpro_membership_card_get_levels_for_user( $pmpro_membership_card_user 
 	}
 
 	if ( empty( $levels ) ) {
-		return _e( 'None', 'pmpro-membership-card' );
+		return esc_html__( 'None', 'pmpro-membership-card' );
 	} else {
 		return $levels;
 	}
@@ -145,6 +145,7 @@ function pmpro_membership_card_return_level_name( $pmpro_membership_card_user ){
 		if ( empty( $expiration_date_text ) ) {
 			return $level->name;
 		} else {
+			/* translators: %s: Expiration date */
 			return $level->name . ' <em>(' . sprintf( esc_html__( 'Expires %s', 'pmpro-membership-card' ), esc_html( $expiration_date_text ) ) . ')</em>';
 		}
 	}, $levels, array( $pmpro_membership_card_user ) );
@@ -179,7 +180,7 @@ function pmpro_membership_card_qr_code_class( $pmpro_membership_card_user, $prin
 function pmpro_membership_card_qr_code( $pmpro_membership_card_user, $print_sizes, $qr_code, $qr_data ){
 
 	if( intval( $qr_code ) || $qr_code == 'true' ){
-		echo "<img src='" . pmpro_membership_card_return_qr_code_data( $pmpro_membership_card_user, $qr_data ) . "' />";
+		echo "<img src='" . esc_url( pmpro_membership_card_return_qr_code_data( $pmpro_membership_card_user, $qr_data ) ) . "' />";
 	}
 }
 //add_action( 'pmpro_membership_card_after_card', 'pmpro_membership_card_qr_code', 10, 4 );
