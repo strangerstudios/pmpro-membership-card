@@ -254,7 +254,11 @@ function pmpro_membership_card_get_display_value( $element, $pmpro_membership_ca
 				$value = '<img class="' . esc_attr( pmpro_get_element_class( 'pmpro_membership_card_image' ) ) . '" src="' . esc_attr( $image_url ) . '" border="0" />';
 				break;
 			case 'featured_image':
-				$image_url = wp_get_attachment_url( get_post_thumbnail_id( $post->ID ) );
+				global $post;
+				$image_url = '';
+				if ( ! empty( $post ) && isset( $post->ID ) ) {
+					$image_url = wp_get_attachment_url( get_post_thumbnail_id( $post->ID ) );
+				}
 				$value = ! empty( $image_url ) ? '<img class="' . esc_attr( pmpro_get_element_class( 'pmpro_membership_card_image' ) ) . '" src="' . esc_attr( $image_url ) . '" border="0" />' : '';
 				break;
 			case 'membership_name':
