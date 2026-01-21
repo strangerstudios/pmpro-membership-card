@@ -9,7 +9,8 @@
  *
  * @see https://github.com/WordPress/gutenberg/blob/trunk/docs/reference-guides/block-api/block-metadata.md#render
  */
+$output = pmpro_membership_card_shortcode( $attributes );
 ?>
-<p <?php echo get_block_wrapper_attributes(); ?>>
-	<?php esc_html_e( 'Pmpro Membership Card Block – hello from a dynamic block!', 'pmpro-membership-card-block' ); ?>
-</p>
+<div <?php echo get_block_wrapper_attributes(); ?>>
+    <?php echo $output; ?>
+</div>

@@ -3,7 +3,7 @@
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-i18n/
  */
-import { __ } from '@wordpress/i18n';
+import {__} from '@wordpress/i18n';
 
 /**
  * React hook that is used to mark the block wrapper element.
@@ -11,8 +11,8 @@ import { __ } from '@wordpress/i18n';
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
-import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
-import { PanelBody, TextControl, SelectControl, ToggleControl } from '@wordpress/components';
+import {useBlockProps, InspectorControls} from '@wordpress/block-editor';
+import {PanelBody, TextControl, SelectControl, ToggleControl} from '@wordpress/components';
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -31,64 +31,68 @@ import './editor.scss';
  * @return {Element} Element to render.
  */
 
-export default function Edit({ attributes, setAttributes }) {
+export default function Edit({attributes, setAttributes}) {
     const blockProps = useBlockProps();
     const textDomain = 'pmpro-membership-card';
-    const { showAvatar, printSize, qrcodeEnabled, qrCodeData, qrcodeDataCustom } = attributes;
+    const {showAvatar, printSize, qrcodeEnabled, qrCodeData, qrcodeDataCustom} = attributes;
 
     return (
-        <div { ...blockProps() }>
+        <div {...blockProps}>
             <InspectorControls>
                 <PanelBody title="Membership Card Settings">
                     <ToggleControl
-                        label={ __( 'Show Avatar', textDomain ) }
-                        checked={attributes.showAvatar}
-                        onChange={(value) => setAttributes({ showAvatar: value })}
+                        label={__('Show Avatar', textDomain)}
+                        checked={showAvatar}
+                        onChange={(value) => setAttributes({showAvatar: value})}
                     />
                     <SelectControl
-                        label={ __( 'Print Size', textDomain ) }
-                        help={ __( 'Specify what sizes to include in the print view.', textDomain ) }
-                        value={all}
+                        label={__('Print Size', textDomain)}
+                        help={__('Specify what sizes to include in the print view.', textDomain)}
+                        value={printSize}
                         options={[
-                            { label: __( 'All', textDomain ), value: 'all' },
-                            { label: __( 'Small', textDomain ), value: 'small' },
-                            { label: __( 'Medium', textDomain ), value: 'medium' },
-                            { label: __( 'Large', textDomain ), value: 'large' },
+                            {label: __('All', textDomain), value: 'all'},
+                            {label: __('Small', textDomain), value: 'small'},
+                            {label: __('Medium', textDomain), value: 'medium'},
+                            {label: __('Large', textDomain), value: 'large'},
                         ]}
-                        onChange={(value) => setAttributes({ printSize: value })}
+                        onChange={(value) => setAttributes({printSize: value})}
                     />
                     <ToggleControl
-                        label={ __( 'Display QR Code', textDomain ) }
-                        help={ __( 'Optionally display a QR code on the card.', textDomain ) }
-                        checked={attributes.qrcodeEnabled}
-                        onChange={(value) => setAttributes({ qrcodeEnabled: value })}
+                        label={__('Display QR Code', textDomain)}
+                        help={__('Optionally display a QR code on the card.', textDomain)}
+                        checked={qrcodeEnabled}
+                        onChange={(value) => setAttributes({qrcodeEnabled: value})}
                     />
-                    <SelectControl
-                        label={ __( 'QR Code Data', textDomain ) }
-                        help={ __( 'Specify what data the scanned QR code should return.', textDomain ) }
-                        value={id}
-                        options={[
-                            { label: __( 'ID', textDomain ), value: 'id' },
-                            { label: __( 'Email', textDomain ), value: 'email' },
-                            { label: __( 'Level', textDomain ), value: 'level' },
-                            { label: __( 'Other', textDomain ), value: 'other' },
-                        ]}
-                        onChange={(value) => setAttributes({ qrCodeData: value })}
-                    />
-                    <TextControl
-                        label={ __( 'Custom QR Code Value', textDomain ) }
-                        help={ __( 'Pass a custom value for what the scanned QR code should return.', textDomain ) }
-                        value={qrcodeDataCustom}
-                        onChange={(value) => setAttributes({ qrcodeDataCustom: value })}
-                    />
+                    {qrCodeData === 'other' && (
+                        <SelectControl
+                            label={__('QR Code Data', textDomain)}
+                            help={__('Specify what data the scanned QR code should return.', textDomain)}
+                            value={qrCodeData}
+                            options={[
+                                {label: __('ID', textDomain), value: 'ID'},
+                                {label: __('Email', textDomain), value: 'email'},
+                                {label: __('Level', textDomain), value: 'level'},
+                                {label: __('Other', textDomain), value: 'other'},
+                            ]}
+                            onChange={(value) => setAttributes({qrCodeData: value})}
+                        />
+                    )}
+                    {qrCodeData === 'other' && (
+                        <TextControl
+                            label={__('Custom QR Code Value', textDomain)}
+                            help={__('Pass a custom value for what the scanned QR code should return.', textDomain)}
+                            value={qrcodeDataCustom}
+                            onChange={(value) => setAttributes({qrcodeDataCustom: value})}
+                        />
+                    )}
                 </PanelBody>
             </InspectorControls>
 
-            <div { ...blockProps }>
-                <div className="pmpro-block-element" { ...blockProps }>
-                    <p>This is a test</p>
-                </div>
+            <div {...blockProps}>
+                <h2>PMPro Team</h2>
+                <p><span>Member since</span> April 29,2025</p>
+                <p><span>Level</span> Beginner</p>
             </div>
         </div>
-    );
+);
 }

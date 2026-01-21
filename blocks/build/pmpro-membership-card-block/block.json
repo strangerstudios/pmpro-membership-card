@@ -1,7 +1,7 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
-  "name": "pmpro-membership-card/pmpro-membership-card-block",
+  "name": "pmpro-membership-card-block/pmpro-membership-card-block",
   "version": "0.1.0",
   "title": "PMPro Membership Card Block",
   "category": "pmpro",
@@ -24,11 +24,11 @@
       "type": "boolean",
       "default": false
     },
-    "qrcodeDataSrc": {
+    "qrcodeData": {
       "type": "string",
       "default": "ID"
     },
-    "qrcodeCustom": {
+    "qrcodeDataCustom": {
       "type": "string",
       "default": ""
     }
@@ -40,7 +40,5 @@
   "textdomain": "pmpro-membership-card",
   "editorScript": "file:./index.js",
   "editorStyle": "file:./index.css",
-  "style": "file:./style-index.css",
-  "render": "file:./render.php",
-  "viewScript": "file:./view.js"
+  "render": "file:./render.php"
 }

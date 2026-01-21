@@ -1,1 +1,21 @@
-.wp-block-pmpro-membership-card-pmpro-membership-card-block{border:1px dotted red}
+/*!***************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./blocks/src/pmpro-membership-card-block/editor.scss ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************/
+/**
+ * The following styles get applied inside the editor only.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+.wp-block.wp-block-pmpro-membership-card-block-pmpro-membership-card-block {
+  background-color: var(--pmpro--color--base);
+  border: 1px solid var(--pmpro--color--border--variation);
+  border-radius: var(--pmpro--base--border-radius);
+  box-shadow: var(--pmpro--box-shadow);
+  display: flex;
+  flex-direction: column;
+  margin: var(--pmpro--base--spacing--medium) 0;
+  overflow: hidden;
+  padding: var(--pmpro--base--spacing--large);
+}
+
+/*# sourceMappingURL=index.css.map*/
