@@ -10,6 +10,10 @@
  */
 global $pmpro_membership_card_user;
 
+if ( ! defined( 'PMPRO_VERSION' ) ) {
+	return;
+}
+
 // Try to ensure we have *some* user object.
 if ( empty( $pmpro_membership_card_user ) || ! is_object( $pmpro_membership_card_user ) ) {
 	$pmpro_membership_card_user = wp_get_current_user();
