@@ -29,5 +29,10 @@ registerBlockType( metadata.name, {
 	/**
 	 * @see ./edit.js
 	 */
+    icon: {
+        background: '#FFFFFF',
+        foreground: '#658B24',
+        src: 'id',
+    },
 	edit: Edit,
 } );
