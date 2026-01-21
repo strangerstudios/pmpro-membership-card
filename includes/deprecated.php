@@ -7,36 +7,31 @@
  * Check for deprecated filters.
  */
 function pmpro_membership_card_init_check_for_deprecated_filters() {
-	global $wp_filter;
-
 	// Deprecated filter name => new filter name (or null if there is no alternative).
 	$pmpro_map_deprecated_filters = array(
-		'pmpro_membership_card_after_card' => null,
-		'pmpro_membership_card-extra_classes' => null,
+		'pmpro_membership_card_after_card' => 'pmpro_membership_card_right',
+		'pmpro_membership_card-extra_classes' => 'pmpro_element_class',
 	);
 	
 	foreach ( $pmpro_map_deprecated_filters as $old => $new ) {
 		if ( has_filter( $old ) ) {
-			if ( ! empty( $new ) ) {
-				// We have an alternative filter. Let's show an error message and forward to that new filter.
-				/* translators: 1: the old hook name, 2: the new or replacement hook name */
-				trigger_error( esc_html( sprintf( esc_html__( 'The %1$s hook has been deprecated in Paid Memberships Pro - Membership Card Add On. Please use the %2$s hook instead.', 'pmpro-membership-card' ), $old, $new ) ) );
-				
-				// Add filters back using the new tag.
-				foreach( $wp_filter[$old]->callbacks as $priority => $callbacks ) {
-					foreach( $callbacks as $callback ) {
-						add_filter( $new, $callback['function'], $priority, $callback['accepted_args'] ); 
-					}
-				}
-			} else {
-				// We don't have an alternative filter. Let's just show an error message.
-				/* translators: 1: the old hook name */
-				trigger_error( esc_html( sprintf( esc_html__( 'The %1$s hook has been deprecated in Paid Memberships Pro - Membership Card Add On and may not be available in future versions.', 'pmpro-membership-card' ), $old ) ) );
-			}
+			$message = $new ? sprintf(
+				/* translators: 1: Old hook name, 2: New hook name. */
+				esc_html__( 'The %1$s hook has been deprecated in Paid Memberships Pro - Membership Card Add On. Please use the %2$s hook instead.', 'pmpro-membership-card' ),
+				$old,
+				$new
+			) : sprintf(
+				/* translators: 1: Old hook name */
+				esc_html__( 'The %1$s hook has been deprecated in Paid Memberships Pro - Membership Card Add On and is no longer available.', 'pmpro-membership-card' ),
+				$old
+			);
+
+			trigger_error( $message );
 		}
+	
 	}
 }
-//add_action( 'init', 'pmpro_membership_card_init_check_for_deprecated_filters', 99 );
+add_action( 'init', 'pmpro_membership_card_init_check_for_deprecated_filters', 99 );
 
 /**
  * Returns the members most distant expiration date for their memberships.
