@@ -22,6 +22,7 @@ import { useSelect } from '@wordpress/data';
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
 import './editor.scss';
+import qrCodeSample from '../../images/qr-code-sample.png';
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -56,7 +57,7 @@ function useFeaturedImage() {
 export default function Edit({attributes, setAttributes}) {
     const blockProps = useBlockProps();
     const textDomain = 'pmpro-membership-card';
-    const {showAvatar, printSize, qrcodeEnabled, qrCodeData, qrcodeDataCustom} = attributes;
+    const {showAvatar, printSize, qrcodeEnabled, qrcodeData, qrcodeDataCustom} = attributes;
     const currentUser = useSelect( select => select( 'core' ).getCurrentUser(), [] );
     const { featuredMedia } = useFeaturedImage();
 
@@ -96,17 +97,17 @@ export default function Edit({attributes, setAttributes}) {
                         <SelectControl
                             label={__('QR Code Data', textDomain)}
                             help={__('Specify what data the scanned QR code should return.', textDomain)}
-                            value={qrCodeData}
+                            value={qrcodeData}
                             options={[
                                 {label: __('ID', textDomain), value: 'ID'},
                                 {label: __('Email', textDomain), value: 'email'},
                                 {label: __('Level', textDomain), value: 'level'},
                                 {label: __('Other', textDomain), value: 'other'},
                             ]}
-                            onChange={(value) => setAttributes({qrCodeData: value})}
+                            onChange={(value) => setAttributes({qrcodeData: value})}
                         />
                     )}
-                    {qrCodeData === 'other' && (
+                    {qrcodeData === 'other' && (
                         <TextControl
                             label={__('Custom QR Code Value', textDomain)}
                             help={__('Pass a custom value for what the scanned QR code should return.', textDomain)}
@@ -120,8 +121,8 @@ export default function Edit({attributes, setAttributes}) {
             <div className="wp-block-pmpro-membership-card-block-inner">
                 <div className="pmpro_membership_card-left">
                     <div className="pmpro_membership_card_field pmpro_membership_card_field-qr_code">
-                        { qrcodeEnabled && qrCodeData && (
-                            <div>QR Code Placeholder</div>
+                        { qrcodeEnabled && qrcodeData && (
+                            <img src={qrCodeSample} alt=""/>
                         ) }
                     </div>
                 </div>
@@ -134,21 +135,24 @@ export default function Edit({attributes, setAttributes}) {
                     <div className="pmpro_membership_card_field pmpro_membership_card_field-featured_image">
                         <span className="pmpro_membership_card_field_data">
                             { showAvatar && useFeaturedImage && (
-                                <img src={url} className="pmpro_membership_card_image"/>
+                                <img src={url} className="pmpro_membership_card_image" alt=""/>
                             ) }
                         </span>
                     </div>
                     <div className="pmpro_membership_card_field pmpro_membership_card_field-membership_startdate">
-                        <span className="pmpro_membership_card_field_label">Member Since</span>
+                        <span className="pmpro_membership_card_field_label">Member Since</span>&nbsp;
                         <span className="pmpro_membership_card_field_data">April 29, 2025</span>
                     </div>
                     <div className="pmpro_membership_card_field pmpro_membership_card_field-membership_name">
-                        <span className="pmpro_membership_card_field_label">Level</span>
+                        <span className="pmpro_membership_card_field_label">Level</span>&nbsp;
                         <span className="pmpro_membership_card_field_data"><span>Beginner</span>
                         </span>
                     </div>
                 </div>
             </div>
+
+            <p className="pmpro_membership_card_sample">Please note that the sample data above is for visual reference only.</p>
         </div>
+
     );
 }
