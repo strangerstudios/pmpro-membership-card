@@ -185,6 +185,6 @@ add_action( 'pmpro_member_links_top', 'pmpro_membership_card_member_links_top' )
  * @return void
  */
 function pmpro_membership_card_register_block() {
-    register_block_type( __DIR__ . '/blocks/build/pmpro-membership-card-block/block.json' );
+	register_block_type( __DIR__ . '/blocks/build/pmpro-membership-card-block/block.json' );
 }
 add_action( 'init', 'pmpro_membership_card_register_block' );

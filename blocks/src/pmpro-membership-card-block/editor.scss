@@ -1,54 +1,54 @@
 .wp-block.wp-block-pmpro-membership-card-block-pmpro-membership-card-block {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  margin: 18px 0;
-  overflow: hidden;
-  padding: 36px 36px 48px;
-  background-color: #FFFFFF;
-  border: 1px solid #E8E8E8;
-  border-radius: 8px;
-  box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.07);
-
-  .pmpro_membership_card_sample {
-	position: absolute;
-	bottom: 0;
-	right: 0;
-	margin: 0;
-	padding: 5px 12px;
-	background: #fafafa;
-	color: #525252;
-  }
-
-  .wp-block-pmpro-membership-card-block-inner {
-	display: flex;
-	flex-direction: row;
-	flex-wrap: nowrap;
-	gap: 36px;
-  }
-
-  .pmpro_membership_card-left {
-	flex: 0 0 auto;
-  }
-
-  .pmpro_membership_card-right {
+	position: relative;
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
-	flex: 1 1 auto;
-  }
+	margin: 18px 0;
+	overflow: hidden;
+	padding: 36px 36px 48px;
+	background-color: #FFFFFF;
+	border: 1px solid #E8E8E8;
+	border-radius: 8px;
+	box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.07);
 
-  .pmpro_membership_card_field {
-	margin: 12px 0;
-
-	.pmpro_membership_card_field_label {
-	  font-weight: 700;
-	  margin-right: 12px;
+	.pmpro_membership_card_sample {
+		position: absolute;
+		bottom: 0;
+		right: 0;
+		margin: 0;
+		padding: 5px 12px;
+		background: #fafafa;
+		color: #525252;
 	}
-  }
 
-  .pmpro_membership_card_image {
-	max-height: 100px;
-	width: auto;
-  }
+	.wp-block-pmpro-membership-card-block-inner {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: nowrap;
+		gap: 36px;
+	}
+
+	.pmpro_membership_card-left {
+		flex: 0 0 auto;
+	}
+
+	.pmpro_membership_card-right {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		flex: 1 1 auto;
+	}
+
+	.pmpro_membership_card_field {
+		margin: 12px 0;
+
+		.pmpro_membership_card_field_label {
+			font-weight: 700;
+			margin-right: 12px;
+		}
+	}
+
+	.pmpro_membership_card_image {
+		max-height: 100px;
+		width: auto;
+	}
 }

@@ -1,44 +1,44 @@
 {
-  "$schema": "https://schemas.wp.org/trunk/block.json",
-  "apiVersion": 3,
-  "name": "pmpro-membership-card-block/pmpro-membership-card-block",
-  "version": "0.1.0",
-  "title": "PMPro Membership Card Block",
-  "category": "pmpro",
-  "description": "Embed a membership card anywhere on your WordPress site.",
-  "keywords": [
-    "membership card",
-    "paid memberships pro",
-    "pmpro"
-  ],
-  "attributes": {
-    "showAvatar": {
-      "type": "boolean",
-      "default": true
-    },
-    "printSize": {
-      "type": "string",
-      "default": "all"
-    },
-    "qrcodeEnabled": {
-      "type": "boolean",
-      "default": false
-    },
-    "qrcodeData": {
-      "type": "string",
-      "default": "ID"
-    },
-    "qrcodeDataCustom": {
-      "type": "string",
-      "default": ""
-    }
-  },
-  "example": {},
-  "supports": {
-    "html": false
-  },
-  "textdomain": "pmpro-membership-card",
-  "editorScript": "file:./index.js",
-  "editorStyle": "file:./index.css",
-  "render": "file:./render.php"
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "pmpro-membership-card-block/pmpro-membership-card-block",
+	"version": "0.1.0",
+	"title": "PMPro Membership Card Block",
+	"category": "pmpro",
+	"description": "Embed a membership card anywhere on your WordPress site.",
+	"keywords": [
+	"membership card",
+	"paid memberships pro",
+	"pmpro"
+	],
+	"attributes": {
+		"showAvatar": {
+			"type": "boolean",
+			"default": true
+		},
+		"printSize": {
+			"type": "string",
+			"default": "all"
+		},
+		"qrcodeEnabled": {
+			"type": "boolean",
+			"default": false
+		},
+		"qrcodeData": {
+			"type": "string",
+			"default": "ID"
+		},
+		"qrcodeDataCustom": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"example": {},
+	"supports": {
+		"html": false
+	},
+	"textdomain": "pmpro-membership-card",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"render": "file:./render.php"
 }
