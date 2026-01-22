@@ -11,8 +11,9 @@ import {__} from '@wordpress/i18n';
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
-import {useBlockProps, InspectorControls} from '@wordpress/block-editor';
-import {PanelBody, TextControl, SelectControl, ToggleControl} from '@wordpress/components';
+import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
+import { PanelBody, TextControl, SelectControl, ToggleControl } from '@wordpress/components';
+import { useSelect } from '@wordpress/data';
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -31,10 +32,37 @@ import './editor.scss';
  * @return {Element} Element to render.
  */
 
+function useFeaturedImage() {
+    return useSelect((select) => {
+        const editor = select('core/editor');
+        const core = select('core');
+
+        const featuredMediaId = editor.getEditedPostAttribute('featured_media');
+
+        if (!featuredMediaId) {
+            return { featuredMediaId: 0, featuredMedia: null, isLoading: false };
+        }
+
+        const media = core.getMedia(featuredMediaId);
+
+        return {
+            featuredMediaId,
+            featuredMedia: media ?? null,
+            isLoading: !media,
+        };
+    }, []);
+}
+
 export default function Edit({attributes, setAttributes}) {
     const blockProps = useBlockProps();
     const textDomain = 'pmpro-membership-card';
     const {showAvatar, printSize, qrcodeEnabled, qrCodeData, qrcodeDataCustom} = attributes;
+    const currentUser = useSelect( select => select( 'core' ).getCurrentUser(), [] );
+    const { featuredMedia } = useFeaturedImage();
+
+    const url =
+        featuredMedia?.media_details?.sizes?.thumbnail?.source_url ||
+        featuredMedia?.source_url;
 
     return (
         <div {...blockProps}>
@@ -42,6 +70,7 @@ export default function Edit({attributes, setAttributes}) {
                 <PanelBody title="Membership Card Settings">
                     <ToggleControl
                         label={__('Show Avatar', textDomain)}
+                        help={__('Set from your featured image.', textDomain)}
                         checked={showAvatar}
                         onChange={(value) => setAttributes({showAvatar: value})}
                     />
@@ -63,7 +92,7 @@ export default function Edit({attributes, setAttributes}) {
                         checked={qrcodeEnabled}
                         onChange={(value) => setAttributes({qrcodeEnabled: value})}
                     />
-                    {qrCodeData === 'other' && (
+                    {qrcodeEnabled && (
                         <SelectControl
                             label={__('QR Code Data', textDomain)}
                             help={__('Specify what data the scanned QR code should return.', textDomain)}
@@ -88,11 +117,38 @@ export default function Edit({attributes, setAttributes}) {
                 </PanelBody>
             </InspectorControls>
 
-            <div {...blockProps}>
-                <h2>PMPro Team</h2>
-                <p><span>Member since</span> April 29,2025</p>
-                <p><span>Level</span> Beginner</p>
+            <div className="wp-block-pmpro-membership-card-block-inner">
+                <div className="pmpro_membership_card-left">
+                    <div className="pmpro_membership_card_field pmpro_membership_card_field-qr_code">
+                        { qrcodeEnabled && qrCodeData && (
+                            <div>QR Code Placeholder</div>
+                        ) }
+                    </div>
+                </div>
+                <div className="pmpro_membership_card-right">
+                    <div className="pmpro_membership_card_field pmpro_membership_card_field-display_name">
+                        <h2 className="pmpro_font-x-large">{
+                            currentUser ? currentUser.name : 'Member Name'
+                        }</h2>
+                    </div>
+                    <div className="pmpro_membership_card_field pmpro_membership_card_field-featured_image">
+                        <span className="pmpro_membership_card_field_data">
+                            { showAvatar && useFeaturedImage && (
+                                <img src={url} className="pmpro_membership_card_image"/>
+                            ) }
+                        </span>
+                    </div>
+                    <div className="pmpro_membership_card_field pmpro_membership_card_field-membership_startdate">
+                        <span className="pmpro_membership_card_field_label">Member Since</span>
+                        <span className="pmpro_membership_card_field_data">April 29, 2025</span>
+                    </div>
+                    <div className="pmpro_membership_card_field pmpro_membership_card_field-membership_name">
+                        <span className="pmpro_membership_card_field_label">Level</span>
+                        <span className="pmpro_membership_card_field_data"><span>Beginner</span>
+                        </span>
+                    </div>
+                </div>
             </div>
         </div>
-);
+    );
 }

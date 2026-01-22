@@ -47,17 +47,40 @@
 }
 
 .wp-block.wp-block-pmpro-membership-card-block-pmpro-membership-card-block {
-  background-color: var(--pmpro--color--base);
-  border: 1px solid var(--pmpro--color--border--variation);
-  border-radius: var(--pmpro--base--border-radius);
-  box-shadow: var(--pmpro--box-shadow);
   display: flex;
   flex-direction: column;
   margin: var(--pmpro--base--spacing--medium) 0;
   overflow: hidden;
   padding: var(--pmpro--base--spacing--large);
+  background-color: var(--pmpro--color--base);
+  border: 1px solid var(--pmpro--color--border--variation);
+  border-radius: var(--pmpro--base--border-radius);
+  box-shadow: var(--pmpro--box-shadow);
 
   .wp-block-pmpro-membership-card-block-inner {
-	padding-left: var(--pmpro--base--spacing--large);
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	gap: var(--pmpro--base--spacing--large);
+  }
+
+  .pmpro_membership_card-left {
+	flex: 0 0 auto;
+  }
+
+  .pmpro_membership_card-right {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	flex: 1 1 auto;
+  }
+
+  .pmpro_membership_card_field {
+	margin: var(--pmpro--base--spacing--small) 0;
+  }
+
+  .pmpro_membership_card_display img {
+	max-height: 100px;
+	width: auto;
   }
 }

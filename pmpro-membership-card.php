@@ -179,14 +179,6 @@ function pmpro_membership_card_member_links_top() {
 }
 add_action( 'pmpro_member_links_top', 'pmpro_membership_card_member_links_top' );
 
-add_action('enqueue_block_editor_assets', function() {
-    wp_enqueue_style(
-            'pmpro-base-editor',
-            plugins_url('css/frontend/base.css', WP_PLUGIN_DIR . '/paid-memberships-pro/'),
-            [],
-            null
-    );
-});
 /**
  * Register the Membership Card block.
  *
@@ -196,3 +188,12 @@ function pmpro_membership_card_register_block() {
     register_block_type( __DIR__ . '/blocks/build/pmpro-membership-card-block/block.json' );
 }
 add_action( 'init', 'pmpro_membership_card_register_block' );
+
+wp_localize_script(
+        'pmpro_membership_card_register_block',
+        'pmproMembershipCardData',
+        array(
+                'memberSince' => pmpro_getMemberStartDate( get_current_user_id() ),
+                'memberLevel' => pmpro_getMembershipLevelForUser( get_current_user_id() ),
+        )
+);
