@@ -5,8 +5,8 @@
 	margin: 18px 0;
 	overflow: hidden;
 	padding: 36px 36px 48px;
-	background-color: #FFFFFF;
-	border: 1px solid #E8E8E8;
+	background-color: #ffffff;
+	border: 1px solid #e8e8e8;
 	border-radius: 8px;
 	box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.07);
 
@@ -29,6 +29,17 @@
 
 	.pmpro_membership_card-left {
 		flex: 0 0 auto;
+	}
+
+	.pmpro_membership_card_field-avatar {
+		border: 1px solid #e8e8e8;
+		border-radius: 50%;
+		box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.07);
+		margin: 0;
+		padding: 0;
+		max-height: 100px;
+		width: auto;
+		overflow: hidden;
 	}
 
 	.pmpro_membership_card-right {

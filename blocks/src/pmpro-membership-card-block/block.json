@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "pmpro-membership-card-block/pmpro-membership-card-block",
 	"version": "0.1.0",
-	"title": "PMPro Membership Card Block",
+	"title": "PMPro Membership Card",
 	"category": "pmpro",
 	"description": "Embed a membership card anywhere on your WordPress site.",
 	"keywords": [
@@ -12,6 +12,10 @@
 	"pmpro"
 	],
 	"attributes": {
+		"elements": {
+			"type": "string",
+			"default": "display_name;featured_image;membership_startdate;membership_name;"
+		},
 		"print_size": {
 			"type": "string",
 			"default": "all"
@@ -23,6 +27,10 @@
 		"qr_data": {
 			"type": "string",
 			"default": "ID"
+		},
+		"show_avatar": {
+			"type": "boolean",
+			"default": false
 		}
 	},
 	"example": {},

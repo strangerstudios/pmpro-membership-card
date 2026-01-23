@@ -3,7 +3,8 @@ import {useBlockProps, InspectorControls} from '@wordpress/block-editor';
 import {PanelBody, TextControl, SelectControl, ToggleControl} from '@wordpress/components';
 import {useSelect} from '@wordpress/data';
 import './editor.scss';
-import qrCodeSample from '../../images/qr-code-sample.png';
+import qrCodeSample from './images/qr-code-sample.png';
+import avatarSample from './images/avatar-sample.png';
 
 function useFeaturedImage() {
 	return useSelect((select) => {
@@ -29,7 +30,7 @@ function useFeaturedImage() {
 export default function Edit({attributes, setAttributes}) {
 	const blockProps = useBlockProps();
 	const textDomain = 'pmpro-membership-card';
-	const {print_size, qr_code, qr_data} = attributes;
+	const {elements, print_size, qr_code, qr_data, show_avatar} = attributes;
 	const currentUser = useSelect(select => select('core').getCurrentUser(), []);
 	let {featuredMedia} = useFeaturedImage();
 
@@ -41,8 +42,12 @@ export default function Edit({attributes, setAttributes}) {
 		<div {...blockProps}>
 			<InspectorControls>
 				<PanelBody title={__('Membership Card Settings', textDomain)}>
-                    <p>{__('Tip: Display an avatar on your membership card by adding a featured image.', textDomain)}</p>
-                    <hr/>
+					<TextControl
+						label={__('Elements (optional)', textDomain)}
+						help={__('This attribute accepts a list of label names and values in the following format: label,field;label,field;...', textDomain)}
+						value={elements}
+						onChange={(value) => setAttributes({elements: value})}
+						/>
 					<SelectControl
 						label={__('Print Size', textDomain)}
 						help={__('Specify what sizes to include in the print view.', textDomain)}
@@ -75,24 +80,36 @@ export default function Edit({attributes, setAttributes}) {
 							onChange={(value) => setAttributes({qr_data: value})}
 						/>
 					)}
+					<ToggleControl
+						label={__('Show Avatar', textDomain)}
+						checked={show_avatar}
+						onChange={(value) => setAttributes({show_avatar: value})}
+					/>
 				</PanelBody>
 			</InspectorControls>
 
 			<div className="wp-block-pmpro-membership-card-block-inner">
-				<div className="pmpro_membership_card-left">
-					<div className="pmpro_membership_card_field pmpro_membership_card_field-qr_code">
-						{qr_code && qr_data && (
-							<img src={qrCodeSample} alt="QR code sample"/>
-						)}
-					</div>
-				</div>
-				<div className="pmpro_membership_card-right">
-					<div className="pmpro_membership_card_field pmpro_membership_card_field-display_name">
-						<h2 className="pmpro_font-x-large">{
-							currentUser ? currentUser.name : __('Member Name', textDomain)
-						}</h2>
-					</div>
-					<div className="pmpro_membership_card_field pmpro_membership_card_field-featured_image">
+                <div className="pmpro_membership_card-left">
+                    <div className="pmpro_membership_card_field pmpro_membership_card_field-avatar">
+                        {show_avatar && (
+                            <img
+                            src={avatarSample} alt="Avatar sample"
+                            className="avatar pmpro_membership_card_avatar" height="98" width="98"/>
+                        )}
+                    </div>
+                    <div className="pmpro_membership_card_field pmpro_membership_card_field-qr_code">
+                        {qr_code && qr_data && (
+                            <img src={qrCodeSample} alt="QR code sample"/>
+                        )}
+                    </div>
+                </div>
+                <div className="pmpro_membership_card-right">
+                    <div className="pmpro_membership_card_field pmpro_membership_card_field-display_name">
+                        <h2 className="pmpro_font-x-large">{
+                            currentUser ? currentUser.name : __('Member Name', textDomain)
+                        }</h2>
+                    </div>
+                    <div className="pmpro_membership_card_field pmpro_membership_card_field-featured_image">
 						<span className="pmpro_membership_card_field_data">
 							{ featuredMedia && (
 								<img src={url} className="pmpro_membership_card_image" alt="Featured image"/>
