@@ -89,27 +89,27 @@ export default function Edit({attributes, setAttributes}) {
 			</InspectorControls>
 
 			<div className="wp-block-pmpro-membership-card-block-inner">
-                <div className="pmpro_membership_card-left">
-                    <div className="pmpro_membership_card_field pmpro_membership_card_field-avatar">
-                        {show_avatar && (
-                            <img
-                            src={avatarSample} alt="Avatar sample"
-                            className="avatar pmpro_membership_card_avatar" height="98" width="98"/>
-                        )}
-                    </div>
-                    <div className="pmpro_membership_card_field pmpro_membership_card_field-qr_code">
-                        {qr_code && qr_data && (
-                            <img src={qrCodeSample} alt="QR code sample"/>
-                        )}
-                    </div>
-                </div>
-                <div className="pmpro_membership_card-right">
-                    <div className="pmpro_membership_card_field pmpro_membership_card_field-display_name">
-                        <h2 className="pmpro_font-x-large">{
-                            currentUser ? currentUser.name : __('Member Name', textDomain)
-                        }</h2>
-                    </div>
-                    <div className="pmpro_membership_card_field pmpro_membership_card_field-featured_image">
+				<div className="pmpro_membership_card-left">
+					<div className="pmpro_membership_card_field pmpro_membership_card_field-avatar">
+						{show_avatar && (
+							<img
+							src={avatarSample} alt="Avatar sample"
+							className="avatar pmpro_membership_card_avatar" height="98" width="98"/>
+						)}
+					</div>
+					<div className="pmpro_membership_card_field pmpro_membership_card_field-qr_code">
+						{qr_code && qr_data && (
+							<img src={qrCodeSample} alt="QR code sample"/>
+						)}
+					</div>
+				</div>
+				<div className="pmpro_membership_card-right">
+					<div className="pmpro_membership_card_field pmpro_membership_card_field-display_name">
+						<h2 className="pmpro_font-x-large">{
+							currentUser ? currentUser.name : __('Member Name', textDomain)
+						}</h2>
+					</div>
+					<div className="pmpro_membership_card_field pmpro_membership_card_field-featured_image">
 						<span className="pmpro_membership_card_field_data">
 							{ featuredMedia && (
 								<img src={url} className="pmpro_membership_card_image" alt="Featured image"/>

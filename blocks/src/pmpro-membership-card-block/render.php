@@ -7,7 +7,7 @@
 
 // Sanitize the 'elements' attribute before using it.
 if ( isset( $attributes['elements'] ) ) {
-    $attributes['elements'] = sanitize_text_field( $attributes['elements'] );
+	$attributes['elements'] = sanitize_text_field( $attributes['elements'] );
 }
 
 $output = pmpro_membership_card_shortcode( $attributes );
