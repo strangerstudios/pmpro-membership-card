@@ -12,25 +12,17 @@
 	"pmpro"
 	],
 	"attributes": {
-		"showAvatar": {
-			"type": "boolean",
-			"default": true
-		},
-		"printSize": {
+		"print_size": {
 			"type": "string",
 			"default": "all"
 		},
-		"qrcodeEnabled": {
+		"qr_code": {
 			"type": "boolean",
 			"default": false
 		},
-		"qrcodeData": {
+		"qr_data": {
 			"type": "string",
 			"default": "ID"
-		},
-		"qrcodeDataCustom": {
-			"type": "string",
-			"default": ""
 		}
 	},
 	"example": {},

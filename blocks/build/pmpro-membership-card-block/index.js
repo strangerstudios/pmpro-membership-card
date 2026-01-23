@@ -18,7 +18,7 @@ module.exports = __webpack_require__.p + "images/qr-code-sample.dd18adcc.png";
   \***********************************************************/
 (module) {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"pmpro-membership-card-block/pmpro-membership-card-block","version":"0.1.0","title":"PMPro Membership Card Block","category":"pmpro","description":"Embed a membership card anywhere on your WordPress site.","keywords":["membership card","paid memberships pro","pmpro"],"attributes":{"showAvatar":{"type":"boolean","default":true},"printSize":{"type":"string","default":"all"},"qrcodeEnabled":{"type":"boolean","default":false},"qrcodeData":{"type":"string","default":"ID"},"qrcodeDataCustom":{"type":"string","default":""}},"example":{},"supports":{"html":false},"textdomain":"pmpro-membership-card","editorScript":"file:./index.js","editorStyle":"file:./index.css","render":"file:./render.php"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"pmpro-membership-card-block/pmpro-membership-card-block","version":"0.1.0","title":"PMPro Membership Card Block","category":"pmpro","description":"Embed a membership card anywhere on your WordPress site.","keywords":["membership card","paid memberships pro","pmpro"],"attributes":{"print_size":{"type":"string","default":"all"},"qr_code":{"type":"boolean","default":false},"qr_data":{"type":"string","default":"ID"}},"example":{},"supports":{"html":false},"textdomain":"pmpro-membership-card","editorScript":"file:./index.js","editorStyle":"file:./index.css","render":"file:./render.php"}');
 
 /***/ },
 
@@ -78,10 +78,9 @@ function Edit({
   const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps)();
   const textDomain = 'pmpro-membership-card';
   const {
-    printSize,
-    qrcodeEnabled,
-    qrcodeData,
-    qrcodeDataCustom
+    print_size,
+    qr_code,
+    qr_data
   } = attributes;
   const currentUser = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useSelect)(select => select('core').getCurrentUser(), []);
   let {
@@ -92,13 +91,13 @@ function Edit({
     ...blockProps,
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InspectorControls, {
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
-        title: "Membership Card Settings",
+        title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Membership Card Settings', textDomain),
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
-          children: "Tip: Display an avatar on your membership card by adding a featured image."
+          children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Tip: Display an avatar on your membership card by adding a featured image.', textDomain)
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("hr", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
           label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Print Size', textDomain),
           help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Specify what sizes to include in the print view.', textDomain),
-          value: printSize,
+          value: print_size,
           options: [{
             label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('All', textDomain),
             value: 'all'
@@ -113,19 +112,19 @@ function Edit({
             value: 'large'
           }],
           onChange: value => setAttributes({
-            printSize: value
+            print_size: value
           })
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
           label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Display QR Code', textDomain),
           help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Optionally display a QR code on the card.', textDomain),
-          checked: qrcodeEnabled,
+          checked: qr_code,
           onChange: value => setAttributes({
-            qrcodeEnabled: value
+            qr_code: value
           })
-        }), qrcodeEnabled && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
+        }), qr_code && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
           label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('QR Code Data', textDomain),
-          help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Specify what data the scanned QR code should return.', textDomain),
-          value: qrcodeData,
+          help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Specify what data the scanned QR code should return. If set to “other”, you must leverage the pmpro_membership_card_qr_data_other filter hook to set the value.', textDomain),
+          value: qr_data,
           options: [{
             label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('ID', textDomain),
             value: 'ID'
@@ -140,14 +139,7 @@ function Edit({
             value: 'other'
           }],
           onChange: value => setAttributes({
-            qrcodeData: value
-          })
-        }), qrcodeData === 'other' && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
-          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Custom QR Code Value', textDomain),
-          help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Pass a custom value for what the scanned QR code should return.', textDomain),
-          value: qrcodeDataCustom,
-          onChange: value => setAttributes({
-            qrcodeDataCustom: value
+            qr_data: value
           })
         })]
       })
@@ -157,9 +149,9 @@ function Edit({
         className: "pmpro_membership_card-left",
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
           className: "pmpro_membership_card_field pmpro_membership_card_field-qr_code",
-          children: qrcodeEnabled && qrcodeData && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("img", {
+          children: qr_code && qr_data && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("img", {
             src: _images_qr_code_sample_png__WEBPACK_IMPORTED_MODULE_5__,
-            alt: ""
+            alt: "QR code sample"
           })
         })
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
@@ -168,7 +160,7 @@ function Edit({
           className: "pmpro_membership_card_field pmpro_membership_card_field-display_name",
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("h2", {
             className: "pmpro_font-x-large",
-            children: currentUser ? currentUser.name : 'Member Name'
+            children: currentUser ? currentUser.name : (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Member Name', textDomain)
           })
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
           className: "pmpro_membership_card_field pmpro_membership_card_field-featured_image",
@@ -177,34 +169,34 @@ function Edit({
             children: featuredMedia && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("img", {
               src: url,
               className: "pmpro_membership_card_image",
-              alt: ""
+              alt: "Featured image"
             })
           })
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
           className: "pmpro_membership_card_field pmpro_membership_card_field-membership_startdate",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
             className: "pmpro_membership_card_field_label",
-            children: "Member Since"
+            children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Member Since', textDomain)
           }), "\xA0", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
             className: "pmpro_membership_card_field_data",
-            children: "April 29, 2025"
+            children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('April 29, 2025', textDomain)
           })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
           className: "pmpro_membership_card_field pmpro_membership_card_field-membership_name",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
             className: "pmpro_membership_card_field_label",
-            children: "Level"
+            children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Level', textDomain)
           }), "\xA0", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
             className: "pmpro_membership_card_field_data",
             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
-              children: "Beginner"
+              children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Beginner', textDomain)
             })
           })]
         })]
       })]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
       className: "pmpro_membership_card_sample",
-      children: "Please note that the sample data above is for visual reference only."
+      children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Please note that the sample data above is for visual reference only.', textDomain)
     })]
   });
 }

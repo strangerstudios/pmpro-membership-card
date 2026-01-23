@@ -7,5 +7,5 @@
 $output = pmpro_membership_card_shortcode( $attributes );
 ?>
 <div <?php echo get_block_wrapper_attributes(); ?>>
-	<?php echo $output; ?>
+	<?php echo  wp_kses_post( $output ); ?>
 </div>
