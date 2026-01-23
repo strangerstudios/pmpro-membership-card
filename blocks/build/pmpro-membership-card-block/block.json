@@ -7,9 +7,9 @@
 	"category": "pmpro",
 	"description": "Embed a membership card anywhere on your WordPress site.",
 	"keywords": [
-	"membership card",
-	"paid memberships pro",
-	"pmpro"
+		"membership card",
+		"paid memberships pro",
+		"pmpro"
 	],
 	"attributes": {
 		"print_size": {
