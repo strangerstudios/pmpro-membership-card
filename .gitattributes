@@ -1,4 +1,9 @@
 .github export-ignore
 .gitattributes export-ignore
+.gitignore export-ignore
+blocks/src export-ignore
+webpack.config.js export-ignore
+package.json export-ignore
+package-lock.json export-ignorereadme.md export-ignore
 readme.md export-ignore
 pmpro-membership-card-banner.png export-ignore
