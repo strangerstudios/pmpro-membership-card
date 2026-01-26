@@ -111,7 +111,7 @@ function pmpro_membership_card_return_level_name( $pmpro_membership_card_user ){
  */
  function pmpro_membership_card_output_levels_for_user( $pmpro_membership_card_user ) {
 	// Show deprecation message.
-	_deprecated_function( __FUNCTION__, 'TBD', 'pmpro_membership_card_get_display_value' );
+	_deprecated_function( __FUNCTION__, '2.0', 'pmpro_membership_card_get_display_value' );
 
 	// Make sure the user exists.
 	if ( empty( $pmpro_membership_card_user ) ) {

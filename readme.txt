@@ -2,8 +2,8 @@
 Contributors: strangerstudios
 Tags: paid memberships pro, pmpro, membership, card, membership card, members, badge, logo
 Requires at least: 5.0
-Tested up to: 6.8
-Stable tag: 1.2
+Tested up to: 6.9
+Stable tag: 2.0
 
 Display a printable Membership Card for Paid Memberships Pro members or WP users.
 
@@ -29,6 +29,16 @@ Specify the print size of the cards to display using the shortcode attribute "pr
 Please post it in the issues section of GitHub and we'll fix it as soon as we can. Thanks for helping. https://github.com/strangerstudios/pmpro-membership-card/issues
 
 == Changelog ==
+= 2.0 - 2026-01-26 =
+* FEATURE: Added a new membership card block for the WordPress Block Editor. #74 (@RachelRVasquez)
+* FEATURE: Introduced a new elements attribute for the [pmpro_membership_card] shortcode, with automatic fallback to the legacy card layout when omitted. #72 (@kimcoleman)
+* ENHANCEMENT: Added support for displaying the site logo via site_logo (and retained featured_image support). #72 (@kimcoleman)
+* ENHANCEMENT: Added new customization filters: pmpro_membership_card_left, pmpro_membership_card_right, and pmpro_membership_card_get_display_value. #72 (@kimcoleman)
+* ENHANCEMENT: Refactored plugin structure by moving template/admin helpers into an /includes folder. #72 (@kimcoleman)
+* BUG FIX: Fixed redirection from the membership card in certain cases to make it more reliable and consistent. #71 (@kimcoleman)
+* BUG FIX: Fixed an issue where the QR code shown would not be resized. #65 (@dwanjuki)
+* DEPRECATION: Removed support for legacy filters pmpro_membership_card-extra_classes and pmpro_membership_card_after_card. #72 (@kimcoleman)
+
 = 1.2 - 2025-03-07 =
 * FEATURE: Added support for user avatars on the membership card. #56 (@andrewlimaza)
 * ENHANCEMENT: Now allowing admins to set the Membership Card page on the Memberships > Settings > Pages settings page. #64 (@dparker1005)

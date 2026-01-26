@@ -86,7 +86,7 @@ if ( ! empty( $elements ) ) {
 						/**
 						 * Filter the Membership Card left column content.
 						 *
-						 * @since TBD
+						 * @since 2.0
 						 * @param array $card_content_left The array of HTML content to show in the left column.
 						 * @param WP_User $pmpro_membership_card_user The user object for the membership card.
 						 * @param array $atts The shortcode attributes.
@@ -126,7 +126,7 @@ if ( ! empty( $elements ) ) {
 						/**
 						 * Filter the Membership Card right column content.
 						 *
-						 * @since TBD
+						 * @since 2.0
 						 * @param array $card_content_right The array of HTML content to show in the right column.
 						 * @param WP_User $pmpro_membership_card_user The user object for the membership card.
 						 * @param array $atts The shortcode attributes.
@@ -175,7 +175,7 @@ if ( ! empty( $elements ) ) {
 								/**
 								 * Filter the Membership Card left column content.
 								 *
-								 * @since TBD
+								 * @since 2.0
 								 * @param array $card_content_left The array of HTML content to show in the left column.
 								 * @param WP_User $pmpro_membership_card_user The user object for the membership card.
 								 * @param array $atts The shortcode attributes.
@@ -215,7 +215,7 @@ if ( ! empty( $elements ) ) {
 								/**
 								 * Filter the Membership Card right column content.
 								 *
-								 * @since TBD
+								 * @since 2.0
 								 * @param array $card_content_right The array of HTML content to show in the right column.
 								 * @param WP_User $pmpro_membership_card_user The user object for the membership card.
 								 * @param array $atts The shortcode attributes.
