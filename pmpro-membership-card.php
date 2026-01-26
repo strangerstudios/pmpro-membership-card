@@ -37,7 +37,7 @@ add_action( 'wp_enqueue_scripts', 'pmpro_membership_card_register_styles' );
  * Load the languages folder for translations.
  */
 function pmpro_membership_card_load_textdomain() {
-	load_plugin_textdomain( 'pmpro-membership-card', false, basename( dirname( __FILE__ ) ) . '/languages' ); 
+	load_plugin_textdomain( 'pmpro-membership-card', false, basename( dirname( __FILE__ ) ) . '/languages' );
 }
 add_action( 'init', 'pmpro_membership_card_load_textdomain' );
 
@@ -56,9 +56,10 @@ function pmpro_membership_card_wp() {
 	$membership_card_page_id = pmpro_membership_card_get_post_id();
 	$is_membership_card_page = $membership_card_page_id && is_page( $membership_card_page_id );
 	$has_shortcode = ( ! empty( $post ) && has_shortcode( $post->post_content, 'pmpro_membership_card' ) );
+	$has_block = ( ! empty( $post ) && has_block( 'pmpro-membership-card-block/pmpro-membership-card-block', $post ) );
 
 	// Return if this is not the Membership Card page or using the shortcode.
-	if ( ! $is_membership_card_page && ! $has_shortcode ) {
+	if ( ! $is_membership_card_page && ! $has_shortcode && ! $has_block ) {
 		return;
 	}
 
@@ -178,3 +179,15 @@ function pmpro_membership_card_member_links_top() {
 	<?php
 }
 add_action( 'pmpro_member_links_top', 'pmpro_membership_card_member_links_top' );
+
+/**
+ * Register the Membership Card block.
+ * 
+ * @since TBD
+ *
+ * @return void
+ */
+function pmpro_membership_card_register_block() {
+	register_block_type( __DIR__ . '/blocks/build/pmpro-membership-card-block/block.json' );
+}
+add_action( 'init', 'pmpro_membership_card_register_block' );
