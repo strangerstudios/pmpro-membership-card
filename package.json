@@ -1,0 +1,30 @@
+{
+  "name": "pmpro-membership-card",
+  "version": "1.0.0",
+  "description": "Membership Card Add On for Paid Memberships Pro",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/strangerstudios/pmpro-membership-card.git"
+  },
+  "main": "build/index.js",
+  "scripts": {
+    "start": "wp-scripts start",
+    "build": "wp-scripts build",
+    "format": "wp-scripts format",
+    "lint:css": "wp-scripts lint-style",
+    "lint:js": "wp-scripts lint-js",
+    "packages-update": "wp-scripts packages-update",
+    "plugin-zip": "wp-scripts plugin-zip"
+  },
+  "keywords": [
+    "wordpress",
+    "membership",
+    "pmpro",
+    "membership-card"
+  ],
+  "author": "Stranger Studios",
+  "license": "GPL-2.0",
+  "devDependencies": {
+    "@wordpress/scripts": "^31.3.0"
+  }
+}

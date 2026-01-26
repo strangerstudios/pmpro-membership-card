@@ -1,0 +1,44 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "pmpro-membership-card-block/pmpro-membership-card-block",
+	"version": "0.1.0",
+	"title": "PMPro Membership Card",
+	"category": "pmpro",
+	"description": "Embed a membership card anywhere on your WordPress site.",
+	"keywords": [
+	"membership card",
+	"paid memberships pro",
+	"pmpro"
+	],
+	"attributes": {
+		"elements": {
+			"type": "string",
+			"default": ""
+		},
+		"print_size": {
+			"type": "string",
+			"default": "all"
+		},
+		"qr_code": {
+			"type": "boolean",
+			"default": false
+		},
+		"qr_data": {
+			"type": "string",
+			"default": "ID"
+		},
+		"show_avatar": {
+			"type": "boolean",
+			"default": false
+		}
+	},
+	"example": {},
+	"supports": {
+		"html": false
+	},
+	"textdomain": "pmpro-membership-card",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"render": "file:./render.php"
+}
