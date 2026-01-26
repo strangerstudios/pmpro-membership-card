@@ -56,9 +56,10 @@ function pmpro_membership_card_wp() {
 	$membership_card_page_id = pmpro_membership_card_get_post_id();
 	$is_membership_card_page = $membership_card_page_id && is_page( $membership_card_page_id );
 	$has_shortcode = ( ! empty( $post ) && has_shortcode( $post->post_content, 'pmpro_membership_card' ) );
+	$has_block = ( ! empty( $post ) && has_block( 'pmpro-membership-card-block/pmpro-membership-card-block', $post ) );
 
 	// Return if this is not the Membership Card page or using the shortcode.
-	if ( ! $is_membership_card_page && ! $has_shortcode ) {
+	if ( ! $is_membership_card_page && ! $has_shortcode && ! $has_block ) {
 		return;
 	}
 
