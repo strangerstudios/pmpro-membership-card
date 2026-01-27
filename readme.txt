@@ -29,7 +29,7 @@ Specify the print size of the cards to display using the shortcode attribute "pr
 Please post it in the issues section of GitHub and we'll fix it as soon as we can. Thanks for helping. https://github.com/strangerstudios/pmpro-membership-card/issues
 
 == Changelog ==
-= 2.0 - 2026-01-26 =
+= 2.0 - 2026-01-27 =
 * FEATURE: Added a new membership card block for the WordPress Block Editor. #74 (@RachelRVasquez)
 * FEATURE: Introduced a new elements attribute for the [pmpro_membership_card] shortcode, with automatic fallback to the legacy card layout when omitted. #72 (@kimcoleman)
 * ENHANCEMENT: Added support for displaying the site logo via site_logo (and retained featured_image support). #72 (@kimcoleman)
