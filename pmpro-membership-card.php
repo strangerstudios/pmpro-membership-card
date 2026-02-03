@@ -21,6 +21,8 @@ require_once( PMPRO_MEMBERSHIP_CARD_DIR . '/includes/functions.php' );
 
 /**
  * Register the Membership Card page styles.
+ * Loaded only when viewing the Membership Card page
+ * See pmpro_membership_card_wp() function.
  */
 function pmpro_membership_card_register_styles() {
 	wp_register_style(
@@ -31,7 +33,6 @@ function pmpro_membership_card_register_styles() {
 	);
 	wp_enqueue_style( 'pmpro-membership-card-styles' );
 }
-add_action( 'wp_enqueue_scripts', 'pmpro_membership_card_register_styles' );
 
 /**
  * Load the languages folder for translations.
@@ -113,6 +114,10 @@ function pmpro_membership_card_wp() {
 		wp_safe_redirect( home_url() );
 		exit;
 	}
+
+	// Only enqueue the CSS/Scripts needed if the page has the membership card and is being viewed.
+	add_action( 'wp_enqueue_scripts', 'pmpro_membership_card_register_styles' );
+
 }
 add_action( 'wp', 'pmpro_membership_card_wp' );
 
