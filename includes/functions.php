@@ -269,6 +269,13 @@ function pmpro_membership_card_get_display_value( $element, $pmpro_membership_ca
 				break;
 			case 'membership_enddate':
 				$value = $enddate;
+				// If membership has no expiration date, check for a renewal date
+				if ( empty( $value ) && ! empty( $pmpro_membership_card_user->ID ) ) {
+					$next_payment = pmpro_next_payment( $pmpro_membership_card_user->ID );
+					if ( $next_payment ) {
+						$value = date_i18n( get_option( 'date_format' ), $next_payment );
+					}
+				}
 				break;
 			case 'pmpro_shipping_address':
 			case 'pmpro_mailing_address':
