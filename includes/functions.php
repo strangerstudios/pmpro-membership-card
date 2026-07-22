@@ -156,13 +156,53 @@ function pmpro_membership_card_prepare_elements_array( $elements ) {
 }
 
 /**
+ * Get the soonest next payment date for a membership card user.
+ *
+ * @param WP_User $pmpro_membership_card_user The membership card user.
+ * @return int|null The next payment date as a timestamp, or null if none is found.
+ */
+function pmpro_membership_card_get_next_payment_date( $pmpro_membership_card_user ) {
+	static $next_payment_dates = array();
+
+	if ( empty( $pmpro_membership_card_user->ID ) ) {
+		return null;
+	}
+
+	$user_id = (int) $pmpro_membership_card_user->ID;
+	if ( array_key_exists( $user_id, $next_payment_dates ) ) {
+		return $next_payment_dates[ $user_id ];
+	}
+
+	$next_payment_date = null;
+	$subscriptions = PMPro_Subscription::get_subscriptions_for_user( $user_id );
+	foreach ( $subscriptions as $subscription ) {
+		$payment_date = $subscription->get_next_payment_date( 'timestamp' );
+		if ( empty( $payment_date ) || ! is_numeric( $payment_date ) ) {
+			continue;
+		}
+
+		$payment_date = (int) $payment_date;
+
+		// Subscriptions are ordered by start date, so compare payment dates to find the soonest one.
+		if ( null === $next_payment_date || $payment_date < $next_payment_date ) {
+			$next_payment_date = $payment_date;
+		}
+	}
+
+	$next_payment_dates[ $user_id ] = $next_payment_date;
+
+	return $next_payment_date;
+}
+
+/**
  * Get the value of a specific element from a string of HTML.
  */
 function pmpro_membership_card_get_display_value( $element, $pmpro_membership_card_user ) {
 	global $post;
 
 	// Initialize the value.
-	$value = '';
+	$value       = '';
+	$use_wp_date = false;
 
 	// Is this a user field?
 	if ( class_exists( 'PMPro_Field_Group' ) ) {
@@ -187,12 +227,15 @@ function pmpro_membership_card_get_display_value( $element, $pmpro_membership_ca
 			'membership_name',
 			'membership_startdate',
 			'membership_enddate',
+			'membership_enddate_or_next_payment_date',
 		);
 
 		// Get a list of fields that should be formatted as dates.
 		$date_fields = array(
 			'membership_startdate',
 			'membership_enddate',
+			'next_payment_date',
+			'membership_enddate_or_next_payment_date',
 			'user_registered',
 		);
 
@@ -269,13 +312,16 @@ function pmpro_membership_card_get_display_value( $element, $pmpro_membership_ca
 				break;
 			case 'membership_enddate':
 				$value = $enddate;
-				// If membership has no expiration date, check for a renewal date
-				if ( empty( $value ) && ! empty( $pmpro_membership_card_user->ID ) ) {
-					$next_payment = pmpro_next_payment( $pmpro_membership_card_user->ID );
-					if ( $next_payment ) {
-						$value = date_i18n( get_option( 'date_format' ), $next_payment );
-					}
-				}
+				break;
+			case 'next_payment_date':
+				$value = pmpro_membership_card_get_next_payment_date( $pmpro_membership_card_user );
+				$use_wp_date = ! empty( $value );
+				break;
+			case 'membership_enddate_or_next_payment_date':
+				$value = ! empty( $enddate )
+					? $enddate
+					: pmpro_membership_card_get_next_payment_date( $pmpro_membership_card_user );
+				$use_wp_date = empty( $enddate ) && ! empty( $value );
 				break;
 			case 'pmpro_shipping_address':
 			case 'pmpro_mailing_address':
@@ -334,7 +380,10 @@ function pmpro_membership_card_get_display_value( $element, $pmpro_membership_ca
 
 		// Format the date fields.
 		if ( in_array( $element, $date_fields, true ) && ! empty( $value ) ) {
-			if ( $value === '0000-00-00 00:00:00' ) {
+			// Subscription dates are true Unix timestamps. Membership dates use legacy offset timestamps.
+			if ( $use_wp_date ) {
+				$value = wp_date( get_option( 'date_format' ), (int) $value );
+			} elseif ( $value === '0000-00-00 00:00:00' ) {
 				$value = '';
 			} else {
 				if ( ! is_numeric( $value ) ) {
