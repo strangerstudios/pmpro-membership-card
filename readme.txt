@@ -3,7 +3,7 @@ Contributors: strangerstudios
 Tags: paid memberships pro, pmpro, membership, card, membership card, members, badge, logo
 Requires at least: 5.0
 Tested up to: 6.9
-Stable tag: 2.0
+Stable tag: 2.0.1
 
 Display a printable Membership Card for Paid Memberships Pro members or WP users.
 
