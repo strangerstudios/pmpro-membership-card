@@ -10,6 +10,10 @@ Text Domain: pmpro-membership-card
 Domain Path: /languages
 */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 // Definitions
 define( 'PMPRO_MEMBERSHIP_CARD_VERSION', '2.1' );
 define( 'PMPRO_MEMBERSHIP_CARD_DIR', dirname( __FILE__ ) );
@@ -65,13 +69,13 @@ function pmpro_membership_card_wp() {
 	}
 
 	// Get requested user (if any) once.
-	$u = isset( $_REQUEST['u'] ) ? (int) $_REQUEST['u'] : 0;
+	$u = isset( $_REQUEST['u'] ) ? (int) $_REQUEST['u'] : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only view; access is checked against the current user's capability below.
 
 	// Redirect if not logged in.
 	if ( ! is_user_logged_in() ) {
 		$redirect_to = get_permalink();
-		if ( ! empty( $_REQUEST['u'] ) ) {
-			$redirect_to = add_query_arg( 'u', intval( $_REQUEST['u'] ), $redirect_to );
+		if ( ! empty( $_REQUEST['u'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only; only preserved in the login redirect.
+			$redirect_to = add_query_arg( 'u', intval( $_REQUEST['u'] ), $redirect_to ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only; only preserved in the login redirect.
 		}
 
 		wp_safe_redirect( pmpro_login_url( $redirect_to ) );

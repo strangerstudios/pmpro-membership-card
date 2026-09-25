@@ -3,6 +3,10 @@
  * Functions for the Membership Card Add On.
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Get the post ID for the membership card page.
  *
