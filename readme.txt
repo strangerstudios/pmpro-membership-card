@@ -2,8 +2,8 @@
 Contributors: strangerstudios
 Tags: paid memberships pro, pmpro, membership, card, membership card, members, badge, logo
 Requires at least: 5.0
-Tested up to: 7.0
-Stable tag: 2.1
+Tested up to: 7.1
+Stable tag: 2.1.1
 
 Display a printable Membership Card for Paid Memberships Pro members or WP users.
 
@@ -44,6 +44,10 @@ If there is no value to encode, no QR code is shown and no request is made. As w
 goQR.me: [Terms of Service](https://goqr.me/legal/tos-api.html), [Privacy Policy](https://goqr.me/privacy-safety-security/).
 
 == Changelog ==
+= 2.1.1 - 2026-10-01 =
+* SECURITY: Improved sanitization and escaping throughout the plugin to resolve Plugin Check security findings. #77 (@dparker1005)
+* ENHANCEMENT: Documented the third-party QR code service used for the membership card. #78 (@dparker1005)
+
 = 2.1 - 2026-07-22 =
 * FEATURE: Added the `next_payment_date` and `membership_enddate_or_next_payment_date` card elements. #76 (@M4rkWilhelm, @dparker1005)
 

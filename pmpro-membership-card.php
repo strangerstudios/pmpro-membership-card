@@ -3,7 +3,7 @@
 Plugin Name: Paid Memberships Pro - Membership Card Add On
 Plugin URI: http://www.paidmembershipspro.com/wp/pmpro-membership-card/
 Description: Display a printable Membership Card for Paid Memberships Pro members or WP users.
-Version: 2.1
+Version: 2.1.1
 Author: Stranger Studios
 Author URI: http://www.strangerstudios.com
 Text Domain: pmpro-membership-card
@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Definitions
-define( 'PMPRO_MEMBERSHIP_CARD_VERSION', '2.1' );
+define( 'PMPRO_MEMBERSHIP_CARD_VERSION', '2.1.1' );
 define( 'PMPRO_MEMBERSHIP_CARD_DIR', dirname( __FILE__ ) );
 
 // Includes
