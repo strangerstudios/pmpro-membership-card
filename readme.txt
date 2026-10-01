@@ -34,10 +34,10 @@ When the QR code option is enabled (the "Display QR Code" setting on the Members
 
 The image is loaded from https://api.qrserver.com/v1/create-qr-code/ by the browser of the person viewing the card, whenever a card with a QR code is displayed. The request includes the image size and the value encoded in the QR code, which depends on the "QR Code Data" setting (`qr_data` shortcode attribute):
 
-* ID (default): the member's WordPress user ID.
-* Email: the member's email address.
-* Level: the IDs of the member's membership levels.
-* Other: the value returned by the `pmpro_membership_card_qr_data_other` filter.
+* ID (`qr_data="ID"`, the default): the member's WordPress user ID.
+* Email (`qr_data="email"`): the member's email address.
+* Level (`qr_data="level"`): the IDs of the member's membership levels.
+* Other (any other `qr_data` value): the value returned by the `pmpro_membership_card_qr_data_other` filter.
 
 If there is no value to encode, no QR code is shown and no request is made. As with any image request, the service also receives the viewer's IP address and browser information.
 
