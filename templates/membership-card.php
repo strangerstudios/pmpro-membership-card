@@ -8,6 +8,10 @@
  * @var string $qr_code
  * @var string $qr_data
  */
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 global $pmpro_membership_card_user;
 
 if ( ! defined( 'PMPRO_VERSION' ) ) {

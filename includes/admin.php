@@ -3,6 +3,10 @@
  * Admin functions for the Membership Card Add On.
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Add a page setting for the Membership Card page.
  *

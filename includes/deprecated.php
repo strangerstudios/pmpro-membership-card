@@ -3,6 +3,10 @@
  * Deprecated features in the Membership Card Add On.
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Check for deprecated filters.
  */
@@ -26,7 +30,7 @@ function pmpro_membership_card_init_check_for_deprecated_filters() {
 				$old
 			);
 
-			trigger_error( $message );
+			trigger_error( $message ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Message is built from esc_html__() with hardcoded hook names.
 		}
 	
 	}
